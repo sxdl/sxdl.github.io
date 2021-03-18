@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>随苑-我的个人小站</title>
+  
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://sxdl.github.io/"/>
+  <updated>2020-09-21T13:08:33.726Z</updated>
+  <id>http://sxdl.github.io/</id>
+  
+  <author>
+    <name>碎星抖落</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>化学等级考：电化腐蚀</title>
+    <link href="http://sxdl.github.io/2020/09/21/200921/"/>
+    <id>http://sxdl.github.io/2020/09/21/200921/</id>
+    <published>2020-09-21T13:04:08.000Z</published>
+    <updated>2020-09-21T13:08:33.726Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id><a href="#" class="headerlink" title></a></h2>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id&gt;&lt;a href=&quot;#&quot; class=&quot;headerlink&quot; title&gt;&lt;/a&gt;&lt;/h2&gt;
+      
+    
+    </summary>
+    
+    
+      <category term="学习笔记" scheme="http://sxdl.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="化学" scheme="http://sxdl.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8C%96%E5%AD%A6/"/>
+    
+    
+      <category term="笔记" scheme="http://sxdl.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="学习" scheme="http://sxdl.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="化学" scheme="http://sxdl.github.io/tags/%E5%8C%96%E5%AD%A6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>地理日常疑惑提问</title>
+    <link href="http://sxdl.github.io/2020/09/13/%E5%9C%B0%E7%90%86%E6%97%A5%E5%B8%B8%E7%96%91%E6%83%91%E6%8F%90%E9%97%AE/"/>
+    <id>http://sxdl.github.io/2020/09/13/%E5%9C%B0%E7%90%86%E6%97%A5%E5%B8%B8%E7%96%91%E6%83%91%E6%8F%90%E9%97%AE/</id>
+    <published>2020-09-13T12:01:02.000Z</published>
+    <updated>2020-09-13T12:48:13.626Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="山地海拔高，气温低的原因"><a href="#山地海拔高，气温低的原因" class="headerlink" title="山地海拔高，气温低的原因"></a>山地海拔高，气温低的原因</h2><p>​    对流层大气的热量来源于地面的长波辐射。海拔越高，大气越稀薄。白天对地面长波辐射的吸收少；晚上，由于大气稀薄，大气逆辐射弱，热量损失大，因此温度低。</p><blockquote><p>参考资料：</p><p><a href="https://baijiahao.baidu.com/s?id=1649076951448342376&amp;wfr=spider&amp;for=pc、" target="_blank" rel="noopener">https://baijiahao.baidu.com/s?id=1649076951448342376&amp;wfr=spider&amp;for=pc、</a></p><p><a href="https://zhidao.baidu.com/question/66506117.html" target="_blank" rel="noopener">https://zhidao.baidu.com/question/66506117.html</a></p></blockquote><hr><h2 id="青藏高原对我国气候的深刻影响"><a href="#青藏高原对我国气候的深刻影响" class="headerlink" title="青藏高原对我国气候的深刻影响"></a>青藏高原对我国气候的深刻影响</h2><blockquote><p><a href="http://www.360doc.com/content/19/0411/23/924893_828152288.shtml" target="_blank" rel="noopener">青藏高原对我国气候的影响</a></p><p><a href="http://www.cma.gov.cn/2011xzt/2012zhuant/20120302/2012030205/201203020501/201203/t20120306_163740.html" target="_blank" rel="noopener">我国气候的主要特征是什么？</a></p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      持续更新
+    
+    </summary>
+    
+    
+      <category term="学习笔记" scheme="http://sxdl.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="地理" scheme="http://sxdl.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%9C%B0%E7%90%86/"/>
+    
+    
+      <category term="笔记" scheme="http://sxdl.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="学习" scheme="http://sxdl.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="答疑" scheme="http://sxdl.github.io/tags/%E7%AD%94%E7%96%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>地理等级考一些不得不记的常识</title>
+    <link href="http://sxdl.github.io/2020/09/08/%E5%9C%B0%E7%90%86%E7%AD%89%E7%BA%A7%E8%80%83%E4%B8%80%E4%BA%9B%E4%B8%8D%E5%BE%97%E4%B8%8D%E8%AE%B0%E7%9A%84%E5%B8%B8%E8%AF%86/"/>
+    <id>http://sxdl.github.io/2020/09/08/%E5%9C%B0%E7%90%86%E7%AD%89%E7%BA%A7%E8%80%83%E4%B8%80%E4%BA%9B%E4%B8%8D%E5%BE%97%E4%B8%8D%E8%AE%B0%E7%9A%84%E5%B8%B8%E8%AF%86/</id>
+    <published>2020-09-08T14:17:30.000Z</published>
+    <updated>2020-09-08T16:25:52.159Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="我国干湿区划分"><a href="#我国干湿区划分" class="headerlink" title="我国干湿区划分"></a>我国干湿区划分</h2><table><thead><tr><th align="center"></th><th align="left">年降水量（mm）</th><th>干湿状况</th><th>分布地区</th><th align="left">植被</th><th align="left">土地利用</th></tr></thead><tbody><tr><td align="center">湿润区</td><td align="left">&gt;800</td><td>降水量&gt;蒸发量</td><td>秦岭-淮河以南、青藏高原南部、内蒙古东北部、东北三省东部</td><td align="left">森林</td><td align="left">水田农业为主</td></tr><tr><td align="center">半湿润区</td><td align="left">&gt;400</td><td>降水量&gt;蒸发量</td><td>东北平原、华北平原、黄土高原大部分、青藏高原东南部</td><td align="left">森林-草原</td><td align="left">旱地农业为主</td></tr><tr><td align="center">半干旱区</td><td align="left">&lt;400</td><td>降水量&lt;蒸发量</td><td>内蒙古高原、黄土高原的一部分、青藏高原大部分</td><td align="left">草原</td><td align="left">畜牧业，灌溉农业</td></tr><tr><td align="center">干旱区</td><td align="left">&lt;200</td><td>降水量&lt;蒸发量</td><td>新疆、内蒙古高原西部、青藏高原西北部</td><td align="left">荒漠</td><td align="left">游牧业、绿洲灌溉农业</td></tr></tbody></table><p>（补《中国干湿地区》图）</p>]]></content>
+    
+    <summary type="html">
+    
+      我一直坚持地理学习应该更注重分析现象，但考题中确实还是有些不得不记的小常识，迫不得已，迫不得已。
+    
+    </summary>
+    
+    
+      <category term="学习笔记" scheme="http://sxdl.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="地理" scheme="http://sxdl.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%9C%B0%E7%90%86/"/>
+    
+    
+      <category term="笔记" scheme="http://sxdl.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="学习" scheme="http://sxdl.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="应试" scheme="http://sxdl.github.io/tags/%E5%BA%94%E8%AF%95/"/>
+    
+      <category term="记忆" scheme="http://sxdl.github.io/tags/%E8%AE%B0%E5%BF%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>对三价铁比二价铁更稳定的思考和延申</title>
+    <link href="http://sxdl.github.io/2020/09/07/%E5%AF%B9%E4%B8%89%E4%BB%B7%E9%93%81%E6%AF%94%E4%BA%8C%E4%BB%B7%E9%93%81%E6%9B%B4%E7%A8%B3%E5%AE%9A%E7%9A%84%E6%80%9D%E8%80%83%E5%92%8C%E5%BB%B6%E7%94%B3/"/>
+    <id>http://sxdl.github.io/2020/09/07/%E5%AF%B9%E4%B8%89%E4%BB%B7%E9%93%81%E6%AF%94%E4%BA%8C%E4%BB%B7%E9%93%81%E6%9B%B4%E7%A8%B3%E5%AE%9A%E7%9A%84%E6%80%9D%E8%80%83%E5%92%8C%E5%BB%B6%E7%94%B3/</id>
+    <published>2020-09-07T11:45:10.000Z</published>
+    <updated>2020-09-07T12:51:02.451Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>​    在学习铁元素的相关性质时，得知三价铁的化学性质比二价铁更加稳定。溶液中，二价铁离子很容易被氧化成三价铁离子。铁是26号元素，基态铁原子的电子排布式为</p><img src="https://latex.codecogs.com/svg.latex?1s^22s^22p^63s^23p^63d^64s^2" title="1s^22s^22p^63s^23p^63d^64s^2" loading="lazy"><p>根据能量最低原则，<code>4s</code>轨道能级低于<code>3d</code>轨道，因此电子会优先填充<code>4s</code>轨道。其价电子数为2。</p><h2 id="洪特规则（Hund）"><a href="#洪特规则（Hund）" class="headerlink" title="洪特规则（Hund）"></a>洪特规则（Hund）</h2><p>根据洪特规则特例，<strong>等价轨道全充满、半充满或全空的状态一般比较稳定</strong>。即具有下列电子层的原子是比较稳定的：</p><p>​    全充满<img src="https://latex.codecogs.com/svg.latex?p^6" title="p^6" loading="lazy">或<img src="https://latex.codecogs.com/svg.latex?d^{10}" title="d^{10}" loading="lazy">或<img src="https://latex.codecogs.com/svg.latex?f^{14}" title="f^{14}" loading="lazy"></p><p>​    半充满<img src="https://latex.codecogs.com/svg.latex?p^3" title="p^3" loading="lazy">或<img src="https://latex.codecogs.com/svg.latex?d^5" title="d^5" loading="lazy">或<img src="https://latex.codecogs.com/svg.latex?f^7" title="f^7" loading="lazy"></p><p>​    全空<img src="https://latex.codecogs.com/svg.latex?p^0" title="p^0" loading="lazy">或<img src="https://latex.codecogs.com/svg.latex?d^0" title="d^0" loading="lazy">或<img src="https://latex.codecogs.com/svg.latex?f^0" title="f^0" loading="lazy"></p><p>这样，我们就可以解释为什么三价铁比二价铁要稳定的原因了。三价铁离子的电子排布式为</p><img src="https://latex.codecogs.com/svg.latex?1s^22s^22p^63s^23p^63d^5" title="1s^22s^22p^63s^23p^63d^5" loading="lazy"><p>而二价铁离子的电子排布式为</p><img src="https://latex.codecogs.com/svg.latex?1s^22s^22p^63s^23p^63d^6" title="1s^22s^22p^63s^23p^63d^6" loading="lazy"><p>可以看到，三价铁离子的<code>3p</code>轨道处于半充满状态，因此比较稳定，而二价铁离子的<code>3p</code>轨道填充了6个电子，因此更容易失去1个电子而形成5电子较稳定的半充满状态。</p><h2 id="关于铜元素的常见价态"><a href="#关于铜元素的常见价态" class="headerlink" title="关于铜元素的常见价态"></a>关于铜元素的常见价态</h2><p>未完。。。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;​    在学习铁元素的相关性质时，得知三价铁的化学性质比二价铁更加稳定。溶液中，二价铁离子很容易被氧化成三价铁离子。铁是26号元素，基态铁
+      
+    
+    </summary>
+    
+    
+      <category term="学习笔记" scheme="http://sxdl.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="化学" scheme="http://sxdl.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8C%96%E5%AD%A6/"/>
+    
+    
+      <category term="笔记" scheme="http://sxdl.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="学习" scheme="http://sxdl.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="结构化学" scheme="http://sxdl.github.io/tags/%E7%BB%93%E6%9E%84%E5%8C%96%E5%AD%A6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>多平台搜取图片资源——booru云图库搭建</title>
+    <link href="http://sxdl.github.io/2020/08/16/200816/"/>
+    <id>http://sxdl.github.io/2020/08/16/200816/</id>
+    <published>2020-08-16T12:22:14.000Z</published>
+    <updated>2020-08-19T10:02:27.729Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p><code>Booru</code>是一个在线图床项目，衍生的<code>Booru</code>系图库有<code>Gelbooru</code>、<code>Moebooru</code>、<code>Danbooru</code>等。比较经典的网站就如<code>konachan</code>、<code>safebooru</code>等。</p><p><img src="https://cdn.jsdelivr.net/gh/sxdl/cdn/img/posts/200816-1.png" alt="konachan" loading="lazy"></p><p><img src="https://cdn.jsdelivr.net/gh/sxdl/cdn/img/posts/200816-2.png" alt="safebooru" loading="lazy"></p><hr><h2 id="创建Booru项目"><a href="#创建Booru项目" class="headerlink" title="创建Booru项目"></a>创建Booru项目</h2><p><code>booru</code>项目<a href="https://booru.org/" target="_blank" rel="noopener">官网</a>提供了自建<code>booru</code>的途径</p><p><img src="https://cdn.jsdelivr.net/gh/sxdl/cdn/img/posts/200816-3.png" alt="booru官网" loading="lazy"></p><p>点击<code>creat your booru</code>然后根据提示一路创建就好了，需要注意一下如果需要注册多个网址，用户名和对应的邮箱不能交叉重复，简单说，就是，用户名不能重复，邮箱也最好不要。</p><blockquote><p><em>PS: 在<code>Will your booru contain only safe images?</code>这一栏，如果你不打算发布和谐图的话，最好改成<code>yes</code>，这样广告会少很多XD</em></p></blockquote><p><img src="https://cdn.jsdelivr.net/gh/sxdl/cdn/img/posts/200816-4.png" alt="需要注意的一栏" loading="lazy"></p><p>登录你的<code>booru</code>账号，然后你可以给网站进行一些个性化配置（因为<code>Gelbooru</code>版本的问题，最好还是什么都别动）</p><p><img src="https://cdn.jsdelivr.net/gh/sxdl/cdn/img/posts/200816-6.png" alt="登录界面" loading="lazy"></p><p><img src="https://cdn.jsdelivr.net/gh/sxdl/cdn/img/posts/200816-5.png" alt="配置页面" loading="lazy"></p><hr><h2 id="上传图片"><a href="#上传图片" class="headerlink" title="上传图片"></a>上传图片</h2><p>在<code>post</code>页面最下方找到<code>add</code>，单机进入后就可以根据要求上传图片了</p><p><img src="https://cdn.jsdelivr.net/gh/sxdl/cdn/img/posts/200816-7.png" alt="add" loading="lazy"></p><p><img src="https://cdn.jsdelivr.net/gh/sxdl/cdn/img/posts/200816-8.png" alt="上传界面" loading="lazy"></p><p><strong>有些时候，受到图片大小的限制或一些其他原因，图片可能会上传失败，需要注意</strong></p><h2 id="批量上传"><a href="#批量上传" class="headerlink" title="批量上传"></a>批量上传</h2><p>官方给出的批量上传链接失效，如果有多张图片同时上传的需求，可以参考安装一些插件。</p><p><a href="https://github.com/Seedmanc/Booru-mass-uploader" target="_blank" rel="noopener">GitHub项目链接</a></p><p>如何给浏览器安装插件，这里就不赘述了，插件安装好后会在原先的网页上多出一个<code>mass upload</code>选项</p><p><img src="https://cdn.jsdelivr.net/gh/sxdl/cdn/img/posts/200816-9.png" alt="mass upload" loading="lazy"></p><p>页面加载的时候需要科学上网，因为有几个脚本文件的链接在国内无效，否则下面加载条就会一直转，加载好就可以把网络切回来了，上传的时候不需要梯子。</p><p>图片需要根据要求命名，有个问题就是文件名长度的限制，有些图片的标签太多了可能需要删除。</p><p>本人没搞懂<code>sidecar</code>文本文件上传方式，试过但是会被跳过，如果有解决的麻烦评论区救济一下。</p><blockquote><p>最后附上自己搭建的两个booru图库<a href="https://sxdl.github.io/sites/">https://sxdl.github.io/sites/</a></p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      以最快的速度搭建一个简单的booru图库
+    
+    </summary>
+    
+    
+      <category term="经验分享" scheme="http://sxdl.github.io/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/"/>
+    
+      <category term="booru" scheme="http://sxdl.github.io/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/booru/"/>
+    
+    
+      <category term="booru" scheme="http://sxdl.github.io/tags/booru/"/>
+    
+      <category term="图床" scheme="http://sxdl.github.io/tags/%E5%9B%BE%E5%BA%8A/"/>
+    
+      <category term="教程" scheme="http://sxdl.github.io/tags/%E6%95%99%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>无题</title>
+    <link href="http://sxdl.github.io/2020/07/31/200731/"/>
+    <id>http://sxdl.github.io/2020/07/31/200731/</id>
+    <published>2020-07-31T14:34:29.000Z</published>
+    <updated>2020-07-31T14:40:35.442Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>没有人会拿着自己的失败津津乐道，如果有，那他可能是太需要被安慰了吧。</strong></p>]]></content>
+    
+    <summary type="html">
+    
+      没有人会拿着自己的失败津津乐道，如果有，那他可能是太需要被安慰了吧
+    
+    </summary>
+    
+    
+      <category term="生活记录" scheme="http://sxdl.github.io/categories/%E7%94%9F%E6%B4%BB%E8%AE%B0%E5%BD%95/"/>
+    
+    
+      <category term="随笔" scheme="http://sxdl.github.io/tags/%E9%9A%8F%E7%AC%94/"/>
+    
+      <category term="短句" scheme="http://sxdl.github.io/tags/%E7%9F%AD%E5%8F%A5/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>C++获取文件夹下所有文件名</title>
+    <link href="http://sxdl.github.io/2020/07/29/200729/"/>
+    <id>http://sxdl.github.io/2020/07/29/200729/</id>
+    <published>2020-07-29T07:05:38.000Z</published>
+    <updated>2020-07-29T10:09:30.059Z</updated>
+    
+    <content type="html"><![CDATA[<p>因为我觉得相册发图片的方式太麻烦，准备自己加一个辅助程序，就用我比较熟悉的C++来实现，这个函数比较常用，记录以备忘。</p><h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;io.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">const</span> <span class="keyword">char</span> *to_search=<span class="string">"C:\\WINDOWS\\*.exe"</span>;    <span class="comment">//欲查找的文件，支持通配符</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">long</span> handle;                               <span class="comment">//用于查找的句柄</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> _<span class="title">finddata_t</span> <span class="title">fileinfo</span>;</span>               <span class="comment">//文件信息的结构体</span></span><br><span class="line">    handle=_findfirst(to_search,&amp;fileinfo);    <span class="comment">//第一次查找</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="number">-1</span>==handle)<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%s\n"</span>,fileinfo.name);              <span class="comment">//打印出找到的文件的文件名</span></span><br><span class="line">    <span class="keyword">while</span>(!_findnext(handle,&amp;fileinfo))        <span class="comment">//循环查找其他符合的文件，知道找不到其他的为止</span></span><br><span class="line">    &#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"%s\n"</span>,fileinfo.name);</span><br><span class="line">    &#125;</span><br><span class="line">    _findclose(handle);                        <span class="comment">//别忘了关闭句柄</span></span><br><span class="line">    system(<span class="string">"pause"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="函数包装"><a href="#函数包装" class="headerlink" title="函数包装"></a>函数包装</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getFileName</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *to_search, <span class="keyword">char</span> output[][<span class="number">1024</span>])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">long</span> handle;                                 <span class="comment">//用于查找的句柄</span></span><br><span class="line">    <span class="keyword">int</span> counter = <span class="number">1</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> _<span class="title">finddata_t</span> <span class="title">fileinfo</span>;</span>                 <span class="comment">//文件信息的结构体</span></span><br><span class="line">    handle=_findfirst(to_search,&amp;fileinfo);      <span class="comment">//第一次查找</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="number">-1</span>==handle) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    <span class="comment">//printf("%s\n",fileinfo.name);              //打印出找到的文件的文件名</span></span><br><span class="line">    <span class="built_in">sprintf</span>(output[<span class="number">0</span>], <span class="string">"%s"</span>, fileinfo.name);     <span class="comment">//保存找到的文件的文件名</span></span><br><span class="line"><span class="keyword">while</span>(!_findnext(handle,&amp;fileinfo))          <span class="comment">//循环查找其他符合的文件，知道找不到其他的为止</span></span><br><span class="line">    &#123;</span><br><span class="line"><span class="comment">//printf("%s\n",fileinfo.name);</span></span><br><span class="line"><span class="built_in">sprintf</span>(output[counter], <span class="string">"%s"</span>, fileinfo.name);</span><br><span class="line">counter++;</span><br><span class="line">    &#125;</span><br><span class="line">    _findclose(handle);                          <span class="comment">//别忘了关闭句柄</span></span><br><span class="line">    <span class="keyword">return</span> counter;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><blockquote><p>参考：<a href="https://www.cnblogs.com/fnlingnzb-learner/p/6424563.html" target="_blank" rel="noopener">https://www.cnblogs.com/fnlingnzb-learner/p/6424563.html</a></p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;因为我觉得相册发图片的方式太麻烦，准备自己加一个辅助程序，就用我比较熟悉的C++来实现，这个函数比较常用，记录以备忘。&lt;/p&gt;
+&lt;h2 id=&quot;代码实现&quot;&gt;&lt;a href=&quot;#代码实现&quot; class=&quot;headerlink&quot; title=&quot;代码实现&quot;&gt;&lt;/a&gt;代码实现&lt;/h
+      
+    
+    </summary>
+    
+    
+      <category term="经验分享" scheme="http://sxdl.github.io/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/"/>
+    
+    
+      <category term="C++" scheme="http://sxdl.github.io/tags/C/"/>
+    
+      <category term="笔记" scheme="http://sxdl.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>相册外链图片无法正常加载的解决方案</title>
+    <link href="http://sxdl.github.io/2020/07/28/%E7%9B%B8%E5%86%8C%E5%A4%96%E9%93%BE%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%AD%A3%E5%B8%B8%E5%8A%A0%E8%BD%BD%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
+    <id>http://sxdl.github.io/2020/07/28/%E7%9B%B8%E5%86%8C%E5%A4%96%E9%93%BE%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%AD%A3%E5%B8%B8%E5%8A%A0%E8%BD%BD%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</id>
+    <published>2020-07-28T04:48:16.000Z</published>
+    <updated>2020-07-28T05:54:29.862Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>在使用<code>yun</code>主题中的相册功能，会发现相册图片外链链接无法加载的问题，<code>url</code>正确，链接有效。</p><p><img src="/2020/07/28/%E7%9B%B8%E5%86%8C%E5%A4%96%E9%93%BE%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%AD%A3%E5%B8%B8%E5%8A%A0%E8%BD%BD%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/1.png" alt="类似如下情况" loading="lazy"></p><h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>在<code>&lt;head&gt;</code>中加入<code>&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;/&gt;</code>标签，重新加载图片成功。</p><p><code>yun</code>主题在<code>layout.pug</code>中对应位置加入<code>meta</code>标签即可</p><blockquote><p>参考：<a href="https://www.cnblogs.com/guozhaoxin/p/11934483.html" target="_blank" rel="noopener">https://www.cnblogs.com/guozhaoxin/p/11934483.html</a></p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      使用yun主题相册功能无法正常加载图片
+    
+    </summary>
+    
+    
+      <category term="经验分享" scheme="http://sxdl.github.io/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/"/>
+    
+    
+      <category term="调试" scheme="http://sxdl.github.io/tags/%E8%B0%83%E8%AF%95/"/>
+    
+      <category term="hexo" scheme="http://sxdl.github.io/tags/hexo/"/>
+    
+      <category term="相册" scheme="http://sxdl.github.io/tags/%E7%9B%B8%E5%86%8C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>python爬虫——konachan壁纸</title>
+    <link href="http://sxdl.github.io/2020/07/27/python%E7%88%AC%E8%99%ABkonachan%E5%A3%81%E7%BA%B8/"/>
+    <id>http://sxdl.github.io/2020/07/27/python%E7%88%AC%E8%99%ABkonachan%E5%A3%81%E7%BA%B8/</id>
+    <published>2020-07-27T15:50:02.000Z</published>
+    <updated>2020-07-27T16:29:55.347Z</updated>
+    
+    <content type="html"><![CDATA[<p>前面主要都是在讲白话，大佬们请自行跳到最后的代码部分</p><h2 id="关于konachan"><a href="#关于konachan" class="headerlink" title="关于konachan"></a>关于konachan</h2><ul><li><p>这是一个动漫壁纸资源网站，你可以通过指定标签来检索你想要的图片</p></li><li><p>绅士必备知识：<code>konachan</code>的所有图片有三个<code>rating</code>：<code>save</code>,<code>questionable</code>,<code>explicit</code>,<code>save</code>是正常的图片，另外两个就是和谐图啦。K站到目前为止，总共收录将近30万张图片，但是如果通过某度的链接进入K站，只能看到<code>save</code>图，却看不到和谐图。实际上，<code>Konachan</code> 有两个网址，一个网址会屏蔽掉一些图片而另一个则是全的。应该登哪个，就不用我多说了吧[滑稽]。</p></li></ul><p><img src="/2020/07/27/python%E7%88%AC%E8%99%ABkonachan%E5%A3%81%E7%BA%B8/1.png" alt="konachan主页" loading="lazy"></p><blockquote><p><a href="https://konachan.net" target="_blank" rel="noopener">https://konachan.net</a></p><p><a href="https://konachan.com" target="_blank" rel="noopener">https://konachan.com</a></p></blockquote><ul><li>看到那个白色的输入框了吗？想搜什么直接搜就可以了。当然，<code>konachan</code>不支持中文，你得先转成罗马音或英文。</li><li>一些特殊的检索方式。如<code>id``rating:``order:</code>等，详见<a href="https://konachan.net/help/cheatsheet" target="_blank" rel="noopener">官方教程</a></li></ul><h2 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h2><p><code>konachan</code>已经了解了之后，那么我们这个爬虫将要实现什么高级的功能呢？</p><p><img src="/2020/07/27/python%E7%88%AC%E8%99%ABkonachan%E5%A3%81%E7%BA%B8/2.png" alt="目前konachan最新的save图数据" loading="lazy"></p><p>这是我现在能看到<code>konachan</code>最新的图片的数据，<code>id</code>是<code>311769</code>，发布时间在四个小时以前。emmm其实最新的图发在三个小时前，只因为它是<code>questionable</code>没有考虑进去//////</p><p>你现在一定很想看到它的内容，现在我们手上只有一个<code>id</code>，但是足够了，只要知道图片的<code>id</code>，我们就能访问它的<code>URL</code>（统一资源定位器）来找到它。只要按照下面格式输入，就能找到任意<code>id</code>对应的图片。</p><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">https:&#x2F;&#x2F;konachan.com&#x2F;post&#x2F;show&#x2F;id</span><br></pre></td></tr></table></figure><p>其中<code>id</code>就是需要查找的图片<code>id</code></p><p>比如我们这个<code>id``311769</code>，它的位置就是</p><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">https:&#x2F;&#x2F;konachan.com&#x2F;post&#x2F;show&#x2F;311769</span><br></pre></td></tr></table></figure><p>输入网址就可以找到它啦。</p><p>别急着右键下载，因为这并不是最清晰的，我们可以在左侧下方看到有<code>PNG</code>格式的下载地址。</p><p><img src="/2020/07/27/python%E7%88%AC%E8%99%ABkonachan%E5%A3%81%E7%BA%B8/3.png" alt loading="lazy"></p><p>如果你点进去了，你会发现它的<code>URL</code>地址是这丫子的：</p><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">https:&#x2F;&#x2F;konachan.net&#x2F;image&#x2F;767d463dbb05de49ae4c06c9f0bfa9a5&#x2F;Konachan.com%20-%20311769%20eho_%28icbm%29%20remilia_scarlet%20touhou.png</span><br></pre></td></tr></table></figure><p>???????????</p><p>这张高清图片的地址包含了它的标签，也就是说，我们没法直接通过<code>id</code>访问它。</p><p>就这？</p><p>也许如果自己动手，会丰衣足食，但是，要获取一张高清壁纸，需要三步，你得先进入图片展示页面，点击下载链接，等待页面跳转后，才能下载。emmm感觉还好，也许你输网址加上等待的时间大概有六七秒的样子，如果用爬虫的话，只要不到一秒的时间。我硬盘里现在大约有3万张壁纸，节省下来的时间就可以用来折腾网站了）））</p><p>那么我们现在需要一个程序来帮助我们完成刚刚的操作，我们只需要输入<code>id</code>然后一张高清壁纸就在文件夹下躺着啦。</p><h2 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h2><p>我们来理理思路，因为高清图片的地址通过简单的算法来生成直接访问，我们需要一个跳板，就是展示页面，然后在这个页面找到带有高清图片的地址，就能下载图片了。图我就不画了，应该听清楚的。</p><h3 id="连接网络"><a href="#连接网络" class="headerlink" title="连接网络"></a>连接网络</h3><p>emmm不是那个意思啦，但还是要连接的，我指的是，要让你的程序能访问网络。这就需要调用python的外部库了。网络上有很多种途径，这里我用的两个库是<code>request</code>和<code>lxml</code></p><p>先来简单的访问一下网站</p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">headers = &#123;</span><br><span class="line"><span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36'</span></span><br><span class="line">&#125;  <span class="comment"># 此处修改为你个人浏览器的User-Agent</span></span><br><span class="line"></span><br><span class="line">urls = [<span class="string">'https://konachan.com/post/show/311769/'</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> url <span class="keyword">in</span> urls:</span><br><span class="line">res = requests.get(url=url, headers=headers)</span><br><span class="line"></span><br><span class="line">print(res)</span><br></pre></td></tr></table></figure><p><code>res</code>打印出来应该是这样的：</p><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;Response [200]&gt;</span><br></pre></td></tr></table></figure><p>说明已经成功连接上了。</p><p>现在我们还看不出什么端倪，我们稍微修改一下程序，把</p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">res = requests.get(url=url, headers=headers)</span><br></pre></td></tr></table></figure><p>改成</p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">res = requests.get(url=url, headers=headers),text</span><br></pre></td></tr></table></figure><p>再运行一次。。。。。。。。。emmm输出比较长，但是，它成功的输出了<code>html</code>格式。你可以手动访问这个地址然后F12，不出意外应该是和网页源代码一致。</p><h3 id="定位网址"><a href="#定位网址" class="headerlink" title="定位网址"></a>定位网址</h3><p>我们现在需要在网页中精准定位图片的链接，在包含链接的文字上右键，检查，就可以定位到指定位置了</p><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"original-file-unchanged"</span> <span class="attr">href</span>=<span class="string">"https://konachan.com/image/767d463dbb05de49ae4c06c9f0bfa9a5/Konachan.com%20-%20311769%20eho_%28icbm%29%20remilia_scarlet%20touhou.png"</span> <span class="attr">id</span>=<span class="string">"png"</span>&gt;</span>Download PNG (1.49 MB)<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure><p>元素<code>a</code>对应的<code>href</code>里就有我们想找的地址。</p><p>现在我们要用程序来找到它。这里就需要用到之前提到的<code>lxml</code>库了，它可以轻松找到对应的路径，然后提取我们需要的数据。</p><p>看到后面的<code>id=&quot;png&quot;</code>了吗？非常巧的是，如果你在源代码里搜索一下，发现只有这个元素包含它。那么我们就可以轻松找到它了。</p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">headers = &#123;</span><br><span class="line"><span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36'</span></span><br><span class="line">&#125;  <span class="comment"># 此处修改为你个人浏览器的User-Agent</span></span><br><span class="line"></span><br><span class="line">urls = [<span class="string">'https://konachan.com/post/show/311769/'</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> url <span class="keyword">in</span> urls:</span><br><span class="line">res = requests.get(url=url, headers=headers).text</span><br><span class="line">tree = etree.HTML(res)  <span class="comment"># 最好加上</span></span><br><span class="line">second_url = tree.xpath(<span class="string">'//*[@id="png"]'</span>)  <span class="comment"># 从所有节点中匹配id为"png"的xpath</span></span><br><span class="line">print(second_url)</span><br></pre></td></tr></table></figure><p>输出：</p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">[&lt;Element a at <span class="number">0x3db0ac8</span>&gt;]</span><br></pre></td></tr></table></figure><p>这是一个<code>xpath</code>路径，看不懂没关系，但是程序的确是找到了。现在<code>second_url</code>存储的是前面我们找到的代码块，我们需要的路径在<code>href</code>下面，再从中提取就行了。</p><blockquote><p>更多关于<code>xpath</code>语法<a href="https://www.runoob.com/xpath/xpath-syntax.html" target="_blank" rel="noopener">https://www.runoob.com/xpath/xpath-syntax.html</a></p></blockquote><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">new_url = second_url.xpath(<span class="string">'./@href'</span>)[<span class="number">0</span>]  <span class="comment"># 将当前节点的 第一个 href的内容赋给new_url</span></span><br></pre></td></tr></table></figure><p>你可以把它打印出来验证一下。这样我们就得到了最终想要的路径了，只要再向网址发送一次请求就可以得到图片的二进制数据了。</p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">headers = &#123;</span><br><span class="line"><span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36'</span></span><br><span class="line">&#125;  <span class="comment"># 此处修改为你个人浏览器的User-Agent</span></span><br><span class="line"></span><br><span class="line">urls = [<span class="string">'https://konachan.com/post/show/311769/'</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> url <span class="keyword">in</span> urls:</span><br><span class="line">res = requests.get(url=url, headers=headers).text</span><br><span class="line">tree = etree.HTML(res)  <span class="comment"># 最好加上</span></span><br><span class="line">second_url = tree.xpath(<span class="string">'//*[@id="png"]'</span>)[<span class="number">0</span>]  <span class="comment"># 从所有节点中匹配id为"png"的xpath</span></span><br><span class="line">new_url = second_url.xpath(<span class="string">'./@href'</span>)[<span class="number">0</span>]</span><br><span class="line">data = requests.get(new_url, headers=headers)</span><br><span class="line">print(data.content)</span><br></pre></td></tr></table></figure><p>输出：</p><p>。。。自己看到控制台看吧，太长。。。</p><blockquote><p>不过貌似是十六进制表示的emmm</p></blockquote><h3 id="输出图片"><a href="#输出图片" class="headerlink" title="输出图片"></a>输出图片</h3><p>总之，你现在已经获得了一张高清壁纸的所有数据了，现在看不见是因为格式不对，我们把它输出为png格式的图片</p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">headers = &#123;</span><br><span class="line"><span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36'</span></span><br><span class="line">&#125;  <span class="comment"># 此处修改为你个人浏览器的User-Agent</span></span><br><span class="line"></span><br><span class="line">urls = [<span class="string">'https://konachan.com/post/show/311769/'</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> url <span class="keyword">in</span> urls:</span><br><span class="line">res = requests.get(url=url, headers=headers).text</span><br><span class="line">tree = etree.HTML(res)  <span class="comment"># 最好加上</span></span><br><span class="line">second_url = tree.xpath(<span class="string">'//*[@id="png"]'</span>)[<span class="number">0</span>]  <span class="comment"># 从所有节点中匹配id为"png"的xpath</span></span><br><span class="line">new_url = second_url.xpath(<span class="string">'./@href'</span>)[<span class="number">0</span>]</span><br><span class="line">data = requests.get(new_url, headers=headers)</span><br><span class="line"><span class="keyword">with</span> open(<span class="string">'./311769'</span> + <span class="string">'.png'</span>, <span class="string">'wb'</span>) <span class="keyword">as</span> f:</span><br><span class="line">f.write(data.content)</span><br><span class="line">print(<span class="string">'311769'</span>, <span class="string">'下载成功'</span>)</span><br></pre></td></tr></table></figure><p>你现在可以在项目的文件夹下，找到你已经下好的图片了。</p><p>如果你想要更换<code>id</code>，那么稍微修改下程序，最后是这样子的，如果你想一次提取多个，加入循环就可以了</p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">Kid = <span class="number">311769</span>  <span class="comment"># 在此处修改你的图片id</span></span><br><span class="line"></span><br><span class="line">headers = &#123;</span><br><span class="line"><span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36'</span></span><br><span class="line">&#125;  <span class="comment"># 此处修改为你个人浏览器的User-Agent</span></span><br><span class="line"></span><br><span class="line">urls = [<span class="string">'https://konachan.com/post/show/&#123;&#125;'</span>.format(Kid)]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> url <span class="keyword">in</span> urls:</span><br><span class="line">res = requests.get(url=url, headers=headers).text</span><br><span class="line">tree = etree.HTML(res)  <span class="comment"># 最好加上</span></span><br><span class="line">second_url = tree.xpath(<span class="string">'//*[@id="png"]'</span>)[<span class="number">0</span>]  <span class="comment"># 从所有节点中匹配id为"png"的xpath</span></span><br><span class="line">new_url = second_url.xpath(<span class="string">'./@href'</span>)[<span class="number">0</span>]</span><br><span class="line">data = requests.get(new_url, headers=headers)</span><br><span class="line"><span class="keyword">with</span> open(<span class="string">'./&#123;&#125;'</span>.format(Kid) + <span class="string">'.png'</span>, <span class="string">'wb'</span>) <span class="keyword">as</span> f:</span><br><span class="line">f.write(data.content)</span><br><span class="line">print(Kid, <span class="string">'下载成功'</span>)</span><br></pre></td></tr></table></figure><h2 id="一定会遇到的问题"><a href="#一定会遇到的问题" class="headerlink" title="一定会遇到的问题"></a>一定会遇到的问题</h2><p>结束了吗？还早得很呢。你可以试试<code>300108</code>这个<code>id</code>huo或者<code>300397</code>,这样的<code>id</code>有很多，你会发现，当输入这些<code>id</code>时，程序会报错。这是为什么呢？我们可以打开一个看看，拿<code>300397</code>为例，你会发现，它只有<code>jpg</code>格式的大图，没有<code>png</code>格式。所以我们的程序并不能找到<code>id=&quot;png&quot;</code>这个匹配项。</p><p><img src="/2020/07/27/python%E7%88%AC%E8%99%ABkonachan%E5%A3%81%E7%BA%B8/4.png" alt="300397的左边栏" loading="lazy"></p><p>emmm，是不是有点头大了？</p><p>解决方法嘛。。。如果你查看过网页源代码，就可以发现链接部分的<code>id=&quot;highres&quot;</code>，大可放心，只有这一个匹配项，这样的话，加一个<code>if</code>分支就行了。</p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">Kid = <span class="number">300108</span></span><br><span class="line"></span><br><span class="line">headers = &#123;</span><br><span class="line"><span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36'</span></span><br><span class="line">&#125;  <span class="comment"># 此处修改为你个人浏览器的User-Agent</span></span><br><span class="line"></span><br><span class="line">urls = [<span class="string">'https://konachan.com/post/show/&#123;&#125;'</span>.format(Kid)]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> url <span class="keyword">in</span> urls:</span><br><span class="line">res = requests.get(url=url, headers=headers).text</span><br><span class="line">tree = etree.HTML(res)  <span class="comment"># 最好加上</span></span><br><span class="line">second_url = tree.xpath(<span class="string">'//*[@id="png"]'</span>)</span><br><span class="line"><span class="keyword">if</span> len(second_url) == <span class="number">0</span>:</span><br><span class="line">second_url = tree.xpath(<span class="string">'//*[@id="highres"]'</span>)</span><br><span class="line"><span class="keyword">if</span> len(second_url) == <span class="number">0</span>:</span><br><span class="line">print(Kid, <span class="string">'页面不存在'</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">second_url = tree.xpath(<span class="string">'//*[@id="highres"]'</span>)[<span class="number">0</span>]</span><br><span class="line">new_url = second_url.xpath(<span class="string">'./@href'</span>)[<span class="number">0</span>]</span><br><span class="line">data = requests.get(new_url, headers=headers)</span><br><span class="line"><span class="keyword">with</span> open(<span class="string">'./&#123;&#125;'</span>.format(Kid) + <span class="string">'.jpg'</span>, <span class="string">'wb'</span>) <span class="keyword">as</span> f:</span><br><span class="line">f.write(data.content)</span><br><span class="line">print(Kid, <span class="string">'下载成功'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">second_url = tree.xpath(<span class="string">'//*[@id="png"]'</span>)[<span class="number">0</span>]</span><br><span class="line">new_url = second_url.xpath(<span class="string">'./@href'</span>)[<span class="number">0</span>]</span><br><span class="line">data = requests.get(new_url, headers=headers)</span><br><span class="line"><span class="keyword">with</span> open(<span class="string">'./&#123;&#125;'</span>.format(Kid) + <span class="string">'.png'</span>, <span class="string">'wb'</span>) <span class="keyword">as</span> f:</span><br><span class="line">f.write(data.content)</span><br><span class="line">print(Kid, <span class="string">'下载成功'</span>)</span><br></pre></td></tr></table></figure><p>这段代码顺便解决了另外一个问题，那就是有些<code>id</code>是不存在的，就是图片被删除或者更新了。单个<code>id</code>也许没什么影响，但如果你开始向我一样准备爬取<code>konachan</code>大量的图的话，这就很必要了。如果你想一次爬完全部三十万张图，也没问题，因为<code>konachan</code>没有反爬机制，但是大量的访问会让服务器吃不消，<del>所以暴力下载的代码我就不贴出来啦</del></p><h2 id="延申与改进"><a href="#延申与改进" class="headerlink" title="延申与改进"></a>延申与改进</h2><p>因为<code>konachan</code>优秀的检索机制，你可以为所欲为地爬取任何你想要的图片，你可以按人物检索，按评分检索，按日期检索，再搭配上一些奇奇怪怪的脑洞，会有更多的发现。</p>]]></content>
+    
+    <summary type="html">
+    
+      通过python爬虫实现按照id下载图片
+    
+    </summary>
+    
+    
+      <category term="经验分享" scheme="http://sxdl.github.io/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/"/>
+    
+    
+      <category term="python" scheme="http://sxdl.github.io/tags/python/"/>
+    
+      <category term="爬虫" scheme="http://sxdl.github.io/tags/%E7%88%AC%E8%99%AB/"/>
+    
+      <category term="K站" scheme="http://sxdl.github.io/tags/K%E7%AB%99/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>World!</title>
+    <link href="http://sxdl.github.io/2020/07/26/World/"/>
+    <id>http://sxdl.github.io/2020/07/26/World/</id>
+    <published>2020-07-26T14:09:17.000Z</published>
+    <updated>2020-07-27T05:31:22.180Z</updated>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
+    
+    <summary type="html">
+    
+      lalala
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>博客调教日记(一)</title>
+    <link href="http://sxdl.github.io/2020/07/25/%E5%8D%9A%E5%AE%A2%E8%B0%83%E6%95%99%E6%97%A5%E8%AE%B0(%E4%B8%80)/"/>
+    <id>http://sxdl.github.io/2020/07/25/%E5%8D%9A%E5%AE%A2%E8%B0%83%E6%95%99%E6%97%A5%E8%AE%B0(%E4%B8%80)/</id>
+    <published>2020-07-25T13:29:36.000Z</published>
+    <updated>2020-07-27T07:14:46.738Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>花了两天时间用hexo简单做了一个网站，刚刚修改好主题。试着发几篇博客测试一下。</strong></p><p><strong>这一篇主要研究下文章的一些格式和配置。</strong></p><a id="more"></a><h1 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a><strong>快速开始</strong></h1><p>​    首先必须要搭建好你的博客，我用的是<code>hexo</code>。这是一个基于<code>nodejs</code> 的静态博客网站生成器。详细的操作<a href="https://blog.csdn.net/sinat_37781304/article/details/82729029" target="_blank" rel="noopener">在这里</a>。在完成网页基础配置之后，就摩拳擦掌准备写博客了。不管其他什么高级的问题，让我们先发一篇博客试一下。</p><h2 id="新建一个post"><a href="#新建一个post" class="headerlink" title="新建一个post"></a><strong>新建一个post</strong></h2><p>在存放你所有博客相关的文件夹下打开<code>Git Bash</code>，然后输入</p><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo new &quot;My New Post&quot;</span><br></pre></td></tr></table></figure><p>这里默认是<code>post</code>,然后你就可以在<code>\source\_posts\</code>文件夹下找到文件格式为<code>My New Post.md</code>的新建博客啦。</p><ul><li>更多参考<code>hexo</code>官网：<a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></li></ul><h2 id="启动服务器"><a href="#启动服务器" class="headerlink" title="启动服务器"></a><strong>启动服务器</strong></h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>你可以在浏览器中输入<code>http://localhost:4000/</code>来预览你的网站</p><ul><li>更多参考<code>hexo</code>官网：<a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></li></ul><p>当我们打开网站预览后，如果没有发生意外，你的第一篇博客就诞生啦！</p><p>接下来让我们把它们部署到你的网站上。</p><h2 id="生成静态文件"><a href="#生成静态文件" class="headerlink" title="生成静态文件"></a><strong>生成静态文件</strong></h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><ul><li>更多参考<code>hexo</code>官网：<a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></li></ul><h2 id="部署到你的网站上"><a href="#部署到你的网站上" class="headerlink" title="部署到你的网站上"></a><strong>部署到你的网站上</strong></h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><ul><li>更多参考<code>hexo</code>官网：<a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></li></ul><p>到目前为止，你已经成功将一篇没有内容只有标题的空文章发布到你的网站上了。接下来我们要给文章添加内容。</p><hr><h1 id="添加内容"><a href="#添加内容" class="headerlink" title="添加内容"></a><strong>添加内容</strong></h1><p>找到你新添加的<code>My New Post.md</code>空文章，然后用<del>各种方式</del>打开它，最好不要用自带的文本编辑器打开，当然如果你硬要这样也没什么关系。我用的是<code>VS code</code>,微软的代码编辑器，因为它可以安装各种非人类的插件，这里就不多讲了XD。总之我们打开文件以后，你应该会看到用<code>---</code>标在中间的代码</p><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: My New Post</span><br><span class="line">date: 2020-07-24 19:32:02</span><br><span class="line">tags:</span><br><span class="line">---</span><br></pre></td></tr></table></figure><p><code>title</code>是我们文章的标题，<code>date</code>是创建时间。<del>（好吧，应该不用讲也能看得懂）</del></p><p>我们先不要管这些，直接换行，在下面输入一行你喜欢的话</p><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: My New Post</span><br><span class="line">date: 2020-07-24 19:32:02</span><br><span class="line">tags:</span><br><span class="line">---</span><br><span class="line">云外有天，年月有歌。</span><br></pre></td></tr></table></figure><p>我写的比较文艺，如果你喜欢经典的<code>Hello World！</code>那也没问题。</p><p>保存之后关闭文件，同样在<code>Git Bash</code>中输入<code>$ hexo clean</code>和<code>$ hexo server</code>等待个几秒，然后就可以在你的网站预览中发现一些变化了。</p><hr><h2 id="格式化输入"><a href="#格式化输入" class="headerlink" title="格式化输入"></a><strong>格式化输入</strong></h2><p>上面的示例中，我们只是在文章中简单加了一段文字。如何格式化输入呢？先上示例：</p><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">无字天书</span><br></pre></td></tr></table></figure><p>你可以把这段复制到你的文章代码中去，然后就可以看到预览的效果了。在对照一下示例代码，相信聪明的你就已经明白怎么写了。反正我是不会写的，但是，</p><p>我有<code>Typora</code>,这是专门为<del>懒惰的</del>小伙伴定制的辅助软件，你可以自由舒畅地码字而不用纠结与代码的缩进，反正用它就对了。贴心的我把链接也贴出来了-&gt; <a href="https://www.typora.io/" target="_blank" rel="noopener">点我</a></p><p>至于怎么用，快捷键什么的，下好之后拉一下菜单就都有了。</p><hr><h1 id="分类和标签"><a href="#分类和标签" class="headerlink" title="分类和标签"></a>分类和标签</h1><p>当学会了如何写内容之后，你一定会跃跃欲试准备一口气写几百篇博客一夜登顶（bushi），实际上，当文章数量多起来的时候，如果没有好的分类，那么找起文章来一定是十分痛苦的。这时候，我们就需要给文章一定的分类规则了。</p><p><code>hexo</code>自带有两种分类规则，一个是<code>分类（categories）</code>，另一个是<code>标签（tags）</code>。需要注意的是，一篇文章只能属于一种<code>分类</code>，却可以添加多个<code>标签</code>。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;strong&gt;花了两天时间用hexo简单做了一个网站，刚刚修改好主题。试着发几篇博客测试一下。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;这一篇主要研究下文章的一些格式和配置。&lt;/strong&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="经验分享" scheme="http://sxdl.github.io/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/"/>
+    
+    
+      <category term="调试" scheme="http://sxdl.github.io/tags/%E8%B0%83%E8%AF%95/"/>
+    
+      <category term="web前端" scheme="http://sxdl.github.io/tags/web%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="博客" scheme="http://sxdl.github.io/tags/%E5%8D%9A%E5%AE%A2/"/>
+    
+      <category term="hexo" scheme="http://sxdl.github.io/tags/hexo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>My New Post</title>
+    <link href="http://sxdl.github.io/2020/07/24/My-New-Post/"/>
+    <id>http://sxdl.github.io/2020/07/24/My-New-Post/</id>
+    <published>2020-07-24T11:32:02.000Z</published>
+    <updated>2020-07-27T07:19:03.146Z</updated>
+    
+    <content type="html"><![CDATA[<p>云外有天，年月有歌。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;云外有天，年月有歌。&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://sxdl.github.io/2020/07/24/hello-world/"/>
+    <id>http://sxdl.github.io/2020/07/24/hello-world/</id>
+    <published>2020-07-24T08:25:27.141Z</published>
+    <updated>2020-07-27T07:15:37.236Z</updated>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+</feed>
