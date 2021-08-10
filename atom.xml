@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://sxdl.github.io/"/>
-  <updated>2021-06-24T16:57:27.257Z</updated>
+  <updated>2021-08-10T15:19:09.254Z</updated>
   <id>http://sxdl.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>有趣的项目</title>
+    <link href="http://sxdl.github.io/2021/08/10/2226/"/>
+    <id>http://sxdl.github.io/2021/08/10/2226/</id>
+    <published>2021-08-10T14:26:08.000Z</published>
+    <updated>2021-08-10T15:19:09.254Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><h1 id="Easy-Bug-Manager"><a href="#Easy-Bug-Manager" class="headerlink" title="Easy Bug Manager"></a><a href="https://github.com/xujiangjiang/Easy-Bug-Manager" target="_blank" rel="noopener">Easy Bug Manager</a></h1></blockquote><ul><li>一个非常可爱的bug管理器，也可以当做一个简单的Todo软件来使用。它可以帮助你记录和管理要做的事情。</li><li>内置1只🦝，和你对话，陪你调试Bug（大白熊调试法）</li></ul><p><img src="/2021/08/10/2226/01.webp" alt loading="lazy"></p><p><img src="/2021/08/10/2226/02.webp" alt loading="lazy"></p><hr><blockquote><h1 id="Easy-Cat-Timer"><a href="#Easy-Cat-Timer" class="headerlink" title="Easy Cat Timer"></a><a href="https://cn.easycattimer.com/" target="_blank" rel="noopener">Easy Cat Timer</a></h1></blockquote><ul><li>一个非常可爱的倒计时器，美中不足的是只能倒计时。</li><li>支持客户端和网页版。</li><li>非常可爱！💖</li><li>非常可爱！💖</li><li>非常可爱！💖</li></ul><p><img src="/2021/08/10/2226/03.png" alt loading="lazy"></p><hr>]]></content>
+    
+    <summary type="html">
+    
+      在Github上逛到的有趣的项目
+    
+    </summary>
+    
+    
+      <category term="经验分享" scheme="http://sxdl.github.io/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/"/>
+    
+    
+      <category term="Github" scheme="http://sxdl.github.io/tags/Github/"/>
+    
+      <category term="记录" scheme="http://sxdl.github.io/tags/%E8%AE%B0%E5%BD%95/"/>
+    
+      <category term="项目" scheme="http://sxdl.github.io/tags/%E9%A1%B9%E7%9B%AE/"/>
+    
+  </entry>
   
   <entry>
     <title>应用化学与技能竞赛知识点</title>
