@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://sxdl.github.io/"/>
-  <updated>2022-03-15T09:11:41.676Z</updated>
+  <updated>2023-08-02T09:14:08.132Z</updated>
   <id>http://sxdl.github.io/</id>
   
   <author>
@@ -17,11 +17,263 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>校园一卡通余额自动查询提醒脚本</title>
+    <link href="http://sxdl.github.io/2023/08/02/202308021407/"/>
+    <id>http://sxdl.github.io/2023/08/02/202308021407/</id>
+    <published>2023-08-02T06:07:00.000Z</published>
+    <updated>2023-08-02T09:14:08.132Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="校园一卡通余额自动查询提醒脚本"><a href="#校园一卡通余额自动查询提醒脚本" class="headerlink" title="校园一卡通余额自动查询提醒脚本"></a>校园一卡通余额自动查询提醒脚本</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>宿舍的水电费在晚上23:30到3:30这一时间段内是无法充值的，这就导致了经常半夜欠费停电停空调还无法充值的问题。学校提供的水电余额查询的唯一途径是企业微信的应用，且没有自动提醒的功能，因此自己开发一个程序用来定时自动查询余额然后发送微信提醒。</p><p>由于查询的 api 并不清楚，而且企业微信中的应用都需要身份验证，实在太麻烦。想着先尽快把功能实现，之后再考虑稳定性和扩展性，采用脚本的方式实现。</p><h2 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h2><h3 id="设备选择"><a href="#设备选择" class="headerlink" title="设备选择"></a>设备选择</h3><p>水电费查询的入口都在企业微信中，而企业微信只有Windows和移动客户端，没有Linux客户端。如果要放在服务器上跑的话环境配置十分麻烦，因此考虑将脚本放在本地设备上跑。本地设备需要确保在指定的时间段内保持开机并不被使用，因为脚本运行的时候不能对设备页面进行操作（脚本是按照步骤顺序运行的，外界操作会干扰脚本运行）。手头目前的设备有：两台笔记本，一台Windows，一台Ubuntu，一个华为平板，一个华为手机。其中Windows笔记本日常经常使用，另一台用作学习折腾和本地Linux环境，不方便重新刷系统，手机日常一直在用。平板倒是合适，一般从来不关机，平常只是用来记笔记用。最后就决定使用平板，在平板上跑脚本。</p><h3 id="脚本工具"><a href="#脚本工具" class="headerlink" title="脚本工具"></a>脚本工具</h3><p>安卓平台上有个很不错的脚本工具，<code>Auto.js</code>，现在似乎已经停止维护了，还能用的有 <a href="http://doc.autoxjs.com/#/" target="_blank" rel="noopener">AutoX.js</a> 和 <a href="https://openautojs.github.io/#/" target="_blank" rel="noopener">OpenAuto.js</a>. 本着对开源项目的偏好，我这里使用了 <code>OpenAuto.js</code>。</p><h3 id="运行流程"><a href="#运行流程" class="headerlink" title="运行流程"></a>运行流程</h3><p>预先登录企业微信和微信（用于消息提醒，可换用公众号或其他），脚本首先打开企业微信，找到查询的服务，查询到余额后将余额通过微信发送到指定聊天对话中（个人或群聊）。</p><h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><ul><li>华为平板（HarmonyOS 3.0）</li><li>OpenAuto.js</li><li>企业微信</li><li>微信</li><li>一键锁屏（OpenAutojs没有提供锁屏的功能， 一键锁屏通过应用市场安装）</li></ul><h2 id="编写脚本"><a href="#编写脚本" class="headerlink" title="编写脚本"></a>编写脚本</h2><p>由于不同的环境脚本会有差异，不放详细代码了，只写关键的几个命令。详细说明查看<a href="https://openautojs.github.io/#/" target="_blank" rel="noopener">OpenAuto.js文档</a></p><h3 id="自动唤醒"><a href="#自动唤醒" class="headerlink" title="自动唤醒"></a>自动唤醒</h3><p>用于从息屏状态中唤醒屏幕，然后解锁，注意必须没有密码，直接上滑解锁的那种。</p><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">device.wakeUp();</span><br></pre></td></tr></table></figure><h3 id="手势"><a href="#手势" class="headerlink" title="手势"></a>手势</h3><p>模拟上滑解锁或屏幕下滑，尝试使用过 swipe() 但是并不好用。</p><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">gestures([<span class="number">350</span>, [<span class="number">500</span>, <span class="number">1600</span>], [<span class="number">500</span>, <span class="number">300</span>]]);  <span class="comment">// 上滑</span></span><br><span class="line">gestures([<span class="number">350</span>, [<span class="number">500</span>, <span class="number">300</span>], [<span class="number">500</span>, <span class="number">1600</span>]]);  <span class="comment">// 下滑</span></span><br></pre></td></tr></table></figure><p>其中<code>350</code>这个位置的参数指持续时间（毫秒），后面两个参数是起始点的坐标，默认屏幕是1080x1920像素。</p><h3 id="等待"><a href="#等待" class="headerlink" title="等待"></a>等待</h3><p>参数等待时间（毫秒），如果脚本出现问题，如某个控件找不到，可能是没有设置sleep，等待页面完全加载出来。</p><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">sleep(<span class="number">1000</span>);</span><br></pre></td></tr></table></figure><h3 id="控件点击"><a href="#控件点击" class="headerlink" title="控件点击"></a>控件点击</h3><p>尝试了各种点击方法，发现只有一种能用（不是我不会用，是真的就找不到控件），直接通过文字点击控件。</p><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">click(<span class="string">"控件名称"</span>)</span><br></pre></td></tr></table></figure><h3 id="启动程序"><a href="#启动程序" class="headerlink" title="启动程序"></a>启动程序</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> appName = <span class="string">"应用名称"</span></span><br><span class="line">launchApp(appName);</span><br><span class="line">sleep(<span class="number">3000</span>);  <span class="comment">// 记得添加以等待程序启动</span></span><br></pre></td></tr></table></figure><h3 id="OCR文字识别"><a href="#OCR文字识别" class="headerlink" title="OCR文字识别"></a>OCR文字识别</h3><p>先截图（需要获取权限，可以使用多线程自动允许），然后OCR提取文字</p><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>(!requestScreenCapture())&#123;  <span class="comment">// 获取截图权限</span></span><br><span class="line">    toast(<span class="string">"请求截图失败"</span>);</span><br><span class="line">    exit();</span><br><span class="line">&#125;</span><br><span class="line">sleep(<span class="number">1000</span>);</span><br><span class="line"><span class="keyword">var</span> img = captureScreen();</span><br><span class="line"><span class="keyword">const</span> stringList = paddle.ocrText(img, <span class="literal">true</span>);  <span class="comment">// 识别到的文字列表</span></span><br><span class="line">img.recycle();  <span class="comment">// 回收图片，避免内存泄漏</span></span><br></pre></td></tr></table></figure><h3 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h3><p>在截图时，需要应用内获取权限，一般需要手动授权，也可以通过多线程自动授权。</p><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">threads.start(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    sleep(<span class="number">1000</span>);</span><br><span class="line">    click(<span class="string">"允许"</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure><h3 id="界面操作"><a href="#界面操作" class="headerlink" title="界面操作"></a>界面操作</h3><p>一些基础的界面操作</p><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">home();  <span class="comment">// 返回主菜单</span></span><br><span class="line">sleep(<span class="number">1000</span>);</span><br><span class="line">back();  <span class="comment">// 返回上一级</span></span><br><span class="line">sleep(<span class="number">1000</span>);</span><br></pre></td></tr></table></figure><h3 id="对话框输入"><a href="#对话框输入" class="headerlink" title="对话框输入"></a>对话框输入</h3><p>输入文本到当前页面中的对话框，用于微信发消息。</p><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">input(<span class="string">"message"</span>);</span><br></pre></td></tr></table></figure><h3 id="脚本调试"><a href="#脚本调试" class="headerlink" title="脚本调试"></a>脚本调试</h3><p>开发过程中，可能需要显示调试信息</p><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.show();  <span class="comment">// 显示控制台信息在应用上层，需要开启权限</span></span><br><span class="line">toastLog(<span class="string">"日志信息"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"另一种方法，效果相同"</span>)</span><br></pre></td></tr></table></figure><h3 id="脚本退出"><a href="#脚本退出" class="headerlink" title="脚本退出"></a>脚本退出</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">exit();</span><br></pre></td></tr></table></figure><h2 id="运行脚本"><a href="#运行脚本" class="headerlink" title="运行脚本"></a>运行脚本</h2><p>首次运行脚本需要开启应用无障碍服务权限，点击运行即可。</p><h3 id="设置定时任务"><a href="#设置定时任务" class="headerlink" title="设置定时任务"></a>设置定时任务</h3><p>在 <code>OpenAuto.js</code> App 中可以设置脚本为定时任务。需要开启程序后台运行权限。</p><h2 id="运行效果"><a href="#运行效果" class="headerlink" title="运行效果"></a>运行效果</h2><p><img src="/2023/08/02/202308021407/image-20230802154342574.jpeg" alt loading="lazy"></p><h2 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h2><p>用了一个晚上，目前是基本实现了主要功能，后面考虑做一些稳定性和适用性的优化，简单列个Todo：</p><ul><li>更多提醒方式（邮件，公众号，企业微信）</li><li>脚本打包成apk，其他用户可以开包即用</li><li>将查询结果发送到服务器上，服务器做一个余额变化统计</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;校园一卡通余额自动查询提醒脚本&quot;&gt;&lt;a href=&quot;#校园一卡通余额自动查询提醒脚本&quot; class=&quot;headerlink&quot; title=&quot;校园一卡通余额自动查询提醒脚本&quot;&gt;&lt;/a&gt;校园一卡通余额自动查询提醒脚本&lt;/h1&gt;&lt;h2 id=&quot;背景&quot;&gt;&lt;a href=&quot;
+      
+    
+    </summary>
+    
+    
+      <category term="项目" scheme="http://sxdl.github.io/categories/%E9%A1%B9%E7%9B%AE/"/>
+    
+    
+      <category term="脚本" scheme="http://sxdl.github.io/tags/%E8%84%9A%E6%9C%AC/"/>
+    
+      <category term="OpenAutojs" scheme="http://sxdl.github.io/tags/OpenAutojs/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>My Best Friends</title>
+    <link href="http://sxdl.github.io/2023/08/01/my-best-friends/"/>
+    <id>http://sxdl.github.io/2023/08/01/my-best-friends/</id>
+    <published>2023-08-01T06:25:30.521Z</published>
+    <updated>2023-08-02T08:56:56.311Z</updated>
+    
+    <content type="html"><![CDATA[<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=1498705975&auto=1&height=66"></iframe><h1 id="2021-8-20"><a href="#2021-8-20" class="headerlink" title="2021/8/20"></a>2021/8/20</h1><blockquote><p><strong>With wyf lgr ylr yyz zyx</strong></p></blockquote><p><img src="/2023/08/01/my-best-friends/1.jpg" alt="午饭" loading="lazy"></p><p><em>我们走着 各自走着</em></p><p><em>不再肩并着肩 不再互叫绰号</em></p><p><em>我们走着 在江畔驻留</em></p><p><em>享受江风吹拂 流连夜幕下的灯影</em></p><p><em>重聚的欢愉 那些约定和梦想</em></p><p><em>愿我们的故事 一直续写下去</em></p><p><em>短暂的重聚 好不容易</em></p><p><em>回过神时</em></p><p><em>却又只独自剩我一人 湿了眼眶</em></p><p><img src="/2023/08/01/my-best-friends/_posts/my-best-friends/2.jpg" alt="黄浦江边吹傍晚的风" loading="lazy"></p><blockquote><p>没人再叫我的绰号了，那个”主任“已经被遗忘了… … </p></blockquote><blockquote><p>2022.02.18: 没有忘，是你自作多情罢了(</p></blockquote><hr><h1 id="2022-1-24"><a href="#2022-1-24" class="headerlink" title="2022/1/24"></a>2022/1/24</h1><blockquote><p><strong>Wiz wyf lgr ylr zyx wjq zhn</strong></p></blockquote><p>给 lgr 小朋友庆生！18岁生日快乐！</p><p><strong>11:30 密室</strong> </p><p>第一次在限定时间内完成密室而且还提前15分钟✈ </p><p><img src="/2023/08/01/my-best-friends/_posts/my-best-friends/3.jpg" alt="通关送的小贴纸" loading="lazy"></p><p>七个人分组到两个不同的房间，一开始不知道白板可以同步于是出现了一边在白板上乱涂乱画另一边恐怖灵异现场哈哈哈哈。</p><p>密室是校园题材，有换装，七个人穿着校服整齐划一表情严肃拍出来的照片真的很想《专业团队》🧑🏾🧑🏾</p><p><strong>13:30 海底捞火锅庆生</strong></p><p>中途去买喜茶。因为某人（<code>wjq</code>）加了奇怪的成分：桑葚，店里没有材料，耽误了好久。后来<code>wjq</code>喝出来一粒葡萄籽，反手一个客服举报，赚了一张优惠券🤣</p><p><img src="/2023/08/01/my-best-friends/_posts/my-best-friends/4.jpg" alt="奶茶萌" loading="lazy"></p><p><code>lgr</code>小朋友的社死环节！&amp; 全家福</p><p>拍摄组三人一起笑到原地躺平</p><p>全家福几张照片没有一个人表情是正常的 /?</p><p><img src="/2023/08/01/my-best-friends/_posts/my-best-friends/5.jpg" alt="快乐恰火锅" loading="lazy"></p><p>最后要了两幅扑克牌玩了几局低配UNO</p><p><strong>17:00 大家说拜拜啦</strong></p><p>一起坐地铁，从同一站上车，在不同站告别。夏天的时候再见。</p><p>回家路上兴致高涨，作诗一首</p><p><img src="/2023/08/01/my-best-friends/_posts/my-best-friends/6.jpg" alt="传统艺能" loading="lazy"></p><p><strong>树洞</strong></p><p>去年的时候（注：写这一段的时候是2022年），发现大家变化很大，结束之后就很emo。很害怕那就是最后一次见面，很害怕以后再也见不到了，很害怕再见面时已经完全是个陌生人，我们的交集只有初中的校园生活了。</p><p>21年9月的时候，我给当时关系最好的几个朋友写了明信片。我用我能想到的最真挚的语言来传递我的思绪。我不知道，那些在晨辉中反射着光芒的教学楼里、在午饭后从食堂到教室的红色跑道旁、在夕阳下踩着金黄的银杏叶走过的放学路上的记忆在他们脑海中是否已经模糊；我不知道，那些纯真的笑声，稚嫩的歌声，那些在朋友的安抚下拭去的泪水是否还记得。现在，也许他们已经忘记了这些，已经忘记了那些无话不说的亲密关系。他们在新的环境里收获了新的友谊，也许在他们心里，我只不过是像他们童年时的诸多玩伴之一。我担惊受怕，我念念不忘，我抓着过去的美好时光不肯松手。我想把这千丝万缕的思绪写在这一方小纸片上，却发现难以下笔。我想起我为挽留这段友谊所做的努力。毕业时我送给每个人一本自己写的手抄诗集，写过几千字的长长的话，不错过每一次团建的机会，但我们还是不可避免的越走越远。我发现越来越插不上你们的聊天内容，我听着你们津津有味的念着我不认识的名字。我意识到，我们注定会从彼此的当下消失，躲进名为回忆的洞穴里。于是，我揣着诀别的心态，在明信片上写下：</p><p><em>“还记得 夕阳温暖的枇杷树吗？”</em></p><p>这一句，是永别，我已随着夕阳的余晖落下，和那些金色的记忆郑重的告别。</p><p>落款。寄出时，我知道这注定是石沉大海，我不企望得到回应。我把它当做一种仪式，一种告别的仪式。然后我释怀了，我把他们放进记忆中最精致的匣子里，上锁，不再打开。</p><p>命运总是在你走向一个极端的时候，让你回过来喘口气。我们一起见证了我们其中一位的 18 岁生日。也许并不是我一个人自始至终在自作多情，我也不敢就这样下一个草率的结论。也许，未来我们还能一起见证更多的重要时刻。我记得，我们的约定，我相信我们都记得。之后的每个夏天，每个冬天，每一年都会记得。</p><p>我跟最后一个同伴告别，转过身去，走进平静的夜。</p><hr><h1 id="2022-2-18-周五"><a href="#2022-2-18-周五" class="headerlink" title="2022/2/18 周五"></a>2022/2/18 周五</h1><p><strong>碎碎念</strong></p><p>今天放学要走的时候收到了 wjq 的明信片，有两张明信片看上去是很久之前写的了，没有日期，估计在路上走了很久。算下来，高中这几年，他给我写了 6 张明信片了。</p><p>下午的语文课上，讲的苏童的《八百米故乡》。</p><blockquote><p>“八百米成为一个象征，就像一个人发现故乡的路，很短，也很长。”</p></blockquote><p>短的是八百米的地理距离，说它长，一个是故乡给了作者创作的愿望和精神情感的寄托；还有是因为与族人的分离，造成了情感上的分割与生活上的分别，看起来不长的距离，却把人分割开来。</p><p>物理上的分别，造成了心灵的隔阂。即使感情还在，长时间生活在不同的环境中，也让人感觉到一丝陌生。就像团聚时的复杂情绪，想到重逢，会欣喜；真正聚在一起，又很难找到共同话题，会惆惘，很煎熬；想从中逃脱开来，又不舍分别。这是人们共有的情况，是不得不接受的现实。</p><p>以前，在我还没理解分别这个词的重量的日子里，我每日沉浸在自己是否拥有真正的友谊的顾虑中，担惊受怕，脆弱。现在，时间缓缓流过，它向我证明那段无法被淹没的友情的存在。我放下心来，却已经错过。</p><p>成熟的人能够接受这些事实，从前的我很幼稚，现在的我也不能说是成熟。但我慢慢接受了这些，接受了窥探朋友圈，用纸笔互道祝福的现状了。这么一看，似乎也挺浪漫。</p><p>我不知道未来我们会走向何方，当下的状态，足以让我心安。</p><hr><h1 id="2022-7-21"><a href="#2022-7-21" class="headerlink" title="2022/7/21"></a>2022/7/21</h1><blockquote><p>Wiz wjq zyx wyl lgr ylr wyf</p></blockquote><p><img src="/2023/08/01/my-best-friends/7.jpg" alt loading="lazy"></p><p><img src="/2023/08/01/my-best-friends/8.jpg" alt loading="lazy"></p><p><img src="/2023/08/01/my-best-friends/9.jpg" alt loading="lazy"></p>]]></content>
+    
+    <summary type="html">
+    
+      和最好的朋友们度过的时光记录
+    
+    </summary>
+    
+    
+      <category term="生活" scheme="http://sxdl.github.io/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    
+      <category term="记录" scheme="http://sxdl.github.io/tags/%E8%AE%B0%E5%BD%95/"/>
+    
+      <category term="友情" scheme="http://sxdl.github.io/tags/%E5%8F%8B%E6%83%85/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python TestDome Certificate</title>
+    <link href="http://sxdl.github.io/2022/12/15/Python%20TestDome%20Certificate/"/>
+    <id>http://sxdl.github.io/2022/12/15/Python%20TestDome%20Certificate/</id>
+    <published>2022-12-15T09:49:00.000Z</published>
+    <updated>2023-08-02T09:17:31.693Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Python-TestDome-Certificate"><a href="#Python-TestDome-Certificate" class="headerlink" title="Python TestDome Certificate"></a>Python TestDome Certificate</h1><a href="https://www.testdome.com/certificates/35d718a9fa784c1bb5d431cceef37958" target="_blank" rel="noopener" class="testdome-certificate-stamp gold">    <span class="testdome-certificate-name">Zicheng Zeng</span>    <span class="testdome-certificate-test-name">Python</span>    <span class="testdome-certificate-card-logo">TestDome<br>Certificate</span></a> <script>     var stylesheet = "https://www.testdome.com/content/source/stylesheets/embed.css", link = document.createElement("link");    link.href = stylesheet, link.type = "text/css", link.rel = "stylesheet", link.media = "screen,print", document.getElementsByTagName("head")[0].appendChild(link);</script>]]></content>
+    
+    <summary type="html">
+    
+      没有什么用的证书，但是很炫酷
+    
+    </summary>
+    
+    
+      <category term="分享" scheme="http://sxdl.github.io/categories/%E5%88%86%E4%BA%AB/"/>
+    
+    
+      <category term="Python" scheme="http://sxdl.github.io/tags/Python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>STM32f103踩坑记录</title>
+    <link href="http://sxdl.github.io/2022/12/15/STM32f103%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/"/>
+    <id>http://sxdl.github.io/2022/12/15/STM32f103%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/</id>
+    <published>2022-12-15T00:30:00.000Z</published>
+    <updated>2023-08-02T09:20:48.132Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="STM32f103踩坑记录"><a href="#STM32f103踩坑记录" class="headerlink" title="STM32f103踩坑记录"></a>STM32f103踩坑记录</h1><h2 id="开发板信息"><a href="#开发板信息" class="headerlink" title="开发板信息"></a>开发板信息</h2><p><strong>型号</strong> STM32f103ZET6</p><p><strong>购买商家</strong> 锋凌万盛</p><p>![[原理图.pdf]]</p><h2 id="使用-ISP-串口下载程序"><a href="#使用-ISP-串口下载程序" class="headerlink" title="使用 ISP 串口下载程序"></a>使用 ISP 串口下载程序</h2><p>跳线帽 Boot0 = 1，Boot1 = 0</p><p>USB 转串口 RXD 接 A9，TXD 接 A10</p><p>重新下载程序需要 Reset</p><h2 id="FlyMcu-配置"><a href="#FlyMcu-配置" class="headerlink" title="FlyMcu 配置"></a>FlyMcu 配置</h2><p>![[Pasted image 20221215085052.png]]</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;STM32f103踩坑记录&quot;&gt;&lt;a href=&quot;#STM32f103踩坑记录&quot; class=&quot;headerlink&quot; title=&quot;STM32f103踩坑记录&quot;&gt;&lt;/a&gt;STM32f103踩坑记录&lt;/h1&gt;&lt;h2 id=&quot;开发板信息&quot;&gt;&lt;a href=&quot;#开发板信
+      
+    
+    </summary>
+    
+    
+      <category term="开发记录" scheme="http://sxdl.github.io/categories/%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95/"/>
+    
+      <category term="嵌入式" scheme="http://sxdl.github.io/categories/%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95/%E5%B5%8C%E5%85%A5%E5%BC%8F/"/>
+    
+    
+      <category term="STM32" scheme="http://sxdl.github.io/tags/STM32/"/>
+    
+      <category term="STM32f103" scheme="http://sxdl.github.io/tags/STM32f103/"/>
+    
+      <category term="Keil" scheme="http://sxdl.github.io/tags/Keil/"/>
+    
+      <category term="FlyMcu" scheme="http://sxdl.github.io/tags/FlyMcu/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>魂</title>
+    <link href="http://sxdl.github.io/2022/11/30/%E9%AD%82/"/>
+    <id>http://sxdl.github.io/2022/11/30/%E9%AD%82/</id>
+    <published>2022-11-30T11:17:00.000Z</published>
+    <updated>2022-11-30T12:07:21.770Z</updated>
+    
+    <content type="html"><![CDATA[<p>MOC [[Blog Post]]</p><hr><h1 align="center"><b>魂</b></h1><p align="center"><font size="4">随苑</font></p><h2 align="center"><b>一、思</b></h2><p><center>我愿踏雨寻梦，</center><center>留你平原清雪,</center><center>灯下背影。</center></p><h2 align="center"><b>二、寻</b></h2><p><center>白色的浪花</center><center>翻过双脚</center><center>你为何这样匆忙</center><center>是否也在寻找</center><center>走吧，走吧</center><center>你没有理由为我停留</center><center>我没有理由放弃寻找</center></p><h2 align="center"><b>三、河</b></h2><p><center>奔跑，奔跑</center><center>不见你回头</center><center>呼唤的声音追不上你</center><center>你欢笑着   歌唱</center><center>不见了你</center></p><h2 align="center"><b>四、停</b></h2><p><center>为什么我一直在走？</center><center>因为云朵一直在后退</center><center>风擦过我的脸颊</center><center>唱起了歌</center></p><p><center>停</center></p><p><center>我想仔细听</center><center>可是为什么云朵还在后退</center><center>歌声却越来越模糊？</center></p><h2 align="center"><b>五、笛</b></h2><p><center>太安静了</center><center>都累了吗</center><center>风儿，</center><center>你且听我吹一曲</center><center>用我白色的长笛</center><center>吹一曲</center></p><h2 align="center"><b>六、光</b></h2><p><center>昨天晚上</center><center>我听见歌声伴笛</center><center>我想这不是梦</center><center>你看，</center><center>这在我头顶的黑色</center><center>今天闪烁起了星光</center></p><h2 align="center"><b>七、隔</b></h2><p><center>长满白色的细密的草的山坡</center><center>让我忍不住躺了下来</center><center>我看到了在我头顶的天空</center><center>只有这样躺下来才能看到的天空</center><center>但我没有找到发着光的东西</center><center>只有光</center><center>充斥着的</center><center>光</center><center>为什么光不会掉下来？</center><center>为什么我不会掉下去？</center></p><h2 align="center"><b>八、听</b></h2><p><center>不知道是谁</center><center>告诉我</center><center>安静</center><center>只要听就好了</center><center>因为黑色的天穹不会睁开眼睛</center></p><p><center>我伫立着</center><center>从怯怯缩缩的风里</center><center>我听到了隐隐约约的歌声</center></p><h2 align="center"><b>九、唱</b></h2><p><center>我是有多久没有说过话了？</center><center>我要对谁说？</center><center>说话是要有人听的</center><center>那不如歌唱吧</center><center>歌唱不需要回应</center></p><h2 align="center"><b>十、寒</b></h2><p><center>下雪了</center><center>我不知道已经走了多远</center><center>这里越来越冷</center><center>那些不会融化的雪</center><center>会把我融化吧</center></p><h2 align="center"><b>十一、昔</b></h2><p><center>不要问我存在的原因</center><center>我没有记忆</center><center>就像这满地的雪花</center><center>不清楚是从哪一片云朵上飘下来的</center></p><h2 align="center"><b>十二、乏</b></h2><p><center>我又听见了歌声</center><center>只是今天的歌声有些疲惫</center><center>是到了歇息的时候了</center><center>是该歇息了</center></p><h2 align="center"><b>十三、眠</b></h2><p><center>不看</center><center>不听</center><center>也不想</center><center>让梦</center><center>轻轻飘过我的躯壳</center></p><h2 align="center"><b>十四、葬</b></h2><p><center>这里本该埋着安息的人</center><center>为什么</center><center>现在只剩一个深坑？</center><center>你一直在等待吗</center><center>等待着安抚孤独的灵魂？</center><center>坑啊，</center><center>若不嫌弃</center><center>请让你葬了我吧</center><center>我想</center><center>歌声不会停止</center><center>雪落不会融化</center></p><h2 align="center"><b>十五、灭</b></h2><p><center>从前有个盘古开了天地</center><center>劈开了黑与白</center><center>断了生与死</center><center>他化成了屏障包裹了天地</center><center>黑夜不散</center><center>光昼不息</center><center>歌声不止</center></p><p><center>万万年后</center><center>最后一个孤独的灵魂走过</center><center>埋葬了天地</center></p><p><center>一切复归于虚</center><center>寂静之后</center><center>是不变的轮回</center></p><p align="right">2019.09.06</p><blockquote><p>后记 2022.11.30</p><p>在整理硬盘时发现以前随手写的诗，当时是高一，写作的目的已经记不清了。</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      翻出来以前写的作品，记录一下
+    
+    </summary>
+    
+    
+      <category term="创作" scheme="http://sxdl.github.io/categories/%E5%88%9B%E4%BD%9C/"/>
+    
+      <category term="诗歌" scheme="http://sxdl.github.io/categories/%E5%88%9B%E4%BD%9C/%E8%AF%97%E6%AD%8C/"/>
+    
+    
+      <category term="诗歌" scheme="http://sxdl.github.io/tags/%E8%AF%97%E6%AD%8C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>本地文件夹同步</title>
+    <link href="http://sxdl.github.io/2022/11/17/%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E5%A4%B9%E5%90%8C%E6%AD%A5/"/>
+    <id>http://sxdl.github.io/2022/11/17/%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E5%A4%B9%E5%90%8C%E6%AD%A5/</id>
+    <published>2022-11-17T04:03:00.000Z</published>
+    <updated>2022-11-17T04:11:32.481Z</updated>
+    
+    <content type="html"><![CDATA[<p>MOC [[Blog Post]]</p><hr><h1 id="本地文件夹同步"><a href="#本地文件夹同步" class="headerlink" title="本地文件夹同步"></a>本地文件夹同步</h1><p><a href="http://www.secondcopy.com/index.html" target="_blank" rel="noopener">Automatic backup software - secure data with Second Copy</a></p>]]></content>
+    
+    <summary type="html">
+    
+      使用Second Copy 实现同一台电脑的本地文件夹同步
+    
+    </summary>
+    
+    
+      <category term="经验分享" scheme="http://sxdl.github.io/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/"/>
+    
+    
+      <category term="unsorted" scheme="http://sxdl.github.io/tags/unsorted/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>NumPy SciPy Matplotlib 踩坑笔记</title>
+    <link href="http://sxdl.github.io/2022/10/25/NumPy%20SciPy%20Matplotlib%20%E8%B8%A9%E5%9D%91%E7%AC%94%E8%AE%B0/"/>
+    <id>http://sxdl.github.io/2022/10/25/NumPy%20SciPy%20Matplotlib%20%E8%B8%A9%E5%9D%91%E7%AC%94%E8%AE%B0/</id>
+    <published>2022-10-25T11:22:00.000Z</published>
+    <updated>2023-08-02T09:21:00.327Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="NumPy-SciPy-Matplotlib-踩坑笔记"><a href="#NumPy-SciPy-Matplotlib-踩坑笔记" class="headerlink" title="NumPy SciPy Matplotlib 踩坑笔记"></a>NumPy SciPy Matplotlib 踩坑笔记</h1><h2 id="安装库"><a href="#安装库" class="headerlink" title="安装库"></a>安装库</h2><p>使用清华镜像安装 NumPy SciPy Matplotlib</p><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip3 install numpy scipy matplotlib -i https:&#x2F;&#x2F;pypi.tuna.tsinghua.edu.cn&#x2F;simple</span><br></pre></td></tr></table></figure><p>安装验证，测试是否安装成功</p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> numpy <span class="keyword">import</span> *</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>eye(<span class="number">4</span>)</span><br><span class="line">array([[<span class="number">1.</span>, <span class="number">0.</span>, <span class="number">0.</span>, <span class="number">0.</span>],</span><br><span class="line">       [<span class="number">0.</span>, <span class="number">1.</span>, <span class="number">0.</span>, <span class="number">0.</span>],</span><br><span class="line">       [<span class="number">0.</span>, <span class="number">0.</span>, <span class="number">1.</span>, <span class="number">0.</span>],</span><br><span class="line">       [<span class="number">0.</span>, <span class="number">0.</span>, <span class="number">0.</span>, <span class="number">1.</span>]])</span><br></pre></td></tr></table></figure><h2 id="NumPy"><a href="#NumPy" class="headerlink" title="NumPy"></a>NumPy</h2><h3 id="NumPy-Ndarray-对象"><a href="#NumPy-Ndarray-对象" class="headerlink" title="NumPy Ndarray 对象"></a>NumPy Ndarray 对象</h3><h4 id="创建-Ndarray-对象"><a href="#创建-Ndarray-对象" class="headerlink" title="创建 Ndarray 对象"></a>创建 Ndarray 对象</h4><p>函数原型</p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">numpy.array(object, dtype = <span class="literal">None</span>, copy = <span class="literal">True</span>, order = <span class="literal">None</span>, subok = <span class="literal">False</span>, ndmin = <span class="number">0</span>)</span><br></pre></td></tr></table></figure><p>参数说明：</p><table><thead><tr><th align="center">名称</th><th align="center">描述</th></tr></thead><tbody><tr><td align="center">object</td><td align="center">数组或嵌套的数列</td></tr><tr><td align="center">dtype</td><td align="center">数组元素的数据类型，可选</td></tr><tr><td align="center">copy</td><td align="center">对象是否需要复制，可选</td></tr><tr><td align="center">order</td><td align="center">创建数组的样式，C为行方向，F为列方向，A为任意方向（默认）</td></tr><tr><td align="center">subok</td><td align="center">默认返回一个与基类类型一致的数组</td></tr><tr><td align="center">ndmin</td><td align="center">指定生成数组的最小维度</td></tr></tbody></table><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 创建多维数组</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">a = np.array([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>]])</span><br><span class="line"><span class="keyword">print</span> (a)</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;NumPy-SciPy-Matplotlib-踩坑笔记&quot;&gt;&lt;a href=&quot;#NumPy-SciPy-Matplotlib-踩坑笔记&quot; class=&quot;headerlink&quot; title=&quot;NumPy SciPy Matplotlib 踩坑笔记&quot;&gt;&lt;/a&gt;NumPy
+      
+    
+    </summary>
+    
+    
+      <category term="开发记录" scheme="http://sxdl.github.io/categories/%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95/"/>
+    
+      <category term="Python包" scheme="http://sxdl.github.io/categories/%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95/Python%E5%8C%85/"/>
+    
+    
+      <category term="Python" scheme="http://sxdl.github.io/tags/Python/"/>
+    
+      <category term="NumPy" scheme="http://sxdl.github.io/tags/NumPy/"/>
+    
+      <category term="SciPy" scheme="http://sxdl.github.io/tags/SciPy/"/>
+    
+      <category term="Matplotlib" scheme="http://sxdl.github.io/tags/Matplotlib/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Xamarin.Forms踩坑日记</title>
+    <link href="http://sxdl.github.io/2022/09/27/Xamarin.Forms%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
+    <id>http://sxdl.github.io/2022/09/27/Xamarin.Forms%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/</id>
+    <published>2022-09-27T05:50:00.000Z</published>
+    <updated>2023-08-02T09:20:42.195Z</updated>
+    
+    <content type="html"><![CDATA[<p>MOC [[Blog Post]]</p><hr><h1 id="Xamarin-Forms踩坑日记"><a href="#Xamarin-Forms踩坑日记" class="headerlink" title="Xamarin.Forms踩坑日记"></a>Xamarin.Forms踩坑日记</h1><h2 id="StackLayOut-布局"><a href="#StackLayOut-布局" class="headerlink" title="StackLayOut 布局"></a>StackLayOut 布局</h2><p>StackLayOut 是一种布局，默认容器子元素纵向排列。</p><p><strong>属性</strong></p><ul><li>Margin：StackLayOut 容器的外边距</li><li>Padding：StackLayOut 容器的内边距</li><li>Spacing：容器内子元素之间的间距</li></ul><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;StackLayout Margin&#x3D;&quot;20,35,20,25&quot; &#x2F;&#x2F; 左 上 右 下</span><br><span class="line"> Padding&#x3D;&quot;20,30,20,0&quot; </span><br><span class="line"> Spacing&#x3D;&quot;20&quot; &gt;</span><br><span class="line">&lt;Label&#x2F;&gt;</span><br><span class="line">...</span><br><span class="line">&lt;Label&#x2F;&gt;</span><br><span class="line">&lt;&#x2F;StackLayOut&gt;</span><br></pre></td></tr></table></figure><ul><li>Orientation：指定容器子元素排列方向</li></ul><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;StackLayout Margin&#x3D;&quot;20,35,20,25&quot;</span><br><span class="line"> Orientation&#x3D;&quot;Horizontal&quot;&gt; &#x2F;&#x2F; 子元素横向排列</span><br><span class="line">&lt;Label Text&#x3D;&quot;a&quot;&#x2F;&gt;</span><br><span class="line">&lt;Label Text&#x3D;&quot;b&quot;&#x2F;&gt;</span><br><span class="line">&lt;Label Text&#x3D;&quot;c&quot;&#x2F;&gt;</span><br><span class="line">&lt;&#x2F;StackLayout&gt;</span><br></pre></td></tr></table></figure><p><strong>子元素对齐方式</strong></p><ul><li><p>HorizontalOptions：水平对齐方式</p></li><li><p>VerticalOptions：纵向对齐方式</p></li><li><p>Start：靠左/靠上</p></li><li><p>Center：居中</p></li><li><p>End：靠右/靠下</p></li><li><p>Fill：填充</p></li><li><p>~Expand：自动填充</p></li></ul><h2 id="Grid-布局"><a href="#Grid-布局" class="headerlink" title="Grid 布局"></a>Grid 布局</h2><h3 id="指定行和列"><a href="#指定行和列" class="headerlink" title="指定行和列"></a>指定行和列</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;Grid Margin&#x3D;&quot;20,35,20,20&quot;&gt;</span><br><span class="line">    &lt;Grid.ColumnDefinitions&gt;</span><br><span class="line">        &lt;ColumnDefinition Width&#x3D;&quot;0.5*&quot; &#x2F;&gt;</span><br><span class="line">        &lt;ColumnDefinition Width&#x3D;&quot;0.5*&quot; &#x2F;&gt;</span><br><span class="line">    &lt;&#x2F;Grid.ColumnDefinitions&gt;</span><br><span class="line">    &lt;Grid.RowDefinitions&gt;</span><br><span class="line">        &lt;RowDefinition Height&#x3D;&quot;50&quot; &#x2F;&gt;</span><br><span class="line">        &lt;RowDefinition Height&#x3D;&quot;50&quot; &#x2F;&gt;</span><br><span class="line">    &lt;&#x2F;Grid.RowDefinitions&gt;</span><br><span class="line">    &lt;Label Text&#x3D;&quot;Column 0, Row 0&quot; &#x2F;&gt;</span><br><span class="line">    &lt;Label Grid.Column&#x3D;&quot;1&quot;</span><br><span class="line">           Text&#x3D;&quot;Column 1, Row 0&quot; &#x2F;&gt;</span><br><span class="line">    &lt;Label Grid.Row&#x3D;&quot;1&quot;</span><br><span class="line">           Text&#x3D;&quot;Column 0, Row 1&quot; &#x2F;&gt;</span><br><span class="line">    &lt;Label Grid.Column&#x3D;&quot;1&quot;</span><br><span class="line">           Grid.Row&#x3D;&quot;1&quot;</span><br><span class="line">           Text&#x3D;&quot;Column 1, Row 1&quot; &#x2F;&gt;</span><br><span class="line">&lt;&#x2F;Grid&gt;</span><br></pre></td></tr></table></figure><ul><li><code>0.5*</code> 表示按比例</li><li><code>auto</code> 表示自动</li></ul><h3 id="跨越多行和多列"><a href="#跨越多行和多列" class="headerlink" title="跨越多行和多列"></a>跨越多行和多列</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;Grid Margin&#x3D;&quot;20,35,20,20&quot;&gt;</span><br><span class="line">&lt;Grid.ColumnDefinitions&gt;</span><br><span class="line">&lt;ColumnDefinition Width&#x3D;&quot;0.5*&quot; &#x2F;&gt;</span><br><span class="line">&lt;ColumnDefinition Width&#x3D;&quot;0.5*&quot; &#x2F;&gt;</span><br><span class="line">&lt;&#x2F;Grid.ColumnDefinitions&gt;</span><br><span class="line">&lt;Grid.RowDefinitions&gt;</span><br><span class="line">&lt;RowDefinition Height&#x3D;&quot;50&quot; &#x2F;&gt;</span><br><span class="line">&lt;RowDefinition Height&#x3D;&quot;30&quot; &#x2F;&gt;</span><br><span class="line">&lt;RowDefinition Height&#x3D;&quot;30&quot; &#x2F;&gt;</span><br><span class="line">&lt;&#x2F;Grid.RowDefinitions&gt;</span><br><span class="line">&lt;Label Grid.ColumnSpan&#x3D;&quot;2&quot;</span><br><span class="line">   Text&#x3D;&quot;This text uses the ColumnSpan property to span both columns.&quot; &#x2F;&gt;</span><br><span class="line">&lt;Label Grid.Row&#x3D;&quot;1&quot;</span><br><span class="line">   Grid.RowSpan&#x3D;&quot;2&quot;</span><br><span class="line">   Text&#x3D;&quot;This text uses the RowSpan property to span two rows.&quot; &#x2F;&gt;</span><br><span class="line">&lt;&#x2F;Grid&gt;</span><br></pre></td></tr></table></figure><ul><li>Grid.ColumnSpan：元素跨越的列数</li><li>Grid.RowSpan：元素跨越的行数</li></ul><h2 id="Label-标签"><a href="#Label-标签" class="headerlink" title="Label 标签"></a>Label 标签</h2><p><strong>属性</strong></p><ul><li>Text：Label 文本内容</li><li>TextColor：文本颜色</li><li>FontAttributes：字体样式<ul><li>Bold：字体加粗</li><li>Italic：</li><li>斜体</li><li>None：无</li></ul></li><li>FontSize：字体大小<ul><li>数字代表字号</li><li>其他默认字号<ul><li>Body</li><li>Header</li><li>Default</li><li>Larger</li><li>等等</li></ul></li></ul></li><li>TextDecorations：<ul><li>Strikethrough：删除线</li><li>Underline：下划线</li></ul></li></ul><h3 id="格式化文本"><a href="#格式化文本" class="headerlink" title="格式化文本"></a>格式化文本</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;Label TextColor&#x3D;&quot;Gray&quot; FontSize&#x3D;&quot;Medium&quot;&gt;</span><br><span class="line">&lt;Label.FormattedText&gt;</span><br><span class="line">&lt;FormattedString&gt;</span><br><span class="line">&lt;Span Text&#x3D;&quot;This sentence contains &quot; &#x2F;&gt;</span><br><span class="line">&lt;Span Text&#x3D;&quot;words that are emphasized, &quot; </span><br><span class="line">  FontAttributes&#x3D;&quot;Italic&quot; &#x2F;&gt;</span><br><span class="line">&lt;Span Text&#x3D;&quot;and underlined.&quot; </span><br><span class="line">  TextDecorations&#x3D;&quot;Underline&quot; &#x2F;&gt; </span><br><span class="line">&lt;&#x2F;FormattedString&gt;</span><br><span class="line">&lt;&#x2F;Label.FormattedText&gt;</span><br><span class="line">&lt;&#x2F;Label&gt;</span><br></pre></td></tr></table></figure><h2 id="Button"><a href="#Button" class="headerlink" title="Button"></a>Button</h2><h3 id="事件类型"><a href="#事件类型" class="headerlink" title="事件类型"></a>事件类型</h3><ul><li>Clicked：按下并松开时</li><li>Pressed：按下时</li><li>Released：松开时</li></ul><h3 id="触发函数"><a href="#触发函数" class="headerlink" title="触发函数"></a>触发函数</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">void OnButtonClicked(object sender, EventArgs e)</span><br><span class="line">&#123;</span><br><span class="line">    (sender as Button).Text &#x3D; &quot;Click me again!&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="更改外观"><a href="#更改外观" class="headerlink" title="更改外观"></a>更改外观</h3><ul><li>BorderColor：按钮边框颜色</li><li>BorderWidth：按钮边框</li><li>CornerRadius：边框圆角半径</li><li>WidthRequest：很迷，不要用</li><li>HeightRequest：很迷，不要用</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;MOC [[Blog Post]]&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1 id=&quot;Xamarin-Forms踩坑日记&quot;&gt;&lt;a href=&quot;#Xamarin-Forms踩坑日记&quot; class=&quot;headerlink&quot; title=&quot;Xamarin.Forms踩坑日记&quot;&gt;&lt;/a&gt;Xamar
+      
+    
+    </summary>
+    
+    
+      <category term="开发记录" scheme="http://sxdl.github.io/categories/%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95/"/>
+    
+      <category term="App开发" scheme="http://sxdl.github.io/categories/%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95/App%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="C#" scheme="http://sxdl.github.io/tags/C/"/>
+    
+      <category term=".NET" scheme="http://sxdl.github.io/tags/NET/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>esp32踩坑日记</title>
+    <link href="http://sxdl.github.io/2022/09/24/esp32%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
+    <id>http://sxdl.github.io/2022/09/24/esp32%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/</id>
+    <published>2022-09-24T11:01:00.000Z</published>
+    <updated>2023-08-02T09:20:53.602Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="esp32踩坑日记"><a href="#esp32踩坑日记" class="headerlink" title="esp32踩坑日记"></a>esp32踩坑日记</h1><h2 id="固件烧录"><a href="#固件烧录" class="headerlink" title="固件烧录"></a>固件烧录</h2><p><strong><a href="http://docs.micropython.org/en/latest/esp32/tutorial/intro.html#esp32-intro" target="_blank" rel="noopener">MycroPython</a></strong></p><h3 id="下载-MycroPython-固件"><a href="#下载-MycroPython-固件" class="headerlink" title="下载 MycroPython 固件"></a>下载 MycroPython 固件</h3><ul><li><a href="https://micropython.org/download/esp32/" target="_blank" rel="noopener">esp32</a></li><li><a href="https://micropython.org/download/" target="_blank" rel="noopener">其他型号</a></li></ul><h3 id="安装-esptool"><a href="#安装-esptool" class="headerlink" title="安装 esptool"></a>安装 esptool</h3><p><code>pip install esptool</code></p><h3 id="deploy-MicroPython"><a href="#deploy-MicroPython" class="headerlink" title="deploy MicroPython"></a>deploy MicroPython</h3><ol><li>在固件所在文件夹 <code>shift</code> + <code>右键</code> <code>在此处打开 PowerShell 窗口</code></li><li>清空 flash <code>esptool.py --port &lt;端口号&gt; erase_flash</code> 以 <code>COM5</code> 为例，<code>esptool.py --port COM5 erase_flash</code></li><li>固件烧录 <code>esptool.py --chip esp32 --port &lt;端口号&gt; write_flash -z 0x1000 &lt;固件文件名&gt;</code> 以 <code>esp32-20180511-v1.9.4.bin</code> 为例， <code>esptool.py --chip esp32 --port /dev/ttyUSB0 write_flash -z 0x1000 esp32-20180511-v1.9.4.bin</code></li></ol><h2 id="Thonny-IDE"><a href="#Thonny-IDE" class="headerlink" title="Thonny IDE"></a>Thonny IDE</h2><p><a href="https://thonny.org/" target="_blank" rel="noopener">Thonny, Python IDE for beginners</a></p><h3 id="设置编译器"><a href="#设置编译器" class="headerlink" title="设置编译器"></a>设置编译器</h3><p>运行 -&gt; 配置编译器 -&gt; 解释器 -&gt; MicroPython(ESP32)</p><p><img src="/2022/09/24/esp32%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/20220924192600.png" alt="|500" loading="lazy"></p><p><img src="/2022/09/24/esp32%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/20220924193355.png" alt="|500" loading="lazy"></p><h3 id="运行-blinker-程序"><a href="#运行-blinker-程序" class="headerlink" title="运行 blinker 程序"></a>运行 blinker 程序</h3><p>保存并重命名为 <code>main.py</code></p><p><img src="/2022/09/24/esp32%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/20220924193849.png" alt="|500" loading="lazy"></p><h2 id="Pycharm"><a href="#Pycharm" class="headerlink" title="Pycharm"></a>Pycharm</h2><p><a href="https://plugins.jetbrains.com/plugin/9777-micropython" target="_blank" rel="noopener">MicroPython - IntelliJ IDEA &amp; PyCharm Plugin | Marketplace (jetbrains.com)</a></p><h2 id="引脚图"><a href="#引脚图" class="headerlink" title="引脚图"></a>引脚图</h2><p><img src="/2022/09/24/esp32%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/20220924213632.png" alt="ESP32 DEVKITV1|500" title="ESP32 DEVKITV1" loading="lazy"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;esp32踩坑日记&quot;&gt;&lt;a href=&quot;#esp32踩坑日记&quot; class=&quot;headerlink&quot; title=&quot;esp32踩坑日记&quot;&gt;&lt;/a&gt;esp32踩坑日记&lt;/h1&gt;&lt;h2 id=&quot;固件烧录&quot;&gt;&lt;a href=&quot;#固件烧录&quot; class=&quot;headerli
+      
+    
+    </summary>
+    
+    
+      <category term="开发记录" scheme="http://sxdl.github.io/categories/%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95/"/>
+    
+      <category term="嵌入式" scheme="http://sxdl.github.io/categories/%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95/%E5%B5%8C%E5%85%A5%E5%BC%8F/"/>
+    
+    
+      <category term="esp32" scheme="http://sxdl.github.io/tags/esp32/"/>
+    
+  </entry>
+  
+  <entry>
     <title>手机如何做电脑外置摄像头</title>
     <link href="http://sxdl.github.io/2022/03/15/droidcam/"/>
     <id>http://sxdl.github.io/2022/03/15/droidcam/</id>
     <published>2022-03-15T09:08:14.000Z</published>
-    <updated>2022-03-15T09:11:41.676Z</updated>
+    <updated>2022-11-17T03:19:18.908Z</updated>
     
     <content type="html"><![CDATA[<h1 id="手机如何做电脑外置摄像头"><a href="#手机如何做电脑外置摄像头" class="headerlink" title="手机如何做电脑外置摄像头"></a>手机如何做电脑外置摄像头</h1><blockquote><p><a href="https://blog.csdn.net/qq1291594496/article/details/104365228?utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~aggregatepage~first_rank_ecpm_v1~rank_v31_ecpm-2-104365228.pc_agg_new_rank&amp;utm_term=%E5%8D%8E%E4%B8%BA%E6%89%8B%E6%9C%BAptp%E6%A8%A1%E5%BC%8F%E6%91%84%E5%83%8F%E5%A4%B4&amp;spm=1000.2123.3001.4430" target="_blank" rel="noopener">https://blog.csdn.net/qq1291594496/article/details/104365228?utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~aggregatepage~first_rank_ecpm_v1~rank_v31_ecpm-2-104365228.pc_agg_new_rank&amp;utm_term=%E5%8D%8E%E4%B8%BA%E6%89%8B%E6%9C%BAptp%E6%A8%A1%E5%BC%8F%E6%91%84%E5%83%8F%E5%A4%B4&amp;spm=1000.2123.3001.4430</a></p></blockquote>]]></content>
     
@@ -42,36 +294,11 @@
   </entry>
   
   <entry>
-    <title>My Best Friends</title>
-    <link href="http://sxdl.github.io/2021/08/20/my-best-friends/"/>
-    <id>http://sxdl.github.io/2021/08/20/my-best-friends/</id>
-    <published>2021-08-20T13:20:20.580Z</published>
-    <updated>2022-02-24T12:51:35.002Z</updated>
-    
-    <content type="html"><![CDATA[<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=1498705975&auto=1&height=66"></iframe><h1 id="2021-8-20"><a href="#2021-8-20" class="headerlink" title="2021/8/20"></a>2021/8/20</h1><blockquote><p><strong>With wyf lgr ylr yyz zyx</strong></p></blockquote><p><img src="/2021/08/20/my-best-friends/1.jpg" alt="1" loading="lazy"></p><p><em>我们走着 各自走着</em></p><p><em>不再肩并着肩 不再互叫绰号</em></p><p><em>我们走着 在江畔驻留</em></p><p><em>享受江风吹拂 流连夜幕下的灯影</em></p><p><em>重聚的欢愉 那些约定和梦想</em></p><p><em>愿我们的故事 一直续写下去</em></p><p><em>短暂的重聚 好不容易</em></p><p><em>回过神时</em></p><p><em>却又只独自剩我一人 湿了眼眶</em></p><p><img src="/2021/08/20/my-best-friends/2.jpg" alt="黄浦江边吹傍晚的风" loading="lazy"></p><blockquote><p>没人再叫我的绰号了，那个”主任“已经被遗忘了… … </p></blockquote><blockquote><p>2022.02.18: 没有忘，是你自作多情罢了(</p></blockquote><hr><h1 id="2022-1-24"><a href="#2022-1-24" class="headerlink" title="2022/1/24"></a>2022/1/24</h1><blockquote><p><strong>Wiz wyf lgr ylr zyx wjq zhn</strong></p></blockquote><p>给 lgr 小朋友庆生！18岁生日快乐！</p><p><strong>11:30 密室</strong> </p><p>第一次在限定时间内完成密室而且还提前15分钟✈ </p><p><img src="/2021/08/20/my-best-friends/3.jpg" alt="通关送的小贴纸" loading="lazy"></p><p>七个人分组到两个不同的房间，一开始不知道白板可以同步于是出现了一边在白板上乱涂乱画另一边恐怖灵异现场哈哈哈哈。</p><p>密室是校园题材，有换装，七个人穿着校服整齐划一表情严肃拍出来的照片真的很想《专业团队》🧑🏾🧑🏾</p><p><strong>13:30 海底捞火锅庆生</strong></p><p>中途去买喜茶。因为某人（<code>wjq</code>）加了奇怪的成分：桑葚，店里没有材料，耽误了好久。后来<code>wjq</code>喝出来一粒葡萄籽，反手一个客服举报，赚了一张优惠券🤣</p><p><img src="/2021/08/20/my-best-friends/4.jpg" alt="奶茶萌" loading="lazy"></p><p><code>lgr</code>小朋友的社死环节！&amp; 全家福</p><p>拍摄组三人一起笑到原地躺平</p><p>全家福几张照片没有一个人表情是正常的 /?</p><p><img src="/2021/08/20/my-best-friends/5.jpg" alt="快乐恰火锅" loading="lazy"></p><p>最后要了两幅扑克牌玩了几局低配UNO</p><p><strong>17:00 大家说拜拜啦</strong></p><p>一起坐地铁，从同一站上车，在不同站告别。夏天的时候再见。</p><p>回家路上兴致高涨，作诗一首</p><p><img src="/2021/08/20/my-best-friends/6.jpg" alt="传统艺能" loading="lazy"></p><p><strong>树洞</strong></p><p>去年的时候（注：写这一段的时候是2022年），发现大家变化很大，结束之后就很emo。很害怕那就是最后一次见面，很害怕以后再也见不到了，很害怕再见面时已经完全是个陌生人，我们的交集只有初中的校园生活了。</p><p>21年9月的时候，我给当时关系最好的几个朋友写了明信片。我用我能想到的最真挚的语言来传递我的思绪。我不知道，那些在晨辉中反射着光芒的教学楼里、在午饭后从食堂到教室的红色跑道旁、在夕阳下踩着金黄的银杏叶走过的放学路上的记忆在他们脑海中是否已经模糊；我不知道，那些纯真的笑声，稚嫩的歌声，那些在朋友的安抚下拭去的泪水是否还记得。现在，也许他们已经忘记了这些，已经忘记了那些无话不说的亲密关系。他们在新的环境里收获了新的友谊，也许在他们心里，我只不过是像他们童年时的诸多玩伴之一。我担惊受怕，我念念不忘，我抓着过去的美好时光不肯松手。我想把这千丝万缕的思绪写在这一方小纸片上，却发现难以下笔。我想起我为挽留这段友谊所做的努力。毕业时我送给每个人一本自己写的手抄诗集，写过几千字的长长的话，不错过每一次团建的机会，但我们还是不可避免的越走越远。我发现越来越插不上你们的聊天内容，我听着你们津津有味的念着我不认识的名字。我意识到，我们注定会从彼此的当下消失，躲进名为回忆的洞穴里。于是，我揣着诀别的心态，在明信片上写下：</p><p><em>“还记得 夕阳温暖的枇杷树吗？”</em></p><p>这一句，是永别，我已随着夕阳的余晖落下，和那些金色的记忆郑重的告别。</p><p>落款。寄出时，我知道这注定是石沉大海，我不企望得到回应。我把它当做一种仪式，一种告别的仪式。然后我释怀了，我把他们放进记忆中最精致的匣子里，上锁，不再打开。</p><p>命运总是在你走向一个极端的时候，让你回过来喘口气。我们一起见证了我们其中一位的 18 岁生日。也许并不是我一个人自始至终在自作多情，我也不敢就这样下一个草率的结论。也许，未来我们还能一起见证更多的重要时刻。我记得，我们的约定，我相信我们都记得。之后的每个夏天，每个冬天，每一年都会记得。</p><p>我跟最后一个同伴告别，转过身去，走进平静的夜。</p><hr><h1 id="2022-2-18-周五"><a href="#2022-2-18-周五" class="headerlink" title="2022/2/18 周五"></a>2022/2/18 周五</h1><p><strong>碎碎念</strong></p><p>今天放学要走的时候收到了 wjq 的明信片，有两张明信片看上去是很久之前写的了，没有日期，估计在路上走了很久。算下来，高中这几年，他给我写了 6 张明信片了。</p><p>下午的语文课上，讲的苏童的《八百米故乡》。</p><blockquote><p>“八百米成为一个象征，就像一个人发现故乡的路，很短，也很长。”</p></blockquote><p>短的是八百米的地理距离，说它长，一个是故乡给了作者创作的愿望和精神情感的寄托；还有是因为与族人的分离，造成了情感上的分割与生活上的分别，看起来不长的距离，却把人分割开来。</p><p>物理上的分别，造成了心灵的隔阂。即使感情还在，长时间生活在不同的环境中，也让人感觉到一丝陌生。就像团聚时的复杂情绪，想到重逢，会欣喜；真正聚在一起，又很难找到共同话题，会惆惘，很煎熬；想从中逃脱开来，又不舍分别。这是人们共有的情况，是不得不接受的现实。</p><p>以前，在我还没理解分别这个词的重量的日子里，我每日沉浸在自己是否拥有真正的友谊的顾虑中，担惊受怕，脆弱。现在，时间缓缓流过，它向我证明那段无法被淹没的友情的存在。我放下心来，却已经错过。</p><p>成熟的人能够接受这些事实，从前的我很幼稚，现在的我也不能说是成熟。但我慢慢接受了这些，接受了窥探朋友圈，用纸笔互道祝福的现状了。这么一看，似乎也挺浪漫。</p><p>我不知道未来我们会走向何方，当下的状态，足以让我心安。</p>]]></content>
-    
-    <summary type="html">
-    
-      和最好的朋友们度过的时光记录
-    
-    </summary>
-    
-    
-      <category term="生活" scheme="http://sxdl.github.io/categories/%E7%94%9F%E6%B4%BB/"/>
-    
-    
-      <category term="记录" scheme="http://sxdl.github.io/tags/%E8%AE%B0%E5%BD%95/"/>
-    
-      <category term="友情" scheme="http://sxdl.github.io/tags/%E5%8F%8B%E6%83%85/"/>
-    
-  </entry>
-  
-  <entry>
     <title>有趣的项目</title>
     <link href="http://sxdl.github.io/2021/08/10/2226/"/>
     <id>http://sxdl.github.io/2021/08/10/2226/</id>
     <published>2021-08-10T14:26:08.000Z</published>
-    <updated>2021-08-10T15:19:09.254Z</updated>
+    <updated>2022-12-20T13:21:55.009Z</updated>
     
     <content type="html"><![CDATA[<blockquote><h1 id="Easy-Bug-Manager"><a href="#Easy-Bug-Manager" class="headerlink" title="Easy Bug Manager"></a><a href="https://github.com/xujiangjiang/Easy-Bug-Manager" target="_blank" rel="noopener">Easy Bug Manager</a></h1></blockquote><ul><li>一个非常可爱的bug管理器，也可以当做一个简单的Todo软件来使用。它可以帮助你记录和管理要做的事情。</li><li>内置1只🦝，和你对话，陪你调试Bug（大白熊调试法）</li></ul><p><img src="/2021/08/10/2226/01.webp" alt loading="lazy"></p><p><img src="/2021/08/10/2226/02.webp" alt loading="lazy"></p><hr><blockquote><h1 id="Easy-Cat-Timer"><a href="#Easy-Cat-Timer" class="headerlink" title="Easy Cat Timer"></a><a href="https://cn.easycattimer.com/" target="_blank" rel="noopener">Easy Cat Timer</a></h1></blockquote><ul><li>一个非常可爱的倒计时器，美中不足的是只能倒计时。</li><li>支持客户端和网页版。</li><li>非常可爱！💖</li><li>非常可爱！💖</li><li>非常可爱！💖</li></ul><p><img src="/2021/08/10/2226/03.png" alt loading="lazy"></p><hr>]]></content>
     
@@ -108,6 +335,40 @@
       
         &lt;h3 id=&quot;八大环境公害事件&quot;&gt;&lt;a href=&quot;#八大环境公害事件&quot; class=&quot;headerlink&quot; title=&quot;八大环境公害事件&quot;&gt;&lt;/a&gt;八大环境公害事件&lt;/h3&gt;&lt;ul&gt;
 &lt;li&gt;&lt;p&gt;&lt;a href=&quot;https://baike.baidu.com/item
+      
+    
+    </summary>
+    
+    
+      <category term="学习笔记" scheme="http://sxdl.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="化学" scheme="http://sxdl.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8C%96%E5%AD%A6/"/>
+    
+    
+      <category term="笔记" scheme="http://sxdl.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="学习" scheme="http://sxdl.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="应用化学" scheme="http://sxdl.github.io/tags/%E5%BA%94%E7%94%A8%E5%8C%96%E5%AD%A6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>应用化学与技能竞赛知识点</title>
+    <link href="http://sxdl.github.io/2021/06/18/%E5%8C%96%E5%AD%A6-%E5%BA%94%E7%94%A8%E5%8C%96%E5%AD%A6%E4%B8%8E%E6%8A%80%E8%83%BD%E7%AB%9E%E8%B5%9B%E7%9F%A5%E8%AF%86%E7%82%B9/"/>
+    <id>http://sxdl.github.io/2021/06/18/%E5%8C%96%E5%AD%A6-%E5%BA%94%E7%94%A8%E5%8C%96%E5%AD%A6%E4%B8%8E%E6%8A%80%E8%83%BD%E7%AB%9E%E8%B5%9B%E7%9F%A5%E8%AF%86%E7%82%B9/</id>
+    <published>2021-06-18T15:09:42.000Z</published>
+    <updated>2022-12-20T13:21:58.222Z</updated>
+    
+    <content type="html"><![CDATA[<p>MOC [[Blog]]</p><hr><h1 id="应用化学与技能竞赛知识点"><a href="#应用化学与技能竞赛知识点" class="headerlink" title="应用化学与技能竞赛知识点"></a>应用化学与技能竞赛知识点</h1><h2 id="一、环境化学"><a href="#一、环境化学" class="headerlink" title="一、环境化学"></a>一、环境化学</h2><h3 id="1、人工降雨"><a href="#1、人工降雨" class="headerlink" title="1、人工降雨"></a>1、人工降雨</h3><blockquote><p><a href="https://wenku.baidu.com/link?url=S-SVpxnNo5CCcfizQ9JIzVsGFQyTJhsK8cXhyaTt6Oc3Q-Ow9AKpOVW6KJS9LaV7TQ4JLJC3AM8btKgzw68gdDsjLdLSG__EjIJPy5Ld3v0FAIWUnH3bLbmQRqn-yoZM" target="_blank" rel="noopener">干冰和碘化银人工降雨的原理</a></p></blockquote><h3 id="2、臭氧层"><a href="#2、臭氧层" class="headerlink" title="2、臭氧层"></a>2、臭氧层</h3><p><strong>能导致臭氧层破坏的气体：</strong><mark>氮氧化物，氟氯烃</mark>（如二氟二氯甲烷CCl<sub>2</sub>F<sub>2​</sub>等），四氯化碳等</p><p><strong>臭氧的应用：</strong></p><ul><li>用来作为生产自来水的消毒剂</li><li>用作水果、蔬菜表面残留农药的降解剂</li><li>医用臭氧治疗仪用来治疗由淋球菌、葡萄球菌、念珠菌等引发的疾病</li></ul><blockquote><p>不可代替氧气帮助危重病人呼吸！<del>病人因吸入过多鱼腥味气体而被臭死</del></p></blockquote><h3 id="3、酸雨"><a href="#3、酸雨" class="headerlink" title="3、酸雨"></a>3、酸雨</h3><p><strong>定义：</strong>pH小于5.6的降水。</p><ul><li>”5.6“是地球上的水与大气中的二氧化碳在室温下达成溶解平衡时水的pH值。</li><li>“pH小于5.6的降水”物理意义是“已经被环境污染物（不包括二氧化碳）污染的水”</li><li>pH介于5.7~6.9之前的水属于非污染水</li></ul><p><strong>导致酸雨的大气污染物：</strong>SO<sub>2</sub>​，NO<sub>x​</sub></p><p><strong>污染物主要来源：</strong>燃烧煤，燃烧石油制品和汽车尾气</p><p><strong>包含的酸性物质：</strong>H<sub>2</sub>CO<sub>3</sub>​，​H<sub>2</sub>SO<sub>4​</sub>，HNO<sub>3</sub>​（后两者是导致降水成为酸雨的酸）</p><p><strong>我国与欧美国家酸雨主要成分的差异：</strong></p><table><thead><tr><th>地区</th><th>酸雨的主要成分</th><th align="center">产生原因</th></tr></thead><tbody><tr><td>中国</td><td>H<sub>2</sub>SO<sub>3</sub>、H<sub>2</sub>SO<sub>4</sub></td><td align="center">我国的燃料结构以煤为主，而煤中含硫，燃烧时产生的大量SO<sub>2</sub>进入大气，SO<sub>2</sub>与大气中的水相遇变成H<sub>2</sub>SO<sub>3</sub>，部分H<sub>2</sub>SO<sub>3</sub>在大气中颗粒物的催化之下氧化成H<sub>2</sub>SO<sub>4</sub>。</td></tr><tr><td>欧美</td><td>HNO<sub>3</sub></td><td align="center">发达国家的汽车过多，汽车的排气管中温度很高，在此条件下混合气体中的O<sub>2</sub>和N<sub>2</sub>部分化合成氮氧化合物进入大气，氮氧化合物在大气中与氧气、水相遇，形成了硝酸。</td></tr></tbody></table><h3 id="4、环保型融雪剂"><a href="#4、环保型融雪剂" class="headerlink" title="4、环保型融雪剂"></a>4、环保型融雪剂</h3><p><strong>原理：</strong>融雪剂溶于水后，使水的冰点降低</p><p><strong>通用融雪剂（氯化钠等无机盐）：</strong>价格便宜，货源充足</p><p><strong>环保型融雪剂：</strong>减轻对路面和桥梁中钢筋的腐蚀和对植物的伤害；融雪残留的产物可促进植物生产，实现二次利用</p><h3 id="5、大气污染"><a href="#5、大气污染" class="headerlink" title="5、大气污染"></a>5、大气污染</h3><table>    <tr>        <th></th>        <th>污染物</th>        <th>如何产生的</th>         <th>对环境的影响</th>    </tr>    <tr>        <td rowspan="5">一次污染物</td>        <td>CO</td>        <td>汽油燃烧不完全</td>        <td>毒气，使人健康受损</td>    </tr>    <tr>        <td>NO</td>        <td>高温的排气管导致N2，O2直接化合</td>        <td>产生二次污染物NO2</td>    </tr>    <tr>        <td>SO2</td>        <td>汽油中含硫的有机物燃烧</td>        <td>导致酸雨；产生二次污染物SO3</td>    </tr>    <tr>        <td>VOC</td>        <td>部分汽油挥发</td>        <td>产生二次污染物O3</td>    </tr>    <tr>        <td>PM</td>        <td>部分汽油碳化所致</td>        <td>导致人民罹患呼吸系统疾病</td>    </tr>    <tr>        <td rowspan="3">二次污染物</td>        <td>NO2</td>        <td>2NO+O2=2NO2</td>        <td>导致酸雨，对人体有毒性</td>    </tr>    <tr>        <td>SO3，H2SO4</td>        <td>2SO2+O2=SO3 </td>        <td>导致酸雨，对人体有毒性</td>    </tr>    <tr>        <td>O3</td>        <td>在阳光，VOC和NO2联合作用下，O2转化成O3</td>        <td>可导致呼吸系统疾病</td>    </tr></table><h2 id="二、绿色化学"><a href="#二、绿色化学" class="headerlink" title="二、绿色化学"></a>二、绿色化学</h2><h3 id="1、绿色化学的核心内容——原子经济性和“5R”原则"><a href="#1、绿色化学的核心内容——原子经济性和“5R”原则" class="headerlink" title="1、绿色化学的核心内容——原子经济性和“5R”原则"></a>1、绿色化学的核心内容——原子经济性和“5R”原则</h3><p><strong>原子经济性原则：</strong>充分利用反应物中的各个原子，从而既能充分利用资源又能防止污染。</p><p><strong>”5R”原则：</strong></p><ul><li>Reduction，减量使用原料，减少实验废弃物的产生和排放</li><li>Reuse，循环使用、重复使用</li><li>Recycling，回收，实现资源的回收利用，从而实现“省资源、少污染，减成本”</li><li>Regeneration，再生，变废为宝，资源和能源再利用，是减少污染的有效途径</li><li>Rejection，拒用有毒有害品，对一些无法替代又无法回收、再生和重复使用的，有毒副作用及会造成污染的原料，拒绝使用，这是杜绝污染的最根本的办法</li></ul><h3 id="2、绿色化学的要点"><a href="#2、绿色化学的要点" class="headerlink" title="2、绿色化学的要点"></a>2、绿色化学的要点</h3><ul><li>物质的循环利用</li><li>废物处理</li><li>原子利用率</li><li>能量的充分利用</li></ul><h2 id="三、食品化学"><a href="#三、食品化学" class="headerlink" title="三、食品化学"></a>三、食品化学</h2><h3 id="1、化学性污染"><a href="#1、化学性污染" class="headerlink" title="1、化学性污染"></a>1、化学性污染</h3><p><strong>福尔马林：</strong>有刺激性气味的无色液体。主要成分是甲醛，它是一种易溶于水的高刺激性有毒气体，具有易燃性及腐蚀性。</p><p><strong>亚硝酸盐：</strong>食入0.3～0.5克的亚硝酸盐即可引起中毒，3克导致死亡</p><blockquote><p><strong>加碘盐：</strong>加入碘酸钾</p></blockquote><p><strong>三聚氰胺：</strong>俗称密胺、蛋白精，对身体有害，不可用于食品加工或食品添加物。</p><h3 id="2、鸡蛋防变质"><a href="#2、鸡蛋防变质" class="headerlink" title="2、鸡蛋防变质"></a>2、鸡蛋防变质</h3><p><strong>石灰水贮藏法：</strong>将鸡蛋浸入石灰水内可以延长鸡蛋的保质时间。</p><p><strong>原理：</strong>石灰呈强碱性，有较强的杀菌作用；Ca(OH)<sub>2</sub>能与鸡蛋呼出的CO<sub>2</sub>反应，生成碳酸钙薄膜，起保护作用。</p><h3 id="3、豆腐"><a href="#3、豆腐" class="headerlink" title="3、豆腐"></a>3、豆腐</h3><p><strong>主要成分：</strong>蛋白质（大豆蛋白质含量非常高）</p><p><strong>传统豆腐生产的基本工艺流程：</strong>大豆——清理——浸泡——磨浆——过滤——煮浆——凝固——成型——成品</p><p><strong>凝聚剂：</strong>石膏；六水氯化镁（可以中和胶体微粒表面吸附的离子的电荷，使蛋白质分子凝聚起来得到豆腐）</p><blockquote><p>氯化钡不能作为豆腐的凝聚剂，因为钡离子会使蛋白质变性。</p></blockquote><h3 id="4、食品添加剂"><a href="#4、食品添加剂" class="headerlink" title="4、食品添加剂"></a>4、食品添加剂</h3><p><strong>主要分类：</strong>防腐剂、抗氧化剂、调味剂、增稠剂、乳化剂、保鲜剂、香料、营养强化剂等</p><p><strong>重大食品添加剂事件：</strong>苏丹红事件，瘦肉精事件，三聚氰胺事件</p><p><strong>食品添加剂必须具备的条件：</strong></p><ol><li>对人体安全无害</li><li>对食品营养成分不起破坏作用</li><li>食品添加剂必须符合国家规定的质量标准，其有害杂质不得超过允许限量</li></ol><blockquote><p>邻苯二甲酸二（2-乙基己基）酯（DEHP）是一种化工原料，多用于塑料制品的增塑剂，<mark>可增加塑料的弹性和韧性</mark>。</p></blockquote><h3 id="5、油条"><a href="#5、油条" class="headerlink" title="5、油条"></a>5、油条</h3><ul><li><strong>油条的制作：</strong>小苏打和明矾</li></ul><blockquote><p>小苏打中CO<sub>3</sub><sup>2-</sup>水解和明矾中Al<sup>3+</sup>水解互相促进，生成CO<sub>2</sub>、H<sub>2</sub>O和Al(OH)<sub>3</sub>；</p><p>总反应方程式：6NaHCO<sub>3</sub> + 2KAl(SO<sub>4</sub>)<sub>2</sub> ·12H<sub>2</sub>O &#8594; K<sub>2</sub>SO<sub>4</sub> + 3Na<sub>2</sub>SO<sub>4</sub> + 2Al(OH)<sub>3</sub>&#8595; + 6CO<sub>2</sub>&#8593; + 12H<sub>2</sub>O</p></blockquote><h3 id="6、食物烹调"><a href="#6、食物烹调" class="headerlink" title="6、食物烹调"></a>6、食物烹调</h3><ul><li>烹调的目的：使食物由生变熟，从而提高食物的消化吸收率。例如食物中的蛋白质经加热变性后，容易消化吸收；改善食物的色、香、味，增进食欲；杀灭食物中存在的有害微生物。</li><li>烹调和饮食的方法及其原因：</li></ul><p>①<strong>食物中各种营养素配合要适当，三餐食物的品种和数量要均衡。</strong> (早餐要吃饱，午餐要吃好，晚餐要吃少。只重视晚餐，忽视早餐的生活习惯不利于健康)。</p><p>②<strong>一日三餐都应进食一定量的蛋白质，不应集中在一餐。每餐食物中应把肉类、豆制品、鱼类和蛋类和米面等合理搭配。</strong>(营养素全面搭配，可发挥“互补作用”，提高吸收率；各种必需氨基酸的比例适当时，吸收利用效果好。)</p><p>③<strong>做面食品、煮粥或炒菜都不要加碱。</strong>(防止维生素B1、维生素C损失。)<br>④<strong>蔬菜要随切随烧</strong>（可防止蔬菜中维生素氧化损失），<strong>随烧随吃，不宜过夜</strong>（蔬菜存放过久，会产生亚硝胺等致癌物)。<br>⑤<strong>蔬菜宜急火快炒，煮时加盖</strong>(减少维生素C等被氧化而损失)。</p><p>⑥<strong>*烧肉宜用文火，不要用急火</strong>(急火烧肉易使肌纤维变硬，不容易煮烂，食后也难于消化。文火烧肉还可使肌溶蛋白、肌肽、肌酸等慢慢溶入汤中，不仅味道鲜美又易吸收。)</p><p>⑦<strong>*煮饭最好用开水，不用生水</strong>(因生水中含有氯气，会使米中维生素B1，B2大量损失。)</p><h3 id="7、脂肪酸"><a href="#7、脂肪酸" class="headerlink" title="7、脂肪酸"></a>7、脂肪酸</h3><ul><li><strong>ω-3脂肪酸和ω-6脂肪酸最佳搭配比例：</strong><mark>1：4</mark></li></ul><h2 id="四、材料化学"><a href="#四、材料化学" class="headerlink" title="四、材料化学"></a>四、材料化学</h2><h3 id="1、人造骨"><a href="#1、人造骨" class="headerlink" title="1、人造骨"></a>1、人造骨</h3><ul><li>人造骨是一种可以替代人骨且具有生物功能的新型无机金属材料，它具有类似于人骨和天然牙的性质和结构。</li><li>人造骨可以依靠从人体体液补充某些离子形成新骨，可在骨骼接合界面发生分解、吸收、析出等反应，实现骨骼牢固结合。人造骨植入人体内需要人体中的Ca<sup>2+</sup>与PO<sub>4</sub><sup>3-</sup>离子形成新骨。</li><li>因为钛可以和人骨密切结合，新的骨头可以贴合在钛上，所以钛是最好的人造骨的材料。</li></ul><h3 id="2、氧化铝"><a href="#2、氧化铝" class="headerlink" title="2、氧化铝"></a>2、氧化铝</h3><ul><li>可以用来制造耐火坩埚、耐火管和耐高温的实验仪器</li></ul><h3 id="3、过氧化钠"><a href="#3、过氧化钠" class="headerlink" title="3、过氧化钠"></a>3、过氧化钠</h3><ul><li>潜水艇在紧急情况下可用过氧化钠供氧</li></ul><h3 id="4、不锈钢"><a href="#4、不锈钢" class="headerlink" title="4、不锈钢"></a>4、不锈钢</h3><ul><li>不锈钢在钢中加入铬、镍等金属，改变内部结构，在金属表面形成稳定的薄膜，因此不锈钢具有较强的抗腐蚀能力。</li></ul><blockquote><p>注意：并不是在钢铁表面镀一层铬。</p></blockquote><h2 id="五、新能源"><a href="#五、新能源" class="headerlink" title="五、新能源"></a>五、新能源</h2><h3 id="1、氢燃料电池"><a href="#1、氢燃料电池" class="headerlink" title="1、氢燃料电池"></a>1、氢燃料电池</h3><blockquote><p>氢燃料电池是将氢气和氧气的化学能直接转换成电能的发电装置。其基本原理是电解水的逆反应，把氢和氧分别供给阳极和阴极，氢通过阳极向外扩散和电解质发生反应后，放出电子通过外部的负载到达阴极。</p></blockquote><p><strong>工作原理：</strong>将氢气送到燃料电池的阳极板（负极），经过催化剂（铂）的作用，氢原子中的一个电子被分离出来，失去电子的氢离子（质子）穿过质子交换膜，到达燃料电池阴极板（正极），而电子是不能通过质子交换膜的，这个电子，只能经外部电路，到达燃料电池阴极板，从而在外电路中产生电流。质子到达阴极板后，与氧原子和氢离子重新结合为水。</p><p><img src="/2021/06/18/%E5%8C%96%E5%AD%A6-%E5%BA%94%E7%94%A8%E5%8C%96%E5%AD%A6%E4%B8%8E%E6%8A%80%E8%83%BD%E7%AB%9E%E8%B5%9B%E7%9F%A5%E8%AF%86%E7%82%B9/_posts/%E5%8C%96%E5%AD%A6-%E5%BA%94%E7%94%A8%E5%8C%96%E5%AD%A6%E4%B8%8E%E6%8A%80%E8%83%BD%E7%AB%9E%E8%B5%9B%E7%9F%A5%E8%AF%86%E7%82%B9/2.jpg" alt loading="lazy"></p><ul><li>燃料电池直接将化学能转化为电能，因此能量利用率比直接以氢气为燃料高</li><li>氢燃料电池工作时不会产生火焰！</li></ul><h2 id="六、元素与生命"><a href="#六、元素与生命" class="headerlink" title="六、元素与生命"></a>六、元素与生命</h2><h3 id="1、氡"><a href="#1、氡" class="headerlink" title="1、氡"></a>1、氡</h3><p>氡元素对应的单质是氡气，为无色、无臭、无味的惰性气体，具有放射性。氡的化学性质不活泼，不易形成化合物。氡没有已知的生物作用。因为氡是放射性气体，当人吸入体内后，氡发生衰变的阿尔法粒子可在人的呼吸系统造成辐射损伤，引发肺癌。</p><p><strong>室内环境中氡的主要来源：</strong></p><ol><li>来自于地下地基土壤。地基土壤的扩散，通过地表和墙体裂缝而进入室内。</li><li>来自于地下水。研究证明，水中氡浓度达到104贝克/立方米时，便是室内的重要氡源。</li><li>来自于室外大气。室外大气中的氡会随着室外空气进入室内。</li><li>来自天然气的燃烧。在烧天然气和液化石油气时，如果室内通风不好，其中的氡全部释放到室内。</li><li>来自于建筑材料和室内装饰材料。特别是一些矿渣砖、炉渣砖等建筑材料（通常都含有不同程度的镭）和那 些含铀高的室内装饰材料，如花岗岩和瓷砖、洁具等。</li></ol><h3 id="2、生命元素"><a href="#2、生命元素" class="headerlink" title="2、生命元素"></a>2、生命元素</h3><p>自然界存在的元素中，有20种左右是构成人体组织、维持生理功能、生化代谢所必须的，称为生命元素。按体内含量的高低可分为<mark>常量元素</mark>和<mark>微量元素</mark></p><p><strong>常量元素：</strong>含量占生物体总质量0.01%以上的元素。如氧、碳、氢、氮、磷、硫、氯、钾、钠、钙和镁。</p><p><strong>微量元素：</strong>占生物体总质量0.01%以下的元素。如铁、铜、锌、钴（Co）、锰、铬（Cr）、硒（Se）、碘、镍、氟、钼（Mo）、钒（V）、锡（Sn）、硅、锶（Sr）、硼、铷（Rb）、砷（As）等。</p><p><strong>污染元素：</strong>存在于生物体内会阻碍生物机体正常代谢过程和影响生理功能的微量元素。如汞、铅、镉（Cd）、铝等</p><h3 id="3、人体必需的营养素"><a href="#3、人体必需的营养素" class="headerlink" title="3、人体必需的营养素"></a>3、人体必需的营养素</h3><ul><li><strong>人体必须的六大营养素包括六大类物质：</strong><mark>碳水化合物，脂肪，蛋白质，无机盐，水，维生素</mark>。</li></ul><h2 id="七、化学兴趣实验"><a href="#七、化学兴趣实验" class="headerlink" title="七、化学兴趣实验"></a>七、化学兴趣实验</h2><h3 id="1、铁粉在空气中燃烧"><a href="#1、铁粉在空气中燃烧" class="headerlink" title="1、铁粉在空气中燃烧"></a>1、铁粉在空气中燃烧</h3><p>铁粉与空气充分接触，可以燃烧。。。火星四射。</p><h3 id="2、盐酸与碳酸钠"><a href="#2、盐酸与碳酸钠" class="headerlink" title="2、盐酸与碳酸钠"></a>2、盐酸与碳酸钠</h3><p><strong>盐酸过量：</strong>2HCl + Na<sub>2</sub>CO<sub>3</sub> &#8594; H<sub>2</sub>O + CO<sub>2</sub>&#8593; + 2NaCl</p><p><strong>碳酸钠过量：</strong>Na<sub>2</sub>CO<sub>3</sub> + HCl  &#8594; NaHCO<sub>3</sub> + NaCl；NaHCO<sub>3</sub> + HCl &#8594; NaCl + H<sub>2</sub>O + CO<sub>2</sub>&#8593;</p><h3 id="3、电解饱和食盐水"><a href="#3、电解饱和食盐水" class="headerlink" title="3、电解饱和食盐水"></a>3、电解饱和食盐水</h3><p>见课本→_→</p><h3 id="4、向碘化钾溶液中滴入氯化铁溶液（碘化钾过量）"><a href="#4、向碘化钾溶液中滴入氯化铁溶液（碘化钾过量）" class="headerlink" title="4、向碘化钾溶液中滴入氯化铁溶液（碘化钾过量）"></a>4、向碘化钾溶液中滴入氯化铁溶液（碘化钾过量）</h3><p>2KI + 2FeCl<sub>3</sub> &#8644; I<sub>2</sub> + 2FeCl<sub>2</sub> + 2KCl</p><p><strong>证明发生<mark>可逆反应</mark>的现象：</strong></p><ol><li>证明正反应发生：能使淀粉溶液呈现蓝色（I<sub>2</sub>​)</li><li>证明逆反应发生：加入NH<sub>4</sub>SCN​试剂，溶液变为血红色（Fe<sup>3+</sup>）</li></ol><h3 id="5、化学试剂分级"><a href="#5、化学试剂分级" class="headerlink" title="5、化学试剂分级"></a>5、化学试剂分级</h3><p><strong>按纯度高低：</strong></p><table><thead><tr><th>试剂级别</th><th>级别名称</th><th>英文名称</th><th>缩写符号</th><th>标签颜色</th><th>用途</th></tr></thead><tbody><tr><td>一级</td><td>优级纯（保证试剂）</td><td>Guaranteed Reagent</td><td>G.R.</td><td>绿色</td><td>主成分含量很高、纯度很高，适用于精确分析和研究工作。</td></tr><tr><td>二级</td><td>分析纯（分析试剂）</td><td>Analytical Reagent</td><td>A.R.</td><td>红色</td><td>主成分含量很高、纯度较高，干扰杂质很低，适用于工业分析及化学实验。这个是一般实验室用的最多的等级。</td></tr><tr><td>三级</td><td>化学纯</td><td>Chemical Pure</td><td>C.P.</td><td>蓝色</td><td>主成分含量高、纯度较高，存在干扰杂质，适用于化学实验和合成制备。</td></tr><tr><td>四级</td><td>实验试剂</td><td>Laboratory Reagent</td><td>L.R.</td><td>棕色</td><td>主成分含量高，纯度较差，杂质含量不做选择，只适用于一般化学实验和合成制备。</td></tr></tbody></table><p>无论做化学实验或进行化学研究，试剂级别的选择都必须得当。如果选择的试剂级别过高，会造成<mark>物质资源浪费，经费开支提高</mark>；反之，若选择级别过低，则会造成<mark>过多的杂质对实验产生干扰，导致实验出现差错或失败</mark>。</p><p><strong>按用途分级：</strong></p><table><thead><tr><th>级别名称</th><th>英文名称</th><th>缩写符号</th><th>用途</th></tr></thead><tbody><tr><td>色谱纯</td><td>Gas Chromatography（气相色谱）/Liquid Chromatography（液相色谱）</td><td>G.C./L.C.</td><td>气相色谱、液相色谱分析专用。质量指标注重干扰色谱峰的杂质。主成分含量高。</td></tr><tr><td>指示剂</td><td>Indicator</td><td>I.D.</td><td>配制指示溶液用。质量指标为变色范围和变色敏感程度。</td></tr><tr><td>生物试剂</td><td>Biological Reagent</td><td>B.R.</td><td>配制生物化学检验试液和生化合成。质量指标注重生物活性杂质。可替代指示剂，可用于有机合成。</td></tr><tr><td>光谱纯</td><td>Spectrum Pure</td><td>S.P.</td><td>用于光谱分析。分别适用于分光光度计标准品、原子吸收光谱标准品、原子发射光谱标准品。</td></tr></tbody></table><h3 id="6、浓硝酸的一种实验室制法"><a href="#6、浓硝酸的一种实验室制法" class="headerlink" title="6、浓硝酸的一种实验室制法"></a>6、浓硝酸的一种实验室制法</h3><p><strong>实验装置：</strong><img src="/2021/06/18/%E5%8C%96%E5%AD%A6-%E5%BA%94%E7%94%A8%E5%8C%96%E5%AD%A6%E4%B8%8E%E6%8A%80%E8%83%BD%E7%AB%9E%E8%B5%9B%E7%9F%A5%E8%AF%86%E7%82%B9/_posts/%E5%8C%96%E5%AD%A6-%E5%BA%94%E7%94%A8%E5%8C%96%E5%AD%A6%E4%B8%8E%E6%8A%80%E8%83%BD%E7%AB%9E%E8%B5%9B%E7%9F%A5%E8%AF%86%E7%82%B9/1.png" alt loading="lazy"></p><p><strong>实验步骤：</strong>连接装置，在曲颈甑里加入30g固体硝酸钾和25mL75%的硫酸（密度1.67g/mL），小心加热。数分钟后，在用水冷却的烧瓶中收集到的液体即为浓硝酸。</p><p><strong>反应方程式：</strong>KNO<sub>3</sub> + H<sub>2</sub>SO<sub>4</sub> &#8594; HNO<sub>3</sub> + KHSO<sub>4</sub></p><p><strong>使用曲颈甑的好处：</strong>曲颈甑具有反应容器的作用，又附带导气管的作用，可以免去玻璃导管、橡皮管等连接件，使装置简单方便；由于浓硝酸可对橡皮塞、将皮管、乳胶管等起腐蚀作用，因此使用曲颈甑制得的硝酸更浓、更纯净。</p><p><strong>反应温度不宜过高：</strong>硝酸受热易分解，导致产物损失；生成的氮氧化物导致环境污染。</p><p><strong>产物带有浅黄色：</strong>硝酸中溶有少量二氧化氮。将浓硝酸略加稀释，二氧化氮转化为硝酸可使溶液褪色。但浓度会有所下降。</p><p><strong>实验装置缺点：</strong>没有交代如何防止氮氧化物的外泄。</p><h3 id="7、蛋白质遇浓硝酸变为黄色"><a href="#7、蛋白质遇浓硝酸变为黄色" class="headerlink" title="7、蛋白质遇浓硝酸变为黄色"></a>7、蛋白质遇浓硝酸变为黄色</h3><p><mark>是因为浓硝酸与苯环发生硝化显黄色</mark>or<mark>强酸使蛋白质变性而变色？</mark></p><h3 id="8、溴化银见光分解"><a href="#8、溴化银见光分解" class="headerlink" title="8、溴化银见光分解"></a>8、溴化银见光分解</h3><p>2AgBr &#8594; 2Ag + Br<sub>2</sub>，银是黑色的。</p><h3 id="9、热的氧化铜与乙醇"><a href="#9、热的氧化铜与乙醇" class="headerlink" title="9、热的氧化铜与乙醇"></a>9、热的氧化铜与乙醇</h3><p><mark>其实就是乙醇的催化氧化，这只是后一半反应而已=_=</mark></p><h3 id="10、化学仪器"><a href="#10、化学仪器" class="headerlink" title="10、化学仪器"></a>10、化学仪器</h3><h4 id="曲颈瓶（曲颈甑）"><a href="#曲颈瓶（曲颈甑）" class="headerlink" title="曲颈瓶（曲颈甑）"></a>曲颈瓶（曲颈甑）</h4><p><strong>优点：</strong>曲颈瓶的最大优点是结构简单，它可通过接受器与玻璃容器相连，或直接与斜置烧瓶相连，其间不需橡胶塞或橡胶管连给，所以耐腐蚀。</p><p><img src="/2021/06/18/%E5%8C%96%E5%AD%A6-%E5%BA%94%E7%94%A8%E5%8C%96%E5%AD%A6%E4%B8%8E%E6%8A%80%E8%83%BD%E7%AB%9E%E8%B5%9B%E7%9F%A5%E8%AF%86%E7%82%B9/_posts/%E5%8C%96%E5%AD%A6-%E5%BA%94%E7%94%A8%E5%8C%96%E5%AD%A6%E4%B8%8E%E6%8A%80%E8%83%BD%E7%AB%9E%E8%B5%9B%E7%9F%A5%E8%AF%86%E7%82%B9/4.jpg" alt loading="lazy"></p><h4 id="泥三角"><a href="#泥三角" class="headerlink" title="泥三角"></a>泥三角</h4><p>用来支撑坩埚以利加热，防止炸裂。</p><p><img src="/2021/06/18/%E5%8C%96%E5%AD%A6-%E5%BA%94%E7%94%A8%E5%8C%96%E5%AD%A6%E4%B8%8E%E6%8A%80%E8%83%BD%E7%AB%9E%E8%B5%9B%E7%9F%A5%E8%AF%86%E7%82%B9/_posts/%E5%8C%96%E5%AD%A6-%E5%BA%94%E7%94%A8%E5%8C%96%E5%AD%A6%E4%B8%8E%E6%8A%80%E8%83%BD%E7%AB%9E%E8%B5%9B%E7%9F%A5%E8%AF%86%E7%82%B9/5.jpg" alt loading="lazy"></p><h3 id="11、制取硫化铝"><a href="#11、制取硫化铝" class="headerlink" title="11、制取硫化铝"></a>11、制取硫化铝</h3><ul><li><strong>干法制取（硫和铝粉混合加热）：</strong>硫化铝在水中发生双水解，完全水解生成Al(OH)<sub>3</sub>和H<sub>2</sub>S</li></ul><h3 id="12、氟化铵的保存"><a href="#12、氟化铵的保存" class="headerlink" title="12、氟化铵的保存"></a>12、氟化铵的保存</h3><ul><li><strong>不能保存在玻璃瓶中：</strong>氟化铵水解产生的HF会腐蚀玻璃。</li></ul><h3 id="13、铜及其氧化物和硝酸"><a href="#13、铜及其氧化物和硝酸" class="headerlink" title="13、铜及其氧化物和硝酸"></a>13、铜及其氧化物和硝酸</h3><h2 id="八、洗涤剂"><a href="#八、洗涤剂" class="headerlink" title="八、洗涤剂"></a>八、洗涤剂</h2><h3 id="1、合成洗涤剂"><a href="#1、合成洗涤剂" class="headerlink" title="1、合成洗涤剂"></a>1、合成洗涤剂</h3><p><strong>组成：</strong>表面活性剂，多种辅助剂</p><p><strong>基本种类：</strong>加酶洗涤剂，低磷洗涤剂，荧光增白剂，4A沸石高聚物洗涤剂</p><ul><li>酶是一种活性成分，70℃以上死亡，所以使用加酶洗涤剂，水温不能超过70℃，否则使效力降低。最好40℃。对于血迹、奶渍、汗腺分泌物及各种蛋白质食品等污垢都有着良好的清除效果</li></ul><ul><li>含磷洗涤剂对于污垢的清除十分有效，但污水会导致江河富营养化，导致水生植物疯长，污染水质。水中氧气耗尽，鱼虾死亡，水发臭。</li></ul><ul><li>荧光增白剂就是白色染料，可以吸收紫外线，并释放出蓝紫色或者蓝色有机化合物，在其中加入荧光增白剂可以提升衣服的光泽和白度，其洗涤原理是在洗涤剂中加入适量的荧光增白剂，这些增白剂会附着在衣服上，并吸收不可见紫外光，将其转化为可见光，这可以有效提升衣服的反射率。由于反射出可见光，那么反射光强度可以得到有效的增强，因此，从视觉上来看，就达到了增白的效果。另外根据光源上互补色的原理，织物含有色物质而泛黄以及经多次洗涤后织物逐渐泛黄，荧光增白剂发出的蓝色或紫色与黄色为互补色，可抵消织物原有的黄色，使之洁白。</li></ul><ul><li>4A沸石高聚物具有很强的除污功能，同时对环境的破坏性极低，对于衣物上的污垢清除效果非常好，同时在产生大量的泡沫之后，可以直接被消除消化，同时不会对人体造成伤害。</li></ul><p><strong>表面活性剂：</strong>是能使目标溶液表面张力显著下降的物质。具有固定的亲水亲油基团，在溶液的表面能定向排列。</p><ul><li>表面活性剂的分子结构具有两性：一端为<code>亲水基团</code>，另一端为<code>疏水基团</code>（<code>亲油机团</code>）；亲水基团常为极性基团（如-OH、     -COOH、-SO<sub>3</sub>H、-NH<sub>2</sub>等）；疏水基团常为非极性烃链（如8个碳原子以上烃链）。表面活性剂的这种特有结构通常称之为“<code>双亲结构</code>”（amphiphilic structure），表面活性剂分子因而也常被称作“<code>双亲分子</code>”。</li></ul><ul><li>表面活性剂分为<code>离子型表面活性剂</code>（包括<code>阳离子表面活性剂</code>与<code>阴离子表面活性剂</code>）、<code>非离子型表面活性剂</code>、<code>两性表面活性剂</code>、复配表面活性剂、其他表面活性剂等。</li><li><mark>表面活性剂被称为“工业味精”</mark></li><li>表面活性剂是从20世纪<mark>50</mark>年代开始随着<mark>石油工业</mark>的飞速发展而兴起的一种新型<mark>化学品</mark>，是精细化工的重要产品，享有<mark>“工业味精”</mark>的美称。它几乎渗透到一切经济领域。当今，表面活性剂产量大，品种<mark>逾万</mark>种。随着世界经济的发展以及科学技术领域的开拓，表面活性剂的发展更加迅猛，其应用领域从日用化学工业发展到<mark>石油、食品、农业、卫生、环境、新型材料</mark>等技术部门。</li></ul><p><strong>阴离子表面活性剂：</strong>在水中解离后，具有的表面活性的是阴离子。（硬脂酸，对十二烷基苯磺酸钠）</p><p><strong>阳离子表面活性剂：</strong>起作用的部分是阳离子（季铵化物）</p><p><strong>两性表面活性剂：</strong>分子结构中同时具有正、负电荷集团，在不同<code>pH</code>值介质中可表现出阳离子或阴离子表面活性剂的性质（卵磷脂，氨基酸型，甜菜碱型）</p><p><strong>非离子表面活性剂：</strong>水中不电离（烷基葡糖苷（APG），脂肪酸甘油酯，脂肪酸山梨坦（司盘），聚山梨酯（吐温））</p><h3 id="2、合成洗衣粉"><a href="#2、合成洗衣粉" class="headerlink" title="2、合成洗衣粉"></a>2、合成洗衣粉</h3><p><strong>合成洗衣粉各成分的作用：</strong></p><table><thead><tr><th>成分</th><th>作用</th></tr></thead><tbody><tr><td>十二烷基苯磺酸钠</td><td>表面活性剂，起除垢作用</td></tr><tr><td>硫酸钠</td><td>防结块的填料</td></tr><tr><td>羧甲基纤维素钠</td><td>抗再沉积剂，防止污垢再沉积</td></tr><tr><td>三聚磷酸钠</td><td>①软水剂，去除Ca<sup>2+</sup>，Mg<sup>2+</sup>及重金属离子；②对脂肪微粒有分散、乳化作用；③能提高织物洗涤后的白度（==主要助剂==）</td></tr><tr><td>A型沸石</td><td>软水剂，去除Ca<sup>2+</sup>，Mg<sup>2+</sup>及重金属离子</td></tr><tr><td>硅酸钠</td><td>填料，抗腐蚀作用，缓冲作用</td></tr><tr><td>过硼酸钠</td><td>漂白剂，起氧化、漂白、去渍作用</td></tr><tr><td>荧光增白剂</td><td>使织物增加白度</td></tr><tr><td>蛋白酶</td><td>清除血迹、奶渍、汗腺分泌物及各种蛋白质食品等污垢（不能用于洗涤丝、毛类织物）</td></tr></tbody></table><ul><li><strong>对十二烷基苯磺酸钠：</strong>阴离子表面活性剂，在水中溶解型好，并具有很好的<mark>脱脂</mark>能力、有很好的降低水的<mark>表面张力</mark>和<mark>润滑</mark>、<mark>渗透</mark>、<mark>乳化</mark>的性能。</li></ul><p><img src="/2021/06/18/%E5%8C%96%E5%AD%A6-%E5%BA%94%E7%94%A8%E5%8C%96%E5%AD%A6%E4%B8%8E%E6%8A%80%E8%83%BD%E7%AB%9E%E8%B5%9B%E7%9F%A5%E8%AF%86%E7%82%B9/_posts/%E5%8C%96%E5%AD%A6-%E5%BA%94%E7%94%A8%E5%8C%96%E5%AD%A6%E4%B8%8E%E6%8A%80%E8%83%BD%E7%AB%9E%E8%B5%9B%E7%9F%A5%E8%AF%86%E7%82%B9/6.jpg" alt="对十二烷基苯磺酸钠" loading="lazy"></p><ul><li><strong>若要洗涤丝、毛等高档质料的衣物，应该选择的洗涤剂中不含有</strong><mark><strong>碳酸钠和碱性蛋白酶</strong></mark>。</li></ul><h2 id="九、其他相关知识"><a href="#九、其他相关知识" class="headerlink" title="九、其他相关知识"></a>九、其他相关知识</h2><h3 id="1、杂化轨道理论"><a href="#1、杂化轨道理论" class="headerlink" title="1、杂化轨道理论"></a>1、杂化轨道理论</h3><p>详见《高中化学竞赛教程 第一分册》</p><h3 id="2、氢键"><a href="#2、氢键" class="headerlink" title="2、氢键"></a>2、氢键</h3><ul><li>氢键不同于范德华力，它具有饱和性和方向性。由于氢原子特别小而原子A和B比较大，所以A—H中的氢原子只能和一个B原子结合形成氢键。同时由于负离子之间的相互排斥，另一个电负性大的原子B′就难于再接近氢原子，这就是氢键的饱和性。氢键具有方向性则是由于电偶极矩A—H与原子B的相互作用，只有当A—H…B在同一条直线上时最强，同时原子B一般含有未共用电子对，在可能范围内氢键的方向和未共用电子对的对称轴一致，这样可使原子B中负电荷分布最多的部分最接近氢原子，这样形成的氢键最稳定。</li></ul><blockquote><p>NH<sub>3</sub>与H<sub>2</sub>O之间存在氢键，导致了氨气在水中的惊人溶解度：1体积水中可溶解700体积氨气。</p></blockquote><p><img src="/2021/06/18/%E5%8C%96%E5%AD%A6-%E5%BA%94%E7%94%A8%E5%8C%96%E5%AD%A6%E4%B8%8E%E6%8A%80%E8%83%BD%E7%AB%9E%E8%B5%9B%E7%9F%A5%E8%AF%86%E7%82%B9/_posts/%E5%8C%96%E5%AD%A6-%E5%BA%94%E7%94%A8%E5%8C%96%E5%AD%A6%E4%B8%8E%E6%8A%80%E8%83%BD%E7%AB%9E%E8%B5%9B%E7%9F%A5%E8%AF%86%E7%82%B9/3.jpg" alt loading="lazy"></p><h3 id="3、过度元素"><a href="#3、过度元素" class="headerlink" title="3、过度元素"></a>3、过度元素</h3><p>详见《精英化学》9-2过度元素</p><h3 id="4、配位化合物"><a href="#4、配位化合物" class="headerlink" title="4、配位化合物"></a>4、配位化合物</h3><p>详见《精英化学》9-1配位化合物</p><h3 id="5、电解质溶液中三大守恒关系"><a href="#5、电解质溶液中三大守恒关系" class="headerlink" title="5、电解质溶液中三大守恒关系"></a>5、电解质溶液中三大守恒关系</h3><ul><li><p><mark>电荷守恒</mark>、<mark>物料守恒</mark>、<mark>质子守恒</mark></p><blockquote><p>物料守恒是指溶液中某一组分的原始浓度应该等于它在溶液中各种存在形式的浓度之和。也就是元素守恒（原子守恒），变化前后某种元素的原子个数守恒不变。</p><p>质子守恒，是指酸失去的质子和碱得到的质子数目相同。</p></blockquote></li></ul><h3 id="6、酚和苯胺"><a href="#6、酚和苯胺" class="headerlink" title="6、酚和苯胺"></a>6、酚和苯胺</h3><p>详见《精英化学》12-6酚和苯胺</p><h3 id="7、晶体结构"><a href="#7、晶体结构" class="headerlink" title="7、晶体结构"></a>7、晶体结构</h3><p>离子型晶体，晶胞，晶体类型等</p><ul><li>自然界存在的固态物质可分为晶体和非晶体两大类。固态的金属与合金大都是<mark>晶体</mark>。晶体与非晶体的本质区别在于组成晶体的<mark>原子</mark>等，晶体中质点是<mark>规则排列的</mark>，而非晶体中质点基本上是<mark>无规则的堆积在一起</mark>。晶体结构是决定固态金属的<mark>物理、化学</mark>和<mark>力学性能</mark>的基本因素之一。从宏观上看，晶体都有<mark>独特的、呈对称性的形状</mark>，如食盐呈立方体；冰呈六角棱柱体；明矾呈八面体等。而非晶体的外形则是不规则的。晶体在不同的方向上有<mark>不同的</mark>物理性质，如<mark>机械强度、导热性、热膨胀、导电性</mark>等，称为<mark>各向异性</mark>。而非晶体的物理性质却表现为<mark>各向同性</mark>。晶体有固定的<mark>熔点</mark>，而非晶体没有<mark>固定的熔点</mark>。</li><li><strong>各向异性：</strong>各向异性是指物质的全部或部分化学、物理等性质随着方向的改变而有所变化，在不同的方向上呈现出差异的性质。</li><li><strong>各向同性：</strong>各向同性指物体的物理、化学等方面的性质不会因方向的不同而有所变化的特性，即某一物体在不同的方向所测得的性能数值完全相同，亦称均质性。</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;MOC [[Blog]]&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1 id=&quot;应用化学与技能竞赛知识点&quot;&gt;&lt;a href=&quot;#应用化学与技能竞赛知识点&quot; class=&quot;headerlink&quot; title=&quot;应用化学与技能竞赛知识点&quot;&gt;&lt;/a&gt;应用化学与技能竞赛知识点&lt;/h1&gt;&lt;h2 id=&quot;
       
     
     </summary>
@@ -164,7 +425,7 @@
     <link href="http://sxdl.github.io/2020/09/21/200921/"/>
     <id>http://sxdl.github.io/2020/09/21/200921/</id>
     <published>2020-09-21T13:04:08.000Z</published>
-    <updated>2020-09-21T13:08:33.726Z</updated>
+    <updated>2022-12-15T10:22:45.753Z</updated>
     
     <content type="html"><![CDATA[<h2 id><a href="#" class="headerlink" title></a></h2>]]></content>
     
@@ -317,7 +578,7 @@
     <link href="http://sxdl.github.io/2020/07/31/200731/"/>
     <id>http://sxdl.github.io/2020/07/31/200731/</id>
     <published>2020-07-31T14:34:29.000Z</published>
-    <updated>2020-07-31T14:40:35.442Z</updated>
+    <updated>2023-08-02T08:55:44.284Z</updated>
     
     <content type="html"><![CDATA[<p><strong>没有人会拿着自己的失败津津乐道，如果有，那他可能是太需要被安慰了吧。</strong></p>]]></content>
     
@@ -334,183 +595,6 @@
       <category term="随笔" scheme="http://sxdl.github.io/tags/%E9%9A%8F%E7%AC%94/"/>
     
       <category term="短句" scheme="http://sxdl.github.io/tags/%E7%9F%AD%E5%8F%A5/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>C++获取文件夹下所有文件名</title>
-    <link href="http://sxdl.github.io/2020/07/29/200729/"/>
-    <id>http://sxdl.github.io/2020/07/29/200729/</id>
-    <published>2020-07-29T07:05:38.000Z</published>
-    <updated>2020-07-29T10:09:30.059Z</updated>
-    
-    <content type="html"><![CDATA[<p>因为我觉得相册发图片的方式太麻烦，准备自己加一个辅助程序，就用我比较熟悉的C++来实现，这个函数比较常用，记录以备忘。</p><h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;io.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">const</span> <span class="keyword">char</span> *to_search=<span class="string">"C:\\WINDOWS\\*.exe"</span>;    <span class="comment">//欲查找的文件，支持通配符</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">long</span> handle;                               <span class="comment">//用于查找的句柄</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> _<span class="title">finddata_t</span> <span class="title">fileinfo</span>;</span>               <span class="comment">//文件信息的结构体</span></span><br><span class="line">    handle=_findfirst(to_search,&amp;fileinfo);    <span class="comment">//第一次查找</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="number">-1</span>==handle)<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%s\n"</span>,fileinfo.name);              <span class="comment">//打印出找到的文件的文件名</span></span><br><span class="line">    <span class="keyword">while</span>(!_findnext(handle,&amp;fileinfo))        <span class="comment">//循环查找其他符合的文件，知道找不到其他的为止</span></span><br><span class="line">    &#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"%s\n"</span>,fileinfo.name);</span><br><span class="line">    &#125;</span><br><span class="line">    _findclose(handle);                        <span class="comment">//别忘了关闭句柄</span></span><br><span class="line">    system(<span class="string">"pause"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="函数包装"><a href="#函数包装" class="headerlink" title="函数包装"></a>函数包装</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getFileName</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *to_search, <span class="keyword">char</span> output[][<span class="number">1024</span>])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">long</span> handle;                                 <span class="comment">//用于查找的句柄</span></span><br><span class="line">    <span class="keyword">int</span> counter = <span class="number">1</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> _<span class="title">finddata_t</span> <span class="title">fileinfo</span>;</span>                 <span class="comment">//文件信息的结构体</span></span><br><span class="line">    handle=_findfirst(to_search,&amp;fileinfo);      <span class="comment">//第一次查找</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="number">-1</span>==handle) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    <span class="comment">//printf("%s\n",fileinfo.name);              //打印出找到的文件的文件名</span></span><br><span class="line">    <span class="built_in">sprintf</span>(output[<span class="number">0</span>], <span class="string">"%s"</span>, fileinfo.name);     <span class="comment">//保存找到的文件的文件名</span></span><br><span class="line"><span class="keyword">while</span>(!_findnext(handle,&amp;fileinfo))          <span class="comment">//循环查找其他符合的文件，知道找不到其他的为止</span></span><br><span class="line">    &#123;</span><br><span class="line"><span class="comment">//printf("%s\n",fileinfo.name);</span></span><br><span class="line"><span class="built_in">sprintf</span>(output[counter], <span class="string">"%s"</span>, fileinfo.name);</span><br><span class="line">counter++;</span><br><span class="line">    &#125;</span><br><span class="line">    _findclose(handle);                          <span class="comment">//别忘了关闭句柄</span></span><br><span class="line">    <span class="keyword">return</span> counter;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><blockquote><p>参考：<a href="https://www.cnblogs.com/fnlingnzb-learner/p/6424563.html" target="_blank" rel="noopener">https://www.cnblogs.com/fnlingnzb-learner/p/6424563.html</a></p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;因为我觉得相册发图片的方式太麻烦，准备自己加一个辅助程序，就用我比较熟悉的C++来实现，这个函数比较常用，记录以备忘。&lt;/p&gt;
-&lt;h2 id=&quot;代码实现&quot;&gt;&lt;a href=&quot;#代码实现&quot; class=&quot;headerlink&quot; title=&quot;代码实现&quot;&gt;&lt;/a&gt;代码实现&lt;/h
-      
-    
-    </summary>
-    
-    
-      <category term="经验分享" scheme="http://sxdl.github.io/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/"/>
-    
-    
-      <category term="C++" scheme="http://sxdl.github.io/tags/C/"/>
-    
-      <category term="笔记" scheme="http://sxdl.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>相册外链图片无法正常加载的解决方案</title>
-    <link href="http://sxdl.github.io/2020/07/28/%E7%9B%B8%E5%86%8C%E5%A4%96%E9%93%BE%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%AD%A3%E5%B8%B8%E5%8A%A0%E8%BD%BD%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
-    <id>http://sxdl.github.io/2020/07/28/%E7%9B%B8%E5%86%8C%E5%A4%96%E9%93%BE%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%AD%A3%E5%B8%B8%E5%8A%A0%E8%BD%BD%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</id>
-    <published>2020-07-28T04:48:16.000Z</published>
-    <updated>2020-07-28T05:54:29.862Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>在使用<code>yun</code>主题中的相册功能，会发现相册图片外链链接无法加载的问题，<code>url</code>正确，链接有效。</p><p><img src="/2020/07/28/%E7%9B%B8%E5%86%8C%E5%A4%96%E9%93%BE%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%AD%A3%E5%B8%B8%E5%8A%A0%E8%BD%BD%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/1.png" alt="类似如下情况" loading="lazy"></p><h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>在<code>&lt;head&gt;</code>中加入<code>&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;/&gt;</code>标签，重新加载图片成功。</p><p><code>yun</code>主题在<code>layout.pug</code>中对应位置加入<code>meta</code>标签即可</p><blockquote><p>参考：<a href="https://www.cnblogs.com/guozhaoxin/p/11934483.html" target="_blank" rel="noopener">https://www.cnblogs.com/guozhaoxin/p/11934483.html</a></p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      使用yun主题相册功能无法正常加载图片
-    
-    </summary>
-    
-    
-      <category term="经验分享" scheme="http://sxdl.github.io/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/"/>
-    
-    
-      <category term="调试" scheme="http://sxdl.github.io/tags/%E8%B0%83%E8%AF%95/"/>
-    
-      <category term="hexo" scheme="http://sxdl.github.io/tags/hexo/"/>
-    
-      <category term="相册" scheme="http://sxdl.github.io/tags/%E7%9B%B8%E5%86%8C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>python爬虫——konachan壁纸</title>
-    <link href="http://sxdl.github.io/2020/07/27/python%E7%88%AC%E8%99%ABkonachan%E5%A3%81%E7%BA%B8/"/>
-    <id>http://sxdl.github.io/2020/07/27/python%E7%88%AC%E8%99%ABkonachan%E5%A3%81%E7%BA%B8/</id>
-    <published>2020-07-27T15:50:02.000Z</published>
-    <updated>2020-07-27T16:29:55.347Z</updated>
-    
-    <content type="html"><![CDATA[<p>前面主要都是在讲白话，大佬们请自行跳到最后的代码部分</p><h2 id="关于konachan"><a href="#关于konachan" class="headerlink" title="关于konachan"></a>关于konachan</h2><ul><li><p>这是一个动漫壁纸资源网站，你可以通过指定标签来检索你想要的图片</p></li><li><p>绅士必备知识：<code>konachan</code>的所有图片有三个<code>rating</code>：<code>save</code>,<code>questionable</code>,<code>explicit</code>,<code>save</code>是正常的图片，另外两个就是和谐图啦。K站到目前为止，总共收录将近30万张图片，但是如果通过某度的链接进入K站，只能看到<code>save</code>图，却看不到和谐图。实际上，<code>Konachan</code> 有两个网址，一个网址会屏蔽掉一些图片而另一个则是全的。应该登哪个，就不用我多说了吧[滑稽]。</p></li></ul><p><img src="/2020/07/27/python%E7%88%AC%E8%99%ABkonachan%E5%A3%81%E7%BA%B8/1.png" alt="konachan主页" loading="lazy"></p><blockquote><p><a href="https://konachan.net" target="_blank" rel="noopener">https://konachan.net</a></p><p><a href="https://konachan.com" target="_blank" rel="noopener">https://konachan.com</a></p></blockquote><ul><li>看到那个白色的输入框了吗？想搜什么直接搜就可以了。当然，<code>konachan</code>不支持中文，你得先转成罗马音或英文。</li><li>一些特殊的检索方式。如<code>id``rating:``order:</code>等，详见<a href="https://konachan.net/help/cheatsheet" target="_blank" rel="noopener">官方教程</a></li></ul><h2 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h2><p><code>konachan</code>已经了解了之后，那么我们这个爬虫将要实现什么高级的功能呢？</p><p><img src="/2020/07/27/python%E7%88%AC%E8%99%ABkonachan%E5%A3%81%E7%BA%B8/2.png" alt="目前konachan最新的save图数据" loading="lazy"></p><p>这是我现在能看到<code>konachan</code>最新的图片的数据，<code>id</code>是<code>311769</code>，发布时间在四个小时以前。emmm其实最新的图发在三个小时前，只因为它是<code>questionable</code>没有考虑进去//////</p><p>你现在一定很想看到它的内容，现在我们手上只有一个<code>id</code>，但是足够了，只要知道图片的<code>id</code>，我们就能访问它的<code>URL</code>（统一资源定位器）来找到它。只要按照下面格式输入，就能找到任意<code>id</code>对应的图片。</p><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">https:&#x2F;&#x2F;konachan.com&#x2F;post&#x2F;show&#x2F;id</span><br></pre></td></tr></table></figure><p>其中<code>id</code>就是需要查找的图片<code>id</code></p><p>比如我们这个<code>id``311769</code>，它的位置就是</p><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">https:&#x2F;&#x2F;konachan.com&#x2F;post&#x2F;show&#x2F;311769</span><br></pre></td></tr></table></figure><p>输入网址就可以找到它啦。</p><p>别急着右键下载，因为这并不是最清晰的，我们可以在左侧下方看到有<code>PNG</code>格式的下载地址。</p><p><img src="/2020/07/27/python%E7%88%AC%E8%99%ABkonachan%E5%A3%81%E7%BA%B8/3.png" alt loading="lazy"></p><p>如果你点进去了，你会发现它的<code>URL</code>地址是这丫子的：</p><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">https:&#x2F;&#x2F;konachan.net&#x2F;image&#x2F;767d463dbb05de49ae4c06c9f0bfa9a5&#x2F;Konachan.com%20-%20311769%20eho_%28icbm%29%20remilia_scarlet%20touhou.png</span><br></pre></td></tr></table></figure><p>???????????</p><p>这张高清图片的地址包含了它的标签，也就是说，我们没法直接通过<code>id</code>访问它。</p><p>就这？</p><p>也许如果自己动手，会丰衣足食，但是，要获取一张高清壁纸，需要三步，你得先进入图片展示页面，点击下载链接，等待页面跳转后，才能下载。emmm感觉还好，也许你输网址加上等待的时间大概有六七秒的样子，如果用爬虫的话，只要不到一秒的时间。我硬盘里现在大约有3万张壁纸，节省下来的时间就可以用来折腾网站了）））</p><p>那么我们现在需要一个程序来帮助我们完成刚刚的操作，我们只需要输入<code>id</code>然后一张高清壁纸就在文件夹下躺着啦。</p><h2 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h2><p>我们来理理思路，因为高清图片的地址通过简单的算法来生成直接访问，我们需要一个跳板，就是展示页面，然后在这个页面找到带有高清图片的地址，就能下载图片了。图我就不画了，应该听清楚的。</p><h3 id="连接网络"><a href="#连接网络" class="headerlink" title="连接网络"></a>连接网络</h3><p>emmm不是那个意思啦，但还是要连接的，我指的是，要让你的程序能访问网络。这就需要调用python的外部库了。网络上有很多种途径，这里我用的两个库是<code>request</code>和<code>lxml</code></p><p>先来简单的访问一下网站</p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">headers = &#123;</span><br><span class="line"><span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36'</span></span><br><span class="line">&#125;  <span class="comment"># 此处修改为你个人浏览器的User-Agent</span></span><br><span class="line"></span><br><span class="line">urls = [<span class="string">'https://konachan.com/post/show/311769/'</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> url <span class="keyword">in</span> urls:</span><br><span class="line">res = requests.get(url=url, headers=headers)</span><br><span class="line"></span><br><span class="line">print(res)</span><br></pre></td></tr></table></figure><p><code>res</code>打印出来应该是这样的：</p><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;Response [200]&gt;</span><br></pre></td></tr></table></figure><p>说明已经成功连接上了。</p><p>现在我们还看不出什么端倪，我们稍微修改一下程序，把</p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">res = requests.get(url=url, headers=headers)</span><br></pre></td></tr></table></figure><p>改成</p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">res = requests.get(url=url, headers=headers),text</span><br></pre></td></tr></table></figure><p>再运行一次。。。。。。。。。emmm输出比较长，但是，它成功的输出了<code>html</code>格式。你可以手动访问这个地址然后F12，不出意外应该是和网页源代码一致。</p><h3 id="定位网址"><a href="#定位网址" class="headerlink" title="定位网址"></a>定位网址</h3><p>我们现在需要在网页中精准定位图片的链接，在包含链接的文字上右键，检查，就可以定位到指定位置了</p><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"original-file-unchanged"</span> <span class="attr">href</span>=<span class="string">"https://konachan.com/image/767d463dbb05de49ae4c06c9f0bfa9a5/Konachan.com%20-%20311769%20eho_%28icbm%29%20remilia_scarlet%20touhou.png"</span> <span class="attr">id</span>=<span class="string">"png"</span>&gt;</span>Download PNG (1.49 MB)<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure><p>元素<code>a</code>对应的<code>href</code>里就有我们想找的地址。</p><p>现在我们要用程序来找到它。这里就需要用到之前提到的<code>lxml</code>库了，它可以轻松找到对应的路径，然后提取我们需要的数据。</p><p>看到后面的<code>id=&quot;png&quot;</code>了吗？非常巧的是，如果你在源代码里搜索一下，发现只有这个元素包含它。那么我们就可以轻松找到它了。</p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">headers = &#123;</span><br><span class="line"><span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36'</span></span><br><span class="line">&#125;  <span class="comment"># 此处修改为你个人浏览器的User-Agent</span></span><br><span class="line"></span><br><span class="line">urls = [<span class="string">'https://konachan.com/post/show/311769/'</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> url <span class="keyword">in</span> urls:</span><br><span class="line">res = requests.get(url=url, headers=headers).text</span><br><span class="line">tree = etree.HTML(res)  <span class="comment"># 最好加上</span></span><br><span class="line">second_url = tree.xpath(<span class="string">'//*[@id="png"]'</span>)  <span class="comment"># 从所有节点中匹配id为"png"的xpath</span></span><br><span class="line">print(second_url)</span><br></pre></td></tr></table></figure><p>输出：</p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">[&lt;Element a at <span class="number">0x3db0ac8</span>&gt;]</span><br></pre></td></tr></table></figure><p>这是一个<code>xpath</code>路径，看不懂没关系，但是程序的确是找到了。现在<code>second_url</code>存储的是前面我们找到的代码块，我们需要的路径在<code>href</code>下面，再从中提取就行了。</p><blockquote><p>更多关于<code>xpath</code>语法<a href="https://www.runoob.com/xpath/xpath-syntax.html" target="_blank" rel="noopener">https://www.runoob.com/xpath/xpath-syntax.html</a></p></blockquote><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">new_url = second_url.xpath(<span class="string">'./@href'</span>)[<span class="number">0</span>]  <span class="comment"># 将当前节点的 第一个 href的内容赋给new_url</span></span><br></pre></td></tr></table></figure><p>你可以把它打印出来验证一下。这样我们就得到了最终想要的路径了，只要再向网址发送一次请求就可以得到图片的二进制数据了。</p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">headers = &#123;</span><br><span class="line"><span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36'</span></span><br><span class="line">&#125;  <span class="comment"># 此处修改为你个人浏览器的User-Agent</span></span><br><span class="line"></span><br><span class="line">urls = [<span class="string">'https://konachan.com/post/show/311769/'</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> url <span class="keyword">in</span> urls:</span><br><span class="line">res = requests.get(url=url, headers=headers).text</span><br><span class="line">tree = etree.HTML(res)  <span class="comment"># 最好加上</span></span><br><span class="line">second_url = tree.xpath(<span class="string">'//*[@id="png"]'</span>)[<span class="number">0</span>]  <span class="comment"># 从所有节点中匹配id为"png"的xpath</span></span><br><span class="line">new_url = second_url.xpath(<span class="string">'./@href'</span>)[<span class="number">0</span>]</span><br><span class="line">data = requests.get(new_url, headers=headers)</span><br><span class="line">print(data.content)</span><br></pre></td></tr></table></figure><p>输出：</p><p>。。。自己看到控制台看吧，太长。。。</p><blockquote><p>不过貌似是十六进制表示的emmm</p></blockquote><h3 id="输出图片"><a href="#输出图片" class="headerlink" title="输出图片"></a>输出图片</h3><p>总之，你现在已经获得了一张高清壁纸的所有数据了，现在看不见是因为格式不对，我们把它输出为png格式的图片</p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">headers = &#123;</span><br><span class="line"><span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36'</span></span><br><span class="line">&#125;  <span class="comment"># 此处修改为你个人浏览器的User-Agent</span></span><br><span class="line"></span><br><span class="line">urls = [<span class="string">'https://konachan.com/post/show/311769/'</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> url <span class="keyword">in</span> urls:</span><br><span class="line">res = requests.get(url=url, headers=headers).text</span><br><span class="line">tree = etree.HTML(res)  <span class="comment"># 最好加上</span></span><br><span class="line">second_url = tree.xpath(<span class="string">'//*[@id="png"]'</span>)[<span class="number">0</span>]  <span class="comment"># 从所有节点中匹配id为"png"的xpath</span></span><br><span class="line">new_url = second_url.xpath(<span class="string">'./@href'</span>)[<span class="number">0</span>]</span><br><span class="line">data = requests.get(new_url, headers=headers)</span><br><span class="line"><span class="keyword">with</span> open(<span class="string">'./311769'</span> + <span class="string">'.png'</span>, <span class="string">'wb'</span>) <span class="keyword">as</span> f:</span><br><span class="line">f.write(data.content)</span><br><span class="line">print(<span class="string">'311769'</span>, <span class="string">'下载成功'</span>)</span><br></pre></td></tr></table></figure><p>你现在可以在项目的文件夹下，找到你已经下好的图片了。</p><p>如果你想要更换<code>id</code>，那么稍微修改下程序，最后是这样子的，如果你想一次提取多个，加入循环就可以了</p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">Kid = <span class="number">311769</span>  <span class="comment"># 在此处修改你的图片id</span></span><br><span class="line"></span><br><span class="line">headers = &#123;</span><br><span class="line"><span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36'</span></span><br><span class="line">&#125;  <span class="comment"># 此处修改为你个人浏览器的User-Agent</span></span><br><span class="line"></span><br><span class="line">urls = [<span class="string">'https://konachan.com/post/show/&#123;&#125;'</span>.format(Kid)]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> url <span class="keyword">in</span> urls:</span><br><span class="line">res = requests.get(url=url, headers=headers).text</span><br><span class="line">tree = etree.HTML(res)  <span class="comment"># 最好加上</span></span><br><span class="line">second_url = tree.xpath(<span class="string">'//*[@id="png"]'</span>)[<span class="number">0</span>]  <span class="comment"># 从所有节点中匹配id为"png"的xpath</span></span><br><span class="line">new_url = second_url.xpath(<span class="string">'./@href'</span>)[<span class="number">0</span>]</span><br><span class="line">data = requests.get(new_url, headers=headers)</span><br><span class="line"><span class="keyword">with</span> open(<span class="string">'./&#123;&#125;'</span>.format(Kid) + <span class="string">'.png'</span>, <span class="string">'wb'</span>) <span class="keyword">as</span> f:</span><br><span class="line">f.write(data.content)</span><br><span class="line">print(Kid, <span class="string">'下载成功'</span>)</span><br></pre></td></tr></table></figure><h2 id="一定会遇到的问题"><a href="#一定会遇到的问题" class="headerlink" title="一定会遇到的问题"></a>一定会遇到的问题</h2><p>结束了吗？还早得很呢。你可以试试<code>300108</code>这个<code>id</code>huo或者<code>300397</code>,这样的<code>id</code>有很多，你会发现，当输入这些<code>id</code>时，程序会报错。这是为什么呢？我们可以打开一个看看，拿<code>300397</code>为例，你会发现，它只有<code>jpg</code>格式的大图，没有<code>png</code>格式。所以我们的程序并不能找到<code>id=&quot;png&quot;</code>这个匹配项。</p><p><img src="/2020/07/27/python%E7%88%AC%E8%99%ABkonachan%E5%A3%81%E7%BA%B8/4.png" alt="300397的左边栏" loading="lazy"></p><p>emmm，是不是有点头大了？</p><p>解决方法嘛。。。如果你查看过网页源代码，就可以发现链接部分的<code>id=&quot;highres&quot;</code>，大可放心，只有这一个匹配项，这样的话，加一个<code>if</code>分支就行了。</p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">Kid = <span class="number">300108</span></span><br><span class="line"></span><br><span class="line">headers = &#123;</span><br><span class="line"><span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36'</span></span><br><span class="line">&#125;  <span class="comment"># 此处修改为你个人浏览器的User-Agent</span></span><br><span class="line"></span><br><span class="line">urls = [<span class="string">'https://konachan.com/post/show/&#123;&#125;'</span>.format(Kid)]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> url <span class="keyword">in</span> urls:</span><br><span class="line">res = requests.get(url=url, headers=headers).text</span><br><span class="line">tree = etree.HTML(res)  <span class="comment"># 最好加上</span></span><br><span class="line">second_url = tree.xpath(<span class="string">'//*[@id="png"]'</span>)</span><br><span class="line"><span class="keyword">if</span> len(second_url) == <span class="number">0</span>:</span><br><span class="line">second_url = tree.xpath(<span class="string">'//*[@id="highres"]'</span>)</span><br><span class="line"><span class="keyword">if</span> len(second_url) == <span class="number">0</span>:</span><br><span class="line">print(Kid, <span class="string">'页面不存在'</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">second_url = tree.xpath(<span class="string">'//*[@id="highres"]'</span>)[<span class="number">0</span>]</span><br><span class="line">new_url = second_url.xpath(<span class="string">'./@href'</span>)[<span class="number">0</span>]</span><br><span class="line">data = requests.get(new_url, headers=headers)</span><br><span class="line"><span class="keyword">with</span> open(<span class="string">'./&#123;&#125;'</span>.format(Kid) + <span class="string">'.jpg'</span>, <span class="string">'wb'</span>) <span class="keyword">as</span> f:</span><br><span class="line">f.write(data.content)</span><br><span class="line">print(Kid, <span class="string">'下载成功'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">second_url = tree.xpath(<span class="string">'//*[@id="png"]'</span>)[<span class="number">0</span>]</span><br><span class="line">new_url = second_url.xpath(<span class="string">'./@href'</span>)[<span class="number">0</span>]</span><br><span class="line">data = requests.get(new_url, headers=headers)</span><br><span class="line"><span class="keyword">with</span> open(<span class="string">'./&#123;&#125;'</span>.format(Kid) + <span class="string">'.png'</span>, <span class="string">'wb'</span>) <span class="keyword">as</span> f:</span><br><span class="line">f.write(data.content)</span><br><span class="line">print(Kid, <span class="string">'下载成功'</span>)</span><br></pre></td></tr></table></figure><p>这段代码顺便解决了另外一个问题，那就是有些<code>id</code>是不存在的，就是图片被删除或者更新了。单个<code>id</code>也许没什么影响，但如果你开始向我一样准备爬取<code>konachan</code>大量的图的话，这就很必要了。如果你想一次爬完全部三十万张图，也没问题，因为<code>konachan</code>没有反爬机制，但是大量的访问会让服务器吃不消，<del>所以暴力下载的代码我就不贴出来啦</del></p><h2 id="延申与改进"><a href="#延申与改进" class="headerlink" title="延申与改进"></a>延申与改进</h2><p>因为<code>konachan</code>优秀的检索机制，你可以为所欲为地爬取任何你想要的图片，你可以按人物检索，按评分检索，按日期检索，再搭配上一些奇奇怪怪的脑洞，会有更多的发现。</p>]]></content>
-    
-    <summary type="html">
-    
-      通过python爬虫实现按照id下载图片
-    
-    </summary>
-    
-    
-      <category term="经验分享" scheme="http://sxdl.github.io/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/"/>
-    
-    
-      <category term="python" scheme="http://sxdl.github.io/tags/python/"/>
-    
-      <category term="爬虫" scheme="http://sxdl.github.io/tags/%E7%88%AC%E8%99%AB/"/>
-    
-      <category term="K站" scheme="http://sxdl.github.io/tags/K%E7%AB%99/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>World!</title>
-    <link href="http://sxdl.github.io/2020/07/26/World/"/>
-    <id>http://sxdl.github.io/2020/07/26/World/</id>
-    <published>2020-07-26T14:09:17.000Z</published>
-    <updated>2020-07-27T05:31:22.180Z</updated>
-    
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
-    
-    <summary type="html">
-    
-      lalala
-    
-    </summary>
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>博客调教日记(一)</title>
-    <link href="http://sxdl.github.io/2020/07/25/%E5%8D%9A%E5%AE%A2%E8%B0%83%E6%95%99%E6%97%A5%E8%AE%B0(%E4%B8%80)/"/>
-    <id>http://sxdl.github.io/2020/07/25/%E5%8D%9A%E5%AE%A2%E8%B0%83%E6%95%99%E6%97%A5%E8%AE%B0(%E4%B8%80)/</id>
-    <published>2020-07-25T13:29:36.000Z</published>
-    <updated>2020-07-27T07:14:46.738Z</updated>
-    
-    <content type="html"><![CDATA[<p><strong>花了两天时间用hexo简单做了一个网站，刚刚修改好主题。试着发几篇博客测试一下。</strong></p><p><strong>这一篇主要研究下文章的一些格式和配置。</strong></p><a id="more"></a><h1 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a><strong>快速开始</strong></h1><p>​    首先必须要搭建好你的博客，我用的是<code>hexo</code>。这是一个基于<code>nodejs</code> 的静态博客网站生成器。详细的操作<a href="https://blog.csdn.net/sinat_37781304/article/details/82729029" target="_blank" rel="noopener">在这里</a>。在完成网页基础配置之后，就摩拳擦掌准备写博客了。不管其他什么高级的问题，让我们先发一篇博客试一下。</p><h2 id="新建一个post"><a href="#新建一个post" class="headerlink" title="新建一个post"></a><strong>新建一个post</strong></h2><p>在存放你所有博客相关的文件夹下打开<code>Git Bash</code>，然后输入</p><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo new &quot;My New Post&quot;</span><br></pre></td></tr></table></figure><p>这里默认是<code>post</code>,然后你就可以在<code>\source\_posts\</code>文件夹下找到文件格式为<code>My New Post.md</code>的新建博客啦。</p><ul><li>更多参考<code>hexo</code>官网：<a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></li></ul><h2 id="启动服务器"><a href="#启动服务器" class="headerlink" title="启动服务器"></a><strong>启动服务器</strong></h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>你可以在浏览器中输入<code>http://localhost:4000/</code>来预览你的网站</p><ul><li>更多参考<code>hexo</code>官网：<a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></li></ul><p>当我们打开网站预览后，如果没有发生意外，你的第一篇博客就诞生啦！</p><p>接下来让我们把它们部署到你的网站上。</p><h2 id="生成静态文件"><a href="#生成静态文件" class="headerlink" title="生成静态文件"></a><strong>生成静态文件</strong></h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><ul><li>更多参考<code>hexo</code>官网：<a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></li></ul><h2 id="部署到你的网站上"><a href="#部署到你的网站上" class="headerlink" title="部署到你的网站上"></a><strong>部署到你的网站上</strong></h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><ul><li>更多参考<code>hexo</code>官网：<a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></li></ul><p>到目前为止，你已经成功将一篇没有内容只有标题的空文章发布到你的网站上了。接下来我们要给文章添加内容。</p><hr><h1 id="添加内容"><a href="#添加内容" class="headerlink" title="添加内容"></a><strong>添加内容</strong></h1><p>找到你新添加的<code>My New Post.md</code>空文章，然后用<del>各种方式</del>打开它，最好不要用自带的文本编辑器打开，当然如果你硬要这样也没什么关系。我用的是<code>VS code</code>,微软的代码编辑器，因为它可以安装各种非人类的插件，这里就不多讲了XD。总之我们打开文件以后，你应该会看到用<code>---</code>标在中间的代码</p><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: My New Post</span><br><span class="line">date: 2020-07-24 19:32:02</span><br><span class="line">tags:</span><br><span class="line">---</span><br></pre></td></tr></table></figure><p><code>title</code>是我们文章的标题，<code>date</code>是创建时间。<del>（好吧，应该不用讲也能看得懂）</del></p><p>我们先不要管这些，直接换行，在下面输入一行你喜欢的话</p><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: My New Post</span><br><span class="line">date: 2020-07-24 19:32:02</span><br><span class="line">tags:</span><br><span class="line">---</span><br><span class="line">云外有天，年月有歌。</span><br></pre></td></tr></table></figure><p>我写的比较文艺，如果你喜欢经典的<code>Hello World！</code>那也没问题。</p><p>保存之后关闭文件，同样在<code>Git Bash</code>中输入<code>$ hexo clean</code>和<code>$ hexo server</code>等待个几秒，然后就可以在你的网站预览中发现一些变化了。</p><hr><h2 id="格式化输入"><a href="#格式化输入" class="headerlink" title="格式化输入"></a><strong>格式化输入</strong></h2><p>上面的示例中，我们只是在文章中简单加了一段文字。如何格式化输入呢？先上示例：</p><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">无字天书</span><br></pre></td></tr></table></figure><p>你可以把这段复制到你的文章代码中去，然后就可以看到预览的效果了。在对照一下示例代码，相信聪明的你就已经明白怎么写了。反正我是不会写的，但是，</p><p>我有<code>Typora</code>,这是专门为<del>懒惰的</del>小伙伴定制的辅助软件，你可以自由舒畅地码字而不用纠结与代码的缩进，反正用它就对了。贴心的我把链接也贴出来了-&gt; <a href="https://www.typora.io/" target="_blank" rel="noopener">点我</a></p><p>至于怎么用，快捷键什么的，下好之后拉一下菜单就都有了。</p><hr><h1 id="分类和标签"><a href="#分类和标签" class="headerlink" title="分类和标签"></a>分类和标签</h1><p>当学会了如何写内容之后，你一定会跃跃欲试准备一口气写几百篇博客一夜登顶（bushi），实际上，当文章数量多起来的时候，如果没有好的分类，那么找起文章来一定是十分痛苦的。这时候，我们就需要给文章一定的分类规则了。</p><p><code>hexo</code>自带有两种分类规则，一个是<code>分类（categories）</code>，另一个是<code>标签（tags）</code>。需要注意的是，一篇文章只能属于一种<code>分类</code>，却可以添加多个<code>标签</code>。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;strong&gt;花了两天时间用hexo简单做了一个网站，刚刚修改好主题。试着发几篇博客测试一下。&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;这一篇主要研究下文章的一些格式和配置。&lt;/strong&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="经验分享" scheme="http://sxdl.github.io/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/"/>
-    
-    
-      <category term="调试" scheme="http://sxdl.github.io/tags/%E8%B0%83%E8%AF%95/"/>
-    
-      <category term="web前端" scheme="http://sxdl.github.io/tags/web%E5%89%8D%E7%AB%AF/"/>
-    
-      <category term="博客" scheme="http://sxdl.github.io/tags/%E5%8D%9A%E5%AE%A2/"/>
-    
-      <category term="hexo" scheme="http://sxdl.github.io/tags/hexo/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>My New Post</title>
-    <link href="http://sxdl.github.io/2020/07/24/My-New-Post/"/>
-    <id>http://sxdl.github.io/2020/07/24/My-New-Post/</id>
-    <published>2020-07-24T11:32:02.000Z</published>
-    <updated>2020-07-27T07:19:03.146Z</updated>
-    
-    <content type="html"><![CDATA[<p>云外有天，年月有歌。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;云外有天，年月有歌。&lt;/p&gt;
-
-      
-    
-    </summary>
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Hello World</title>
-    <link href="http://sxdl.github.io/2020/07/24/hello-world/"/>
-    <id>http://sxdl.github.io/2020/07/24/hello-world/</id>
-    <published>2020-07-24T08:25:27.141Z</published>
-    <updated>2020-07-27T07:15:37.236Z</updated>
-    
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
-      
-    
-    </summary>
-    
-    
     
   </entry>
   
