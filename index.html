@@ -1,347 +1,98 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sxdl</title>
-    <style>
-/* ============================================
-   🎨 COLOR PALETTE — 全局色卡，修改这里即可换色
-   ============================================ */
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>sxdl</title>
+<style>
 :root {
-    --c-bg:           #FAFAFA;
-    --c-surface:      #FFFFFF;
-    --c-border:       #EEEEEE;
-    --c-text:         #1A1A2E;
-    --c-text-2:       #6B7280;
-    --c-text-3:       #C4C9D4;
-
-    --c-accent:       #6366F1;
-    --c-accent-light: #EEF2FF;
-    --c-accent-dark:  #4338CA;
-
-    --c-coral:        #F97066;
-    --c-sky:          #38BDF8;
-    --c-amber:        #FBBF24;
-    --c-emerald:      #34D399;
-    --c-violet:       #A78BFA;
-    --c-rose:         #FB7185;
-
-    --radius:         16px;
-    --radius-sm:      10px;
-    --radius-full:    999px;
-    --shadow:         0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
-    --shadow-md:      0 4px 16px rgba(0,0,0,0.06);
-    --shadow-lg:      0 8px 32px rgba(0,0,0,0.08);
-    --shadow-hover:   0 12px 40px rgba(99,102,241,0.15);
-    --font:           -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Noto Sans SC', sans-serif;
-    --max-w:          720px;
+    --bg: #FAFAFA; --surface: #FFF; --border: #EEE;
+    --text: #1A1A2E; --text2: #6B7280; --text3: #C4C9D4;
+    --accent: #6366F1; --accent-lt: #EEF2FF;
+    --coral: #F97066; --sky: #38BDF8; --amber: #FBBF24;
+    --emerald: #34D399; --violet: #A78BFA; --rose: #FB7185;
+    --r: 16px; --r-sm: 10px; --r-full: 999px;
+    --font: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Noto Sans SC', sans-serif;
 }
-
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-    font-family: var(--font);
-    background: var(--c-bg);
-    color: var(--c-text);
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-    min-height: 100vh;
-}
-
-a { color: inherit; text-decoration: none; }
-
-.wrap {
-    max-width: var(--max-w);
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-/* ===== Hero ===== */
-.hero {
-    padding: 80px 0 48px;
-    text-align: center;
-}
-
-.avatar {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    margin: 0 auto 20px;
-    background: linear-gradient(135deg, var(--c-violet), var(--c-sky));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 30px;
-    color: white;
-    font-weight: 700;
-    box-shadow: 0 8px 24px rgba(99,102,241,0.25);
-}
-
-.hero h1 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-    margin-bottom: 4px;
-}
-
-.hero .tagline {
-    color: var(--c-text-2);
-    font-size: 0.88rem;
-}
-
-/* ===== Search ===== */
-.search {
-    max-width: 380px;
-    margin: 0 auto 44px;
-    position: relative;
-}
-
-.search input {
-    width: 100%;
-    padding: 11px 16px 11px 40px;
-    border: 1.5px solid var(--c-border);
-    border-radius: var(--radius-full);
-    font-size: 0.88rem;
-    font-family: var(--font);
-    background: var(--c-surface);
-    color: var(--c-text);
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.search input:focus {
-    border-color: var(--c-accent);
-    box-shadow: 0 0 0 3px var(--c-accent-light);
-}
-
-.search input::placeholder { color: var(--c-text-3); }
-
-.search svg {
-    position: absolute;
-    left: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--c-text-3);
-    pointer-events: none;
-}
-
-/* ===== Section ===== */
-.section { margin-bottom: 32px; }
-
-.section-head {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 12px;
-    padding: 0 2px;
-}
-
-.section-head h2 {
-    font-size: 0.78rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--c-text-2);
-}
-
-.section-head .badge {
-    font-size: 0.7rem;
-    color: var(--c-text-3);
-    background: var(--c-bg);
-    padding: 2px 8px;
-    border-radius: var(--radius-full);
-}
-
-/* ===== Card Grid ===== */
-.cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 12px;
-}
-
-@media (max-width: 400px) {
-    .cards { grid-template-columns: 1fr; }
-}
-
-/* ===== Card ===== */
-.card {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    background: var(--c-surface);
-    border: 1px solid var(--c-border);
-    border-radius: var(--radius);
-    padding: 16px 18px;
-    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
-    cursor: pointer;
-    position: relative;
-}
-
-.card:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-hover);
-    border-color: var(--c-accent);
-}
-
-.card-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: var(--radius-sm);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.15rem;
-    flex-shrink: 0;
-}
-
-.card-body { flex: 1; min-width: 0; }
-
-.card-title {
-    font-size: 0.92rem;
-    font-weight: 600;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.card-desc {
-    font-size: 0.78rem;
-    color: var(--c-text-2);
-    margin-top: 2px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.card-arrow {
-    color: var(--c-text-3);
-    transition: transform 0.2s, color 0.2s;
-    flex-shrink: 0;
-}
-
-.card:hover .card-arrow {
-    transform: translateX(3px);
-    color: var(--c-accent);
-}
-
-/* Color variants */
-.card[data-color="coral"]   .card-icon { background: #FFF1F0; }
-.card[data-color="sky"]     .card-icon { background: #F0F9FF; }
-.card[data-color="amber"]   .card-icon { background: #FFFBEB; }
-.card[data-color="emerald"] .card-icon { background: #ECFDF5; }
-.card[data-color="violet"]  .card-icon { background: #F5F3FF; }
-.card[data-color="rose"]    .card-icon { background: #FFF1F2; }
-.card[data-color="default"] .card-icon { background: var(--c-accent-light); }
-
-.card[data-color="coral"]:hover   { border-color: var(--c-coral); }
-.card[data-color="sky"]:hover     { border-color: var(--c-sky); }
-.card[data-color="amber"]:hover   { border-color: var(--c-amber); }
-.card[data-color="emerald"]:hover { border-color: var(--c-emerald); }
-.card[data-color="violet"]:hover  { border-color: var(--c-violet); }
-.card[data-color="rose"]:hover    { border-color: var(--c-rose); }
-
-/* ===== Footer ===== */
-.footer {
-    text-align: center;
-    padding: 48px 0 32px;
-    color: var(--c-text-3);
-    font-size: 0.72rem;
-}
-
-.footer a {
-    color: var(--c-accent);
-    transition: color 0.15s;
-}
-
-.footer a:hover { color: var(--c-accent-dark); }
-
-/* ===== Stagger animation ===== */
-@keyframes cardIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to   { opacity: 1; transform: translateY(0); }
-}
-.card { animation: cardIn 0.35s ease both; }
-
-@media (prefers-reduced-motion: reduce) {
-    .card { animation: none; }
-    .card:hover { transform: none; }
-}
-    </style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px}
+.hero{padding:80px 0 48px;text-align:center}
+.avatar{width:80px;height:80px;border-radius:50%;margin:0 auto 20px;background:linear-gradient(135deg,var(--violet),var(--sky));display:flex;align-items:center;justify-content:center;font-size:30px;color:#fff;font-weight:700;box-shadow:0 8px 24px rgba(99,102,241,.25)}
+.hero h1{font-size:1.5rem;font-weight:700;letter-spacing:-.01em;margin-bottom:4px}
+.hero .tag{color:var(--text2);font-size:.88rem}
+.search{max-width:380px;margin:0 auto 44px;position:relative}
+.search input{width:100%;padding:11px 16px 11px 40px;border:1.5px solid var(--border);border-radius:var(--r-full);font-size:.88rem;font-family:var(--font);background:var(--surface);color:var(--text);outline:none;transition:border-color .2s,box-shadow .2s}
+.search input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-lt)}
+.search input::placeholder{color:var(--text3)}
+.search svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text3);pointer-events:none}
+.section{margin-bottom:32px}
+.section-head{display:flex;align-items:center;gap:8px;margin-bottom:12px;padding:0 2px}
+.section-head h2{font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text2)}
+.section-head .badge{font-size:.7rem;color:var(--text3);background:var(--bg);padding:2px 8px;border-radius:var(--r-full)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px}
+@media(max-width:400px){.cards{grid-template-columns:1fr}}
+.card{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px;transition:transform .2s,box-shadow .2s,border-color .2s;cursor:pointer;position:relative}
+.card:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(99,102,241,.15);border-color:var(--accent)}
+.card-icon{width:40px;height:40px;border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0}
+.card-body{flex:1;min-width:0}
+.card-title{font-size:.92rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-desc{font-size:.78rem;color:var(--text2);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-arrow{color:var(--text3);transition:transform .2s,color .2s;flex-shrink:0}
+.card:hover .card-arrow{transform:translateX(3px);color:var(--accent)}
+.card[data-color="coral"] .card-icon{background:#FFF1F0}
+.card[data-color="coral"]:hover{border-color:var(--coral)}
+.card[data-color="default"] .card-icon{background:var(--accent-lt)}
+.footer{text-align:center;padding:48px 0 32px;color:var(--text3);font-size:.72rem}
+</style>
 </head>
 <body>
 <div class="wrap">
-
-    <header class="hero">
-        <div class="avatar">S</div>
-        <h1>Hi, I'm sxdl</h1>
-        <p class="tagline">欢迎来到我的小站 ✨</p>
-    </header>
-
-    <div class="search">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="text" placeholder="搜索" autocomplete="off">
-    </div>
-
-    <main id="main"></main>
-
-    <footer class="footer">
-        <a href="https://github.com/sxdl" target="_blank">@sxdl</a>
-    </footer>
-
+  <header class="hero">
+    <div class="avatar">S</div>
+    <h1>Hi, I'm sxdl</h1>
+    <p class="tag">欢迎来到我的小站</p>
+  </header>
+  <div class="search">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" placeholder="搜索" autocomplete="off">
+  </div>
+  <main id="main"></main>
+  <footer class="footer"></footer>
 </div>
-
 <script>
-/* ============================================
-   📐 MOCK DATA — 先看 UI 效果，后续替换为真实数据
-   ============================================ */
-const SECTIONS = [
-    {
-        title: 'Projects',
-        icon: '🚀',
-        items: [
-            { name: '洛克王国种公查询', desc: '蛋组 · 属性 · 种公排行', icon: '🐉', color: 'coral', url: 'https://sxdl.site/Roco-Kingdom-StudMaster/' },
-        ]
+var ITEMS = [
+  {name: "洛克王国种公查询", desc: "蛋组 · 属性 · 种公排行", icon: "🐉", color: "coral", url: "https://sxdl.site/Roco-Kingdom-StudMaster/"}
 ];
 
-function render() {
-    const main = document.getElementById('main');
-    let html = '';
-    SECTIONS.forEach((s, si) => {
-        html += `<section class="section" data-section="${si}">`;
-        html += `<div class="section-head"><span>${s.icon}</span><h2>${s.title}</h2><span class="badge">${s.items.length}</span></div>`;
-        html += `<div class="cards">`;
-        s.items.forEach((item, ci) => {
-            html += `
-            <a href="${item.url}" target="_blank" class="card" data-color="${item.color}" style="animation-delay:${(si*3+ci)*50}ms">
-                <div class="card-icon">${item.icon}</div>
-                <div class="card-body">
-                    <div class="card-title">${item.name}</div>
-                    <div class="card-desc">${item.desc}</div>
-                </div>
-                <div class="card-arrow">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-                </div>
-            </a>`;
-        });
-        html += `</div></section>`;
-    });
-    main.innerHTML = html;
+(function() {
+  var main = document.getElementById("main");
+  var html = '<section class="section"><div class="section-head"><span>🚀</span><h2>Projects</h2><span class="badge">' + ITEMS.length + '</span></div><div class="cards">';
+  for (var i = 0; i < ITEMS.length; i++) {
+    var it = ITEMS[i];
+    html += '<a href="' + it.url + '" target="_blank" class="card" data-color="' + it.color + '">'
+      + '<div class="card-icon">' + it.icon + '</div>'
+      + '<div class="card-body"><div class="card-title">' + it.name + '</div><div class="card-desc">' + it.desc + '</div></div>'
+      + '<div class="card-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>'
+      + '</a>';
+  }
+  html += '</div></section>';
+  main.innerHTML = html;
 
-    // Search filter
-    document.querySelector('.search input').addEventListener('input', (e) => {
-        const q = e.target.value.toLowerCase().trim();
-        document.querySelectorAll('.card').forEach(c => {
-            c.style.display = (!q || c.textContent.toLowerCase().includes(q)) ? '' : 'none';
-        });
-        document.querySelectorAll('.section').forEach(s => {
-            const visible = s.querySelectorAll('.card:not([style*="display: none"])');
-            s.style.display = visible.length ? '' : 'none';
-        });
-    });
-}
-
-render();
+  document.querySelector(".search input").addEventListener("input", function(e) {
+    var q = e.target.value.toLowerCase().trim();
+    var cards = document.querySelectorAll(".card");
+    for (var j = 0; j < cards.length; j++) {
+      cards[j].style.display = (!q || cards[j].textContent.toLowerCase().indexOf(q) >= 0) ? "" : "none";
+    }
+    var sections = document.querySelectorAll(".section");
+    for (var k = 0; k < sections.length; k++) {
+      var vis = sections[k].querySelectorAll('.card:not([style*="display: none"])');
+      sections[k].style.display = vis.length ? "" : "none";
+    }
+  });
+})();
 </script>
 </body>
 </html>
