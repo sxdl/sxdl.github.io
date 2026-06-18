@@ -300,24 +300,14 @@ const SECTIONS = [
         title: 'Projects',
         icon: '🚀',
         items: [
-            { name: 'Roco Kingdom Stud', desc: '洛克王国蛋组种公查询工具', icon: '🐉', color: 'coral' },
-            { name: 'DSP Cheat Sheet', desc: '数字信号处理速查表', icon: '📊', color: 'sky' },
-            { name: 'Paper Notes', desc: '论文笔记与总结', icon: '📝', color: 'amber' },
-        ]
-    },
-    {
-        title: 'Blog',
-        icon: '📰',
-        items: [
-            { name: '随苑', desc: '技术博客 · 随想随笔', icon: '🌙', color: 'violet' },
+            { name: '洛克王国种公查询', desc: '蛋组 · 属性 · 种公排行', icon: '🐉', color: 'coral', url: 'https://sxdl.site/Roco-Kingdom-StudMaster/' },
         ]
     },
     {
         title: 'Links',
         icon: '🔗',
         items: [
-            { name: 'GitHub', desc: '@sxdl', icon: '🐙', color: 'default' },
-            { name: 'Research', desc: '学术主页', icon: '🎓', color: 'emerald' },
+            { name: 'GitHub', desc: '@sxdl', icon: '🐙', color: 'default', url: 'https://github.com/sxdl' },
         ]
     },
 ];
@@ -331,7 +321,7 @@ function render() {
         html += `<div class="cards">`;
         s.items.forEach((item, ci) => {
             html += `
-            <a href="#" class="card" data-color="${item.color}" style="animation-delay:${(si*3+ci)*50}ms">
+            <a href="${item.url}" target="_blank" class="card" data-color="${item.color}" style="animation-delay:${(si*3+ci)*50}ms">
                 <div class="card-icon">${item.icon}</div>
                 <div class="card-body">
                     <div class="card-title">${item.name}</div>
